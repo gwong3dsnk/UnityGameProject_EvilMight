@@ -5,25 +5,56 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] InputAction inputAction;
+    private PlayerControls playerControls;
+    private Vector2 moveVector;
+    private float movementSpeed = 10.0f;
+    private Rigidbody rb;
 
-    void OnEnable() 
+    private void Awake() 
     {
-        inputAction.Enable();
+        playerControls = new PlayerControls();
+        rb = GetComponent<Rigidbody>();
     }
 
-    void OnDisable() 
+    private void OnEnable() 
     {
-        inputAction.Disable();
+        playerControls.Enable();
+        playerControls.Player.Movement.performed += OnMovementPerformed;
+        playerControls.Player.Movement.canceled += OnMovementCanceled;
     }
 
-    void Start()
+    private void OnDisable() 
     {
+        playerControls.Disable();
+        playerControls.Player.Movement.performed -= OnMovementPerformed;
+        playerControls.Player.Movement.canceled -= OnMovementCanceled;
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
+    private void MovePlayer()
+    {
+        // No y-axis movement required.  Up/Down (Y) should affect Forward/Backward (Z) instead.
+        Vector3 movement = new Vector3(moveVector.x, 0, moveVector.y);
         
+        if (movement.magnitude > 1f)
+        {
+            movement.Normalize();
+        }
+
+        rb.velocity = movement * movementSpeed;
     }
 
-    void Update()
+    private void OnMovementPerformed(InputAction.CallbackContext value)
     {
-        
+        moveVector = value.ReadValue<Vector2>();
+    }
+
+    private void OnMovementCanceled(InputAction.CallbackContext value)
+    {
+        moveVector = Vector2.zero;
     }
 }
