@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!20 &125294031 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 900470326075416038, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+  m_PrefabInstance: {fileID: 109696816220360735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +321,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1036946498594865688, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2073193086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5592519998316936867, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+  m_PrefabInstance: {fileID: 109696816220360735}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2073193092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073193086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &109696816220360735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -347,7 +376,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5592519998316936867, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2073193092}
   m_SourcePrefab: {fileID: 100100000, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
 --- !u!1001 &987564362046679704
 PrefabInstance:
@@ -360,6 +392,18 @@ PrefabInstance:
     - target: {fileID: 3759426337301209794, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
       propertyPath: m_Name
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426616507783094637, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426616507783094637, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5426616507783094637, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5426616507783094637, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -401,6 +445,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5762086082023539822, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: 52be8d582bc3c724d831daeff9ec90da, type: 2}
     - target: {fileID: 7631852270125942166, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
       propertyPath: color.b
       value: 0.009967966
@@ -422,6 +470,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34ca493a98df4e5439c685953c1f04b5, type: 3}
+--- !u!1001 &8743787247072072361
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 295442695883785601, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyMinion
+      value: 
+      objectReference: {fileID: 8028765944443884622, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+    - target: {fileID: 1944780644130037402, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_Name
+      value: EnemyPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976077031855403337, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: poolSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 125294031}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyMinion
+      value: 
+      objectReference: {fileID: 8028765944443884622, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: spawnOffset
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: smallWaveSize
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: maxSpawnLocation.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: maxSpawnLocation.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: minSpawnLocation.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2453278234839077555, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: minSpawnLocation.y
+      value: -20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -429,3 +574,4 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 987564362046679704}
   - {fileID: 109696816220360735}
+  - {fileID: 8743787247072072361}

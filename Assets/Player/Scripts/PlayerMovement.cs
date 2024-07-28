@@ -18,16 +18,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable() 
     {
-        playerControls.Enable();
-        playerControls.Player.Movement.performed += OnMovementPerformed;
-        playerControls.Player.Movement.canceled += OnMovementCanceled;
+        if (playerControls != null)
+        {
+            playerControls.Enable();
+            playerControls.Player.Movement.performed += OnMovementPerformed;
+            playerControls.Player.Movement.canceled += OnMovementCanceled;
+        }
     }
 
     private void OnDisable() 
     {
-        playerControls.Disable();
-        playerControls.Player.Movement.performed -= OnMovementPerformed;
-        playerControls.Player.Movement.canceled -= OnMovementCanceled;
+        if (playerControls != null)
+        {
+            playerControls.Disable();
+            playerControls.Player.Movement.performed -= OnMovementPerformed;
+            playerControls.Player.Movement.canceled -= OnMovementCanceled;
+        }
     }
 
     private void FixedUpdate()
