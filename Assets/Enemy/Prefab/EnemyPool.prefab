@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1976077031855403337}
   - component: {fileID: 2453278234839077555}
   - component: {fileID: 2856321283441375728}
+  - component: {fileID: 9135962907687306953}
   m_Layer: 0
   m_Name: EnemyPool
   m_TagString: Untagged
@@ -45,13 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3dd0cdc6303f6f44b24a78c20284541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMinion: {fileID: 0}
-  enemyData: {fileID: 11400000, guid: 885faad23396a2c459bad24d7490c866, type: 2}
+  timeBetweenEnemies: 1
   timeBetweenWaves: 1
-  poolSize: 5
-  smallWaveSize: 3
-  moderateWaveSize: 5
-  largeWaveSize: 10
   mainCamera: {fileID: 0}
 --- !u!114 &2856321283441375728
 MonoBehaviour:
@@ -66,3 +62,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyWaveContainer: []
+--- !u!114 &9135962907687306953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944780644130037402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b55406147de50642896c3b373894ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefabAssignments:
+  - enemyClass: 0
+    enemyDifficulty: 0
+    enemyPrefab: {fileID: 8934287722568434336, guid: de7ba1c3190711e4f90c74a386802913, type: 3}
+  - enemyClass: 1
+    enemyDifficulty: 0
+    enemyPrefab: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}

@@ -6,10 +6,12 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    Transform player;
-    NavMeshAgent navMeshAgent;
-    Enemy enemy;
-    float distanceToTarget = Mathf.Infinity;
+    [SerializeField] ParticleSystem projectileFX;
+    [SerializeField] float turnSpeed = 1f;
+    private Transform player;
+    private NavMeshAgent navMeshAgent;
+    private Enemy enemy;
+    private float distanceToTarget = Mathf.Infinity;
 
     void Start()
     {
@@ -34,13 +36,17 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        distanceToTarget = Vector3.Distance(player.position, transform.position);
-        EngagePlayer();
+        if (player != null)
+        {
+            distanceToTarget = Vector3.Distance(player.position, transform.position);
+            EngagePlayer();
+        }
     }
 
     private void EngagePlayer()
     {
         if (navMeshAgent == null) return;
+        FacePlayer();
 
         // Set the enemy traversal speed and stopping distance
         navMeshAgent.speed = enemy.MovementSpeed;
@@ -57,9 +63,23 @@ public class EnemyAI : MonoBehaviour
         }        
     }
 
+    private void FacePlayer()
+    {
+        // Make sure the enemy is always rotating to face the player
+        Vector3 direction = (player.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
+    }
+
     private void AttackTarget()
     {
-        Debug.Log("Attacking the player");
+        Debug.Log("Attacking player.");
+        if (enemy.EnemyClass == EnemyClass.Range && enemy.EnemyDifficulty == EnemyDifficulty.Easy)
+        {
+            Debug.Log("Ranged enemy starting to attack with projectile");
+            var projectileEmission = projectileFX.emission;
+            projectileEmission.enabled = true;
+        }
     }
 
     private void ChaseTarget()

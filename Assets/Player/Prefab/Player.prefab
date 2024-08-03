@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 507619735079525155}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a4c30e17528a34e898a5c07c769ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMesh: {fileID: 0}
+  playerMesh: {fileID: 1036946498594865688}
 --- !u!1 &5592519998316936867
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +153,9 @@ GameObject:
   - component: {fileID: 1372490305684011994}
   - component: {fileID: 8375900831703486986}
   - component: {fileID: 5094802073796450431}
+  - component: {fileID: 8959277420992722768}
+  - component: {fileID: 1888536999915482598}
+  - component: {fileID: 3378347712008903245}
   m_Layer: 0
   m_Name: MeshPlaceholder
   m_TagString: Untagged
@@ -287,3 +290,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a520356f00dd24bb960a29fd9e46aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8959277420992722768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592519998316936867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da00e7cebd98de4b8a0d88c6b2add05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 3
+--- !u!114 &1888536999915482598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592519998316936867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3abef2a071ccc48907a5c5a7909f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDeathCanvas: {fileID: 0}
+--- !u!114 &3378347712008903245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592519998316936867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

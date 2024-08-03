@@ -5,5 +5,5 @@ using UnityEngine;
 public class EnemyPrefabLibrary : MonoBehaviour
 {
     [SerializeField] EnemyPrefabAssignments[] enemyPrefabAssignments;
-
+    public EnemyPrefabAssignments[] EnemyPrefabAssignments { get { return enemyPrefabAssignments; } }
 }

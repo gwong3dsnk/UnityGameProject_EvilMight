@@ -6,21 +6,24 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] EnemyData enemyData;
     [SerializeField] EnemyClass enemyClass;
-    [SerializeField] EnemyDifficulty difficulty;
+    public EnemyClass EnemyClass { get { return enemyClass; } }
+    [SerializeField] EnemyDifficulty enemyDifficulty;
+    public EnemyDifficulty EnemyDifficulty { get { return enemyDifficulty; } }
     // Unserialize below later, leave for testing and visibility
-    [SerializeField] int hitPoints;
-    [SerializeField] int defense;
-    [SerializeField] int attack;
-    [SerializeField] int spellAttack;
-    [SerializeField] float attackRadius;
-    public float AttackRadius { get { return attackRadius; } }
-    [SerializeField] float movementSpeed;
-    public float MovementSpeed { get { return movementSpeed; } }
+    [SerializeField] int t_hitPoints;
+    [SerializeField] int t_defense;
+    [SerializeField] int t_attack;
+    public int Attack { get { return t_attack; } }
+    [SerializeField] int t_spellAttack;
+    [SerializeField] float t_attackRadius;
+    public float AttackRadius { get { return t_attackRadius; } }
+    [SerializeField] float t_movementSpeed;
+    public float MovementSpeed { get { return t_movementSpeed; } }
 
     public void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {
         this.enemyClass = enemyClass;
-        this.difficulty = enemyDifficulty;
+        this.enemyDifficulty = enemyDifficulty;
         InitializeAttributes();
     }
 
@@ -34,15 +37,14 @@ public class Enemy : MonoBehaviour
         {
             foreach (var stats in enemyData.enemyStatsArray)
             {
-                if (stats.enemyClass == this.enemyClass && stats.difficulty == this.difficulty)
+                if (stats.enemyClass == this.enemyClass && stats.difficulty == this.enemyDifficulty)
                 {
-                    Debug.Log("Enemy data found");
-                    this.hitPoints = stats.hp;
-                    this.defense = stats.def;
-                    this.attack = stats.atk;
-                    this.spellAttack = stats.spellAtk;
-                    this.attackRadius = stats.atkRadius;
-                    this.movementSpeed = stats.movementSpeed;
+                    this.t_hitPoints = stats.hp;
+                    this.t_defense = stats.def;
+                    this.t_attack = stats.atk;
+                    this.t_spellAttack = stats.spellAtk;
+                    this.t_attackRadius = stats.atkRadius;
+                    this.t_movementSpeed = stats.movementSpeed;
                     break;
                 }
             }

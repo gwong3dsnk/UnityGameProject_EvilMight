@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyStatsArray:
   - enemyClass: 0
     difficulty: 0
-    hp: 1
+    hp: 2
     def: 1
     atk: 1
     spellAtk: 0
@@ -23,7 +23,7 @@ MonoBehaviour:
     movementSpeed: 6
   - enemyClass: 1
     difficulty: 0
-    hp: 1
+    hp: 2
     def: 1
     atk: 1
     spellAtk: 0
