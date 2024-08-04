@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDeathHandler : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerDeathHandler : MonoBehaviour
     {
         if (playerDeathCanvas != null)
         {
-            playerDeathCanvas.enabled = false;
+            playerDeathCanvas.transform.gameObject.SetActive(false);
         }
         else
         {
@@ -25,7 +26,8 @@ public class PlayerDeathHandler : MonoBehaviour
 
         if (playerDeathCanvas != null)
         {
-            playerDeathCanvas.enabled = true;
+            Debug.Log("Enabling Player Death Canvas");
+            playerDeathCanvas.transform.gameObject.SetActive(true);
         }
         else
         {

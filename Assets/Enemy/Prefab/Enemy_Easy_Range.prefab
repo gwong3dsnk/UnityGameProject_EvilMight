@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: e948fcc4c18fbbb4e9f0c3147e5d09a6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.8
+      value: 3.52
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: e948fcc4c18fbbb4e9f0c3147e5d09a6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.78
+      value: 3.78
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: e948fcc4c18fbbb4e9f0c3147e5d09a6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -53,8 +53,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9220439057694531453, guid: e948fcc4c18fbbb4e9f0c3147e5d09a6, type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 0
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
