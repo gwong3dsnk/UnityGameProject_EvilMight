@@ -20,6 +20,7 @@ public abstract class HealthManagement : MonoBehaviour
     protected void TakeDamage(int amount)
     {
         currentHealth -= amount;
+
         if (currentHealth <= 0)
         {
             HandleDeath();

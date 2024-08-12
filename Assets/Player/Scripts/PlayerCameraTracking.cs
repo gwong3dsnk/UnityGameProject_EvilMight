@@ -5,7 +5,12 @@ using UnityEngine;
 public class PlayerCameraTracking : MonoBehaviour
 {
     [SerializeField] Transform playerMesh;
-    Vector3 offset = new Vector3(0f, 35f, -10f);
+    Vector3 offset;
+
+    private void Start()
+    {
+        offset = transform.position;
+    }
 
     void Update()
     {

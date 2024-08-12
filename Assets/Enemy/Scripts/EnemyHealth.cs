@@ -24,15 +24,21 @@ public class EnemyHealth : HealthManagement
 
     private void OnParticleCollision(GameObject other) 
     {
+        Debug.Log(other.transform.name);
         ability = other.GetComponentInParent<PlayerAbilities>();
         if (ability != null)
         {
             TakeDamage(ability.Damage);
         }
+        else
+        {
+            Debug.LogError("Missing PlayerAbilities.", this);
+        }
     }
 
     protected override void HandleDeath()
     {
+        gameObject.SetActive(false);
         TriggerDeathEvent();
     }
     
