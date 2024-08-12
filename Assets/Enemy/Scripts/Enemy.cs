@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public EnemyDifficulty EnemyDifficulty { get { return enemyDifficulty; } }
     // Unserialize below later, leave for testing and visibility
     [SerializeField] int t_hitPoints;
+    public int HitPoints => t_hitPoints;
     [SerializeField] int t_defense;
     [SerializeField] int t_attack;
     public int Attack { get { return t_attack; } }

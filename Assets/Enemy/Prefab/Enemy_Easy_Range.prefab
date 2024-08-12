@@ -136,6 +136,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4582252279215852374, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: bed239e817269e443b5b6e9e52f26663, type: 2}
+    - target: {fileID: 4582252279215852374, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       propertyPath: enemyClass
       value: 1
       objectReference: {fileID: 0}
@@ -143,14 +147,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Easy_Range
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8798541948843615087, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9204375957564539902}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8028765944443884622, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6465116064472428498}
   m_SourcePrefab: {fileID: 100100000, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+--- !u!1 &698273978741594474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8028765944443884622, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+  m_PrefabInstance: {fileID: 7411566460538866980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6465116064472428498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698273978741594474}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &6435127547529613018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}

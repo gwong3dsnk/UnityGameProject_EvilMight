@@ -6,6 +6,7 @@ public abstract class PlayerAbilities : MonoBehaviour
 {
     [SerializeField] protected ParticleSystem abilityParticleSystem;
     [SerializeField] protected int damage;
+    public int Damage => damage;
     [SerializeField] protected int speedMultiplier;
 
     public virtual void ActivateAbility()
