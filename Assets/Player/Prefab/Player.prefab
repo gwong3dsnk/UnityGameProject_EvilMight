@@ -210,10 +210,11 @@ GameObject:
   - component: {fileID: 5109585901985917513}
   - component: {fileID: 182635996393916530}
   - component: {fileID: 8375900831703486986}
+  - component: {fileID: 3378347712008903245}
   - component: {fileID: 5094802073796450431}
   - component: {fileID: 8959277420992722768}
   - component: {fileID: 1888536999915482598}
-  - component: {fileID: 3378347712008903245}
+  - component: {fileID: 450783085418865178}
   m_Layer: 0
   m_Name: MeshPlaceholder
   m_TagString: Untagged
@@ -335,6 +336,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3378347712008903245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5592519998316936867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!114 &5094802073796450431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeathCanvas: {fileID: 0}
---- !u!114 &3378347712008903245
+--- !u!114 &450783085418865178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,13 +402,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5592519998316936867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Script: {fileID: 11500000, guid: cb794e7d0d28b264699aadc54f2c6287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OverrideArea: 0
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 1
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
+  gridManager: {fileID: 0}
+  searchTimeInterval: 0.5
+  searchRadius: 30

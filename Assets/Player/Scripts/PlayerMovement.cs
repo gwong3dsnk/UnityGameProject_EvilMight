@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerControls playerControls;
     private Vector2 moveVector;
     private float movementSpeed = 10.0f;
+    private float rotationSpeed = 10.0f;
     private Rigidbody rb;
 
     private void Awake() 
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        RotatePlayer();
     }
 
     private void MovePlayer()
@@ -52,6 +54,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = movement * movementSpeed;
+    }
+
+    private void RotatePlayer()
+    {
+        if (moveVector.magnitude > 0.1f)
+        {
+            Vector3 direction = new Vector3(moveVector.x, 0, moveVector.y);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed);
+        }
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
