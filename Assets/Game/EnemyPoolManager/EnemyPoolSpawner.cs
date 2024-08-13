@@ -34,6 +34,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         for (int currentWave = 0; currentWave < enemyPool.WaveDataSets.Count; currentWave++)
         {
             yield return StartCoroutine(SpawnEnemies(currentWave));
+
             if (currentWave < enemyPool.WaveDataSets.Count - 1)
             {
                 yield return new WaitForSeconds(timeBetweenWaves);
@@ -47,6 +48,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         if (!enemyPool.WaveEnemies.ContainsKey(waveKey)) yield break;
 
         List<GameObject> enemiesToActivate = enemyPool.WaveEnemies[waveKey];
+        Debug.Log($"WaveEnemyCount: {enemiesToActivate.Count}");
 
         foreach (GameObject enemy in enemiesToActivate)
         {

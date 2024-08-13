@@ -11,7 +11,6 @@ public class EnemyPool : MonoBehaviour
     private Dictionary<string, List<GameObject>> waveEnemies = new Dictionary<string, List<GameObject>>();
     public Dictionary<string, List<GameObject>> WaveEnemies => waveEnemies;
     private GameObject enemyToInstantiate;
-    private List<GameObject> enemies = new List<GameObject>();
     private GameObject waveChildContainer;
 
     private void Awake()
@@ -51,6 +50,7 @@ public class EnemyPool : MonoBehaviour
             
             foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
             {
+                List<GameObject> enemies = new List<GameObject>();
                 waveChildContainer = new GameObject(wave.Key);
                 waveChildContainer.transform.parent = transform;
 
@@ -65,7 +65,7 @@ public class EnemyPool : MonoBehaviour
                         continue;
                     }
                                         
-                    InstantiateEnemyPrefab(wave, data);
+                    InstantiateEnemyPrefab(wave, data, enemies);
                 }
 
                 // Add to list to later use to enable enemies during gameplay.
@@ -90,10 +90,12 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    private void InstantiateEnemyPrefab(KeyValuePair<string, EnemyWaveData[]> wave, EnemyWaveData data)
-    {
+    private void InstantiateEnemyPrefab(KeyValuePair<string, EnemyWaveData[]> wave, EnemyWaveData data, List<GameObject> enemies)
+    {   
         for (int i = 0; i < data.enemyCount; i++)
         {
+            Debug.Log($"Data EnemyCount: {data.enemyCount}");
+
             GameObject enemyUnit = Instantiate(enemyToInstantiate, transform.position, Quaternion.identity, waveChildContainer.transform);
             Enemy enemyScript = enemyUnit.GetComponent<Enemy>();
 
