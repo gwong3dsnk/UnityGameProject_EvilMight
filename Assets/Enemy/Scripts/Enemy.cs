@@ -12,14 +12,14 @@ public class Enemy : MonoBehaviour
     // Unserialize below later, leave for testing and visibility
     [SerializeField] int t_hitPoints;
     public int HitPoints => t_hitPoints;
-    [SerializeField] int t_defense;
     [SerializeField] int t_attack;
     public int Attack { get { return t_attack; } }
-    [SerializeField] int t_spellAttack;
     [SerializeField] float t_attackRadius;
     public float AttackRadius { get { return t_attackRadius; } }
     [SerializeField] float t_movementSpeed;
     public float MovementSpeed { get { return t_movementSpeed; } }
+    [SerializeField] int t_experience;
+    public int Experience => Experience;
 
     public void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {
@@ -41,11 +41,10 @@ public class Enemy : MonoBehaviour
                 if (stats.enemyClass == this.enemyClass && stats.difficulty == this.enemyDifficulty)
                 {
                     this.t_hitPoints = stats.hp;
-                    this.t_defense = stats.def;
                     this.t_attack = stats.atk;
-                    this.t_spellAttack = stats.spellAtk;
                     this.t_attackRadius = stats.atkRadius;
                     this.t_movementSpeed = stats.movementSpeed;
+                    this.t_experience = stats.experience;
                     break;
                 }
             }

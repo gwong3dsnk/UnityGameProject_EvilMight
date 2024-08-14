@@ -10,6 +10,15 @@ public class EnemyLocator : MonoBehaviour
     [SerializeField] private float searchRadius = 30f;
     private Collider nearestEnemy;
     public Collider NearestEnemy => nearestEnemy;
+    public static EnemyLocator EnemyLocatorInstance { get; private set; }
+
+    private void Awake()
+    {
+        if (EnemyLocatorInstance == null)
+        {
+            EnemyLocatorInstance = this;
+        }
+    }
 
     private void Start()
     {

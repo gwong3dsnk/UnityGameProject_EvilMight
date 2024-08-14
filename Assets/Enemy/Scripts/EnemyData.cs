@@ -11,11 +11,10 @@ public class EnemyData : ScriptableObject
         public EnemyClass enemyClass;
         public EnemyDifficulty difficulty;
         public int hp;
-        public int def;
         public int atk;
-        public int spellAtk;
         public float atkRadius;
         public float movementSpeed;
+        public int experience;
     }
 
     public EnemyStats[] enemyStatsArray;    

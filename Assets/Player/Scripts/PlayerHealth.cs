@@ -3,29 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : HealthManagement
 {
     [SerializeField] int playerHealth = 3;
     private Enemy enemy;
+
+    protected override void Start()
+    {
+        maxHealth = playerHealth;
+        base.Start();
+    }
 
     private void OnParticleCollision(GameObject other) 
     {
         GameObject enemyPrefab = other.transform.parent?.gameObject;
         enemy = enemyPrefab.GetComponent<Enemy>();
 
-        ProcessHit();
-    }
-
-    private void ProcessHit()
-    {
-        playerHealth -= enemy.Attack;
-        if (playerHealth <= 0)
+        if (enemy != null)
         {
-            HandlePlayerDeath();
+            TakeDamage(enemy.Attack);
         }
     }
 
-    private void HandlePlayerDeath()
+    protected override void HandleDeath()
     {
         GetComponent<PlayerDeathHandler>().HandleDeath();
     }
