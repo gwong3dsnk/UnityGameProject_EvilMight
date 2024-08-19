@@ -94,9 +94,8 @@ public class EnemyPool : MonoBehaviour
     {   
         for (int i = 0; i < data.enemyCount; i++)
         {
-            Debug.Log($"Data EnemyCount: {data.enemyCount}");
-
             GameObject enemyUnit = Instantiate(enemyToInstantiate, transform.position, Quaternion.identity, waveChildContainer.transform);
+            enemyUnit.name = $"Enemy{i}";
             Enemy enemyScript = enemyUnit.GetComponent<Enemy>();
 
             // Based on enemy class/difficulty pair, set the enemy properties.

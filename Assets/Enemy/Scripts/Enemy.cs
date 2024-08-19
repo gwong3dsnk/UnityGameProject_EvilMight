@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float t_movementSpeed;
     public float MovementSpeed { get { return t_movementSpeed; } }
     [SerializeField] int t_experience;
-    public int Experience => Experience;
+    public int Experience => t_experience;
 
     public void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {

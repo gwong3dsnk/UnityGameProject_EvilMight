@@ -21,9 +21,13 @@ public class EnemyPoolSpawner : MonoBehaviour
             Debug.LogError("Missing EnemyPool script component.", this);
         }
 
-        if (gridManager == null)
+        if (GridManager.GridManagerInstance != null)
         {
-            Debug.LogError("Missing GridManager script assignment", this);
+            gridManager = GridManager.GridManagerInstance;
+        }
+        else
+        {
+            Debug.LogError("Missing reference to GridManager singleton instance", this);
         }
         
         StartCoroutine(SpawnWaves());
@@ -48,7 +52,6 @@ public class EnemyPoolSpawner : MonoBehaviour
         if (!enemyPool.WaveEnemies.ContainsKey(waveKey)) yield break;
 
         List<GameObject> enemiesToActivate = enemyPool.WaveEnemies[waveKey];
-        Debug.Log($"WaveEnemyCount: {enemiesToActivate.Count}");
 
         foreach (GameObject enemy in enemiesToActivate)
         {

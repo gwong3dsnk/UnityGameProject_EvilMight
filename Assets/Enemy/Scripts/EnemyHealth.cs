@@ -38,7 +38,6 @@ public class EnemyHealth : HealthManagement
 
     protected override void HandleDeath()
     {
-        gameObject.SetActive(false);
         TriggerDeathEvent();
     }
     

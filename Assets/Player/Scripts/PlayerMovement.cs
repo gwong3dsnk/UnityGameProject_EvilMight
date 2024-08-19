@@ -62,7 +62,12 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 direction = new Vector3(moveVector.x, 0, moveVector.y);
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed);
+            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            // TODO: Test this code to see if player is still rotating a bunch or not
+            rb.angularVelocity = Vector3.zero;
         }
     }
 

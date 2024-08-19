@@ -33,16 +33,19 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>().transform;
-        gridManager = FindObjectOfType<GridManager>();
 
         if (player == null)
         {
             Debug.LogError("PlayerMovement script is not found in the scene.", this);
         }
 
-        if (gridManager == null)
+        if (GridManager.GridManagerInstance != null)
         {
-            Debug.LogError("GridManager script is not found in the scene.", this);
+            gridManager = GridManager.GridManagerInstance;
+        }
+        else
+        {
+            Debug.LogError("GridManager Instance is not found in the scene.", this);
         }
 
         lastPosition = transform.position;

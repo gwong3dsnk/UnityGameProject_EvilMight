@@ -6,6 +6,15 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] int cellSize = 10;
     Dictionary<Vector2Int, List<Collider>> grid = new Dictionary<Vector2Int, List<Collider>>();
+    public static GridManager GridManagerInstance { get; private set; }
+
+    private void Awake()
+    {
+        if (GridManagerInstance == null)
+        {
+            GridManagerInstance = this;
+        }
+    }
 
     private Vector2Int WorldToCell(Vector3 position)
     {
@@ -37,7 +46,7 @@ public class GridManager : MonoBehaviour
             {
                 grid.Remove(cell);
             }
-        }
+        }   
     }
 
     public void UpdatePosition(Collider collider)

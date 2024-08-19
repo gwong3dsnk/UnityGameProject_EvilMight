@@ -29,4 +29,9 @@ public class PlayerHealth : HealthManagement
     {
         GetComponent<PlayerDeathHandler>().HandleDeath();
     }
+
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+    }
 }
