@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    // Attach this script as a component to an empty gameobject in the Player gameobject
     [SerializeField] PlayerHealth playerHealth;
-    [SerializeField] Canvas abilityCardCanvas;
+    [SerializeField] AbilityCardChooserUI abilitychoiceUI;
+    // Unserialize below later.
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXP = 0;
@@ -51,8 +51,8 @@ public class LevelManager : MonoBehaviour
             currentXP = 0;
         }
 
-        Time.timeScale = 0; // Restore time once player chooses an ability card.
-        abilityCardCanvas.gameObject.SetActive(true);
+        // TO THINK ABOUT: Make this into an event so that when a player levels up, the event is fired, method below is called.
+        abilitychoiceUI.EnableAbilityChoiceCanvas();
     }
 
     private void CalculateXPThreshold()

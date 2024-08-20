@@ -7,7 +7,7 @@ public class SingleShotProjectile : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating Ability", this);
+        Debug.Log("Activating SingleShot", this);
     }
 
     public override void DeactivateAbility()

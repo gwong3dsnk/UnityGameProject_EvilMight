@@ -36,6 +36,12 @@ public class EnemyHealth : HealthManagement
         }
     }
 
+    public void ApplyAOEDamage(int damage)
+    {
+        Debug.Log($"Passing in damage to TakeDamage() in the amount of {damage}");
+        TakeDamage(damage);
+    }
+
     protected override void HandleDeath()
     {
         TriggerDeathEvent();

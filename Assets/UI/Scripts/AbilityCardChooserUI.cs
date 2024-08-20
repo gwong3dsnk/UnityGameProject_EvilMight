@@ -4,9 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class AbilityCardChooserUI : MonoBehaviour
 {
+    [SerializeField] PlayerAbilitiesManager abilityManager;
+    [SerializeField] Canvas abilityChoiceCanvas;
+    [SerializeField] GameObject screenAOE; // temp
+
     public void OnCardButtonClick(Button clickedButton)
     {
         string buttonName = clickedButton.gameObject.name;
@@ -21,14 +26,18 @@ public class AbilityCardChooserUI : MonoBehaviour
                 break;
             case "Ability3_CardImage":
                 HandleAbility3Card();
-                break;                            
+                break;
         }
+
+        DisableAbilityChoiceCanvas();
     }
 
     private void HandleAbility1Card()
     {
         // This method will be a new ability (screen clear of enemies)
-        Debug.Log("Logic for Ability 1");
+        // Will eventually need an if statement to see if it's a new ability or an ability upgrade.
+        Debug.Log("Instantiating ScreenAOE ability gameobject", this);
+        abilityManager.InstantiateAbility(screenAOE);
     }
 
     private void HandleAbility2Card()
@@ -41,5 +50,17 @@ public class AbilityCardChooserUI : MonoBehaviour
     {
         // This method will be an upgrade to the SingleShotProjectile conal spread       
         Debug.Log("Logic for Ability 3");
+    }
+
+    public void EnableAbilityChoiceCanvas()
+    {
+        Time.timeScale = 0;
+        abilityChoiceCanvas.gameObject.SetActive(true);
+    }
+
+    private void DisableAbilityChoiceCanvas()
+    {
+        Time.timeScale = 1;
+        abilityChoiceCanvas.gameObject.SetActive(false);
     }
 }
