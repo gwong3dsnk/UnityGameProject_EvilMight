@@ -17,6 +17,9 @@ public class SingleShotProjectile : PlayerAbilities
 
     public override void UpgradeAbility()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Upgrading singleShot ability firerate");
+        ParticleSystem singleShotFX = GetComponentInChildren<ParticleSystem>();
+        var singleShotEmission = singleShotFX.emission;
+        singleShotEmission.rateOverTime = 2;
     }
 }

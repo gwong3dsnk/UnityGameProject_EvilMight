@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affdc739a5705244e930827d3315106f, type: 3}
+  m_Name: AbilityData
+  m_EditorClassIdentifier: 
+  abilityStatsArray:
+  - abilityName: SingleShotProjectile
+    abilityDescription: None
+    maxLevel: 5
+    damage: 1
+    fireRate: 1
+    abilityUpgrades:
+    - upgradeType: 0
+      newValue: 2
+      upgradeDescription: 'Boost your single shot firerate!  Boost your single shot
+        firerate!  Boost your single shot firerate!  Boost your single shot firerate! 
+        Boost your single shot firerate!  '
+    - upgradeType: 1
+      newValue: 2
+      upgradeDescription: Boost your single shot damage! Boost your single shot damage!
+        Boost your single shot damage! Boost your single shot damage! Boost your
+        single shot damage!
+    prefab: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+    playerAbilities: {fileID: 3352761367841308090, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+  - abilityName: ScreenAOE
+    abilityDescription: 
+    maxLevel: 5
+    damage: 5
+    fireRate: 10
+    abilityUpgrades:
+    - upgradeType: 0
+      newValue: 15
+      upgradeDescription: Boost ScreenAOE occurrence! Boost ScreenAOE occurrence!
+        Boost ScreenAOE occurrence! Boost ScreenAOE occurrence! Boost ScreenAOE occurrence!
+    - upgradeType: 1
+      newValue: 10
+      upgradeDescription: Boost ScreenAOE damage! Boost ScreenAOE damage! Boost ScreenAOE
+        damage! Boost ScreenAOE damage! Boost ScreenAOE damage!
+    prefab: {fileID: 6043325753769299960, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}
+    playerAbilities: {fileID: 1719185197974016433, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}

@@ -31,7 +31,6 @@ public class ScreenAOE : PlayerAbilities
 
         foreach (GameObject enemy in visibleEnemies)
         {
-            Debug.Log($"Enemy in VisibleEnemies - {enemy.transform.name}");
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
 
             if (enemyHealth == null)

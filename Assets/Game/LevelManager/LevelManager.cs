@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,13 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] AbilityCardChooserUI abilitychoiceUI;
+    [SerializeField] AbilityCardGenerator cardGenerator;
     // Unserialize below later.
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXP = 0;
     [SerializeField] private int excessXP;
+    public event EventHandler OnLevelUp;
 
     private void Awake()
     {
@@ -38,6 +41,8 @@ public class LevelManager : MonoBehaviour
 
     private void LevelUp()
     {
+        Debug.Log("Leveling Up");
+        OnLevelUp?.Invoke(this, EventArgs.Empty);
         currentLevel += 1;
         playerHealth.ResetHealth();
         CalculateXPThreshold();
@@ -50,9 +55,6 @@ public class LevelManager : MonoBehaviour
         {
             currentXP = 0;
         }
-
-        // TO THINK ABOUT: Make this into an event so that when a player levels up, the event is fired, method below is called.
-        abilitychoiceUI.EnableAbilityChoiceCanvas();
     }
 
     private void CalculateXPThreshold()
