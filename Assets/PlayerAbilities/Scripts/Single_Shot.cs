@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleShotProjectile : PlayerAbilities
+public class Single_Shot : PlayerAbilities
 {
     public override void ActivateAbility()
     {

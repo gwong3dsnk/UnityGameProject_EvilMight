@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class UtilityMethods
@@ -12,8 +13,9 @@ public static class UtilityMethods
         return randomIndex;
     }
 
-    public static IList<T> ShuffleList<T>(this IList<T> list)
+    public static List<T> ShuffleList<T>(List<T> list)
     {
+        // Fisher-Yates Shuffle algorithm to mix up a provided list.
         int n = list.Count;
         while (n > 1)
         {
@@ -25,5 +27,11 @@ public static class UtilityMethods
         }
 
         return list;
+    }    
+
+    public static string InsertSpaceBeforeCapitalLetters(string input)
+    {
+        // Use regex to insert a space before each capital letter, except the first one
+        return Regex.Replace(input, @"(?<!^)(?<!^)([A-Z])", " $1");
     }    
 }

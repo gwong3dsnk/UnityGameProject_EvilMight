@@ -52,10 +52,10 @@ public class AbilityCardChooserUI : MonoBehaviour
 
     private void HandleAbility2Card()
     {
-        // This method will be an upgrade to the SingleShotProjectile firerate by increase Emission rate from 1 to 2.
+        // This method will be an upgrade to the Single_Shot firerate by increase Emission rate from 1 to 2.
         // Check if the player has the ability and that it's active
         Debug.Log("Upgrading SingleShot Firerate (Emission)");
-        PlayerAbilities singleShot = FindObjectOfType<SingleShotProjectile>();
+        PlayerAbilities singleShot = FindObjectOfType<Single_Shot>();
         singleShot.UpgradeAbility();
     }
 
