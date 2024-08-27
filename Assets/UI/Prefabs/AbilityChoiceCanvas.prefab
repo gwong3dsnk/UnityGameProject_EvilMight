@@ -648,7 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityManager: {fileID: 0}
+  cardAssigner: {fileID: 1783058966032599383}
 --- !u!1 &3254016984543471119
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityManager: {fileID: 0}
+  cardAssigner: {fileID: 1783058966032599383}
 --- !u!1 &5128855053529946884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,7 +1850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityManager: {fileID: 0}
+  cardAssigner: {fileID: 1783058966032599383}
 --- !u!1 &8771185081312324316
 GameObject:
   m_ObjectHideFlags: 0
