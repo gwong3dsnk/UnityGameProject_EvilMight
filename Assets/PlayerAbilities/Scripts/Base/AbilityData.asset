@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityStatsArray:
   - abilityName: Single Shot
-    abilityDescription: None
-    maxLevel: 5
+    abilityDescription: FIre off a single shot projectile
     damage: 1
     fireRate: 1
     abilityUpgrades:
@@ -26,10 +25,9 @@ MonoBehaviour:
       newValue: 2
       upgradeDescription: Boost your single shot damage!
     prefab: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
-    playerAbilities: {fileID: 3352761367841308090, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+    playerAbilities: {fileID: 732283309839090374, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
   - abilityName: Screen AOE
     abilityDescription: Destroy all enemies on screen with one big boom!
-    maxLevel: 5
     damage: 5
     fireRate: 10
     abilityUpgrades:
@@ -43,7 +41,6 @@ MonoBehaviour:
     playerAbilities: {fileID: 1719185197974016433, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}
   - abilityName: Melee Slash
     abilityDescription: Viscerally slash at enemies near you!
-    maxLevel: 5
     damage: 3
     fireRate: 5
     abilityUpgrades:
@@ -57,7 +54,6 @@ MonoBehaviour:
     playerAbilities: {fileID: 864473063569061556, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
   - abilityName: Melee Explode
     abilityDescription: Burst damage to enemies near you!
-    maxLevel: 5
     damage: 6
     fireRate: 5
     abilityUpgrades:
@@ -71,7 +67,6 @@ MonoBehaviour:
     playerAbilities: {fileID: 8806668786151840947, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
   - abilityName: Rock Shield
     abilityDescription: Single rock orbiting you to defend of damage enemies!
-    maxLevel: 5
     damage: 6
     fireRate: 5
     abilityUpgrades:

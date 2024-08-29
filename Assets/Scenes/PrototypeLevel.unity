@@ -375,6 +375,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.UI.Button, UnityEngine.UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5316378662479280844, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5514477925300507331, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 321.47342
@@ -478,38 +482,6 @@ PrefabInstance:
     - target: {fileID: 6715380684928002208, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1718078263}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ProcessSelectedCard
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: AbilityCardChooserUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6940476609775160099, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6988418886245703042, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_IsActive
@@ -726,6 +698,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1718078263}
+    - targetCorrespondingSourceObject: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1718078265}
   m_SourcePrefab: {fileID: 100100000, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
 --- !u!1 &1718078262 stripped
 GameObject:
@@ -747,6 +722,18 @@ MonoBehaviour:
   abilityManager: {fileID: 1576660763}
   abilityChoiceCanvas: {fileID: 721856084}
   levelManager: {fileID: 109696816220360738}
+--- !u!114 &1718078265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718078262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e86c5886491344cab98484157a9dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!21 &1861730034
 Material:
   serializedVersion: 8

@@ -138,13 +138,13 @@ public class AbilityCardAssignment : MonoBehaviour
 
     private string GetRandomUpgradeKey(List<string> upgradeKeys)
     {
-        int index = UtilityMethods.GenerateRandomIndex(upgradeKeys.Count);
+        int index = BaseUtilityMethods.GenerateRandomIndex(upgradeKeys.Count);
         return upgradeKeys[index];
     }
 
     private AbilityLibraryData.AbilityStats GetRandomAbilityData()
     {
-        int randomIndex = UtilityMethods.GenerateRandomIndex(generatedAbilities.Count);
+        int randomIndex = BaseUtilityMethods.GenerateRandomIndex(generatedAbilities.Count);
         return generatedAbilities[randomIndex];
     }
 
@@ -162,7 +162,7 @@ public class AbilityCardAssignment : MonoBehaviour
 
     private void ShufflePanelCards()
     {
-        shuffledList = UtilityMethods.ShuffleList(cardPanels.ToList());
+        shuffledList = BaseUtilityMethods.ShuffleList(cardPanels.ToList());
     }
 
     private void DisplayAbilities(List<AbilityLibraryData.AbilityStats> chosenAbilities)
@@ -193,14 +193,20 @@ public class AbilityCardAssignment : MonoBehaviour
         {
             TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
 
-            string upgradeType = UtilityMethods.InsertSpaceBeforeCapitalLetters(chosenUpgradeList[x].Value.upgradeType.ToString());
-            int lastIndex = chosenUpgradeList[x].Key.LastIndexOf("_");
-            string abilityName = chosenUpgradeList[x].Key.Substring(0, lastIndex);
+            // Format text to display
+            string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(chosenUpgradeList[x].Value.upgradeType.ToString());
+            string abilityName = AbilityUtilityMethods.FormatAbilityName(chosenUpgradeList[x].Key);
             string upgradeDescription = chosenUpgradeList[x].Value.upgradeDescription;
 
+            // Update UI text
             textElements[0].text = "New Upgrade!!";
             textElements[1].text = $"{abilityName}\n{upgradeType}";
             textElements[2].text = upgradeDescription;
+
+            // Add new upgade-card relation
+            Dictionary <string, AbilityUpgrades> upgradeToAdd = new Dictionary<string, AbilityUpgrades>();
+            upgradeToAdd.Add(chosenUpgradeList[x].Key, chosenUpgradeList[x].Value);
+            upgradeCardRelationship.Add(shuffledList[cardIndex], upgradeToAdd);
 
             x++;
             cardIndex++;

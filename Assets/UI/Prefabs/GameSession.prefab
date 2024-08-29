@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7341249836970012137}
   - component: {fileID: 8269357910722396818}
+  - component: {fileID: 8862431950662961022}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -44,3 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14bb5af288a694419e0bb74ce59aba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8862431950662961022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194612043889151074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a1ec8948631c6488bb00cc7643d648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityChoiceCanvas: {fileID: 0}
+  levelManager: {fileID: 0}

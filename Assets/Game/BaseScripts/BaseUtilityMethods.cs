@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static class UtilityMethods
+public static class BaseUtilityMethods
 {
     private static System.Random random = new System.Random();
 

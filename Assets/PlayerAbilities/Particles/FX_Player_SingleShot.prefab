@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9220439057694531453}
   - component: {fileID: 9151281040934908521}
   m_Layer: 0
-  m_Name: FX_Player_SingleShotProjectile
+  m_Name: FX_Player_SingleShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,7 +8,7 @@ public class RockShield : PlayerAbilities
 {
     private Camera mainCamera;
 
-    private void Awake()
+    public override void Awake()
     {
         mainCamera = Camera.main;
 
@@ -16,6 +16,8 @@ public class RockShield : PlayerAbilities
         {
             Debug.LogError("No main camera found in the scene", this);
         }
+
+        base.Awake();
     }
 
     public override void ActivateAbility()
@@ -71,8 +73,13 @@ public class RockShield : PlayerAbilities
         throw new System.NotImplementedException();
     }
 
-    public override void UpgradeAbility()
+    public override void ActivateUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void InitializeAbilityData()
+    {
+        throw new System.NotImplementedException();
+    }    
 }

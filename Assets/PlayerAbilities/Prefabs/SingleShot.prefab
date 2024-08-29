@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7017957672160078959}
-  - component: {fileID: 3352761367841308090}
+  - component: {fileID: 732283309839090374}
   m_Layer: 0
-  m_Name: SingleShotProjectile
+  m_Name: SingleShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 2712497432267922221}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3352761367841308090
+--- !u!114 &732283309839090374
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,8 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityParticleSystem: {fileID: 8239790212743361537}
-  damage: 1
-  speedMultiplier: 1
+  abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
+  abilityName: 
+  abilityDescription: 
+  damage: 0
+  fireRate: 0
+  abilityUpgrades: []
+  prefab: {fileID: 0}
+  playerAbilities: {fileID: 0}
 --- !u!1001 &985173355039288188
 PrefabInstance:
   m_ObjectHideFlags: 0

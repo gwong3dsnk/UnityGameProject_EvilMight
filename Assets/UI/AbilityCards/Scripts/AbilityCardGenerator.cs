@@ -44,7 +44,7 @@ public class AbilityCardGenerator : MonoBehaviour
 
             while (x < 3)
             {
-                int index = UtilityMethods.GenerateRandomIndex(abilityData.Count);
+                int index = BaseUtilityMethods.GenerateRandomIndex(abilityData.Count);
 
                 if (!newAbilityList.Contains(abilityData[index]))
                 {
@@ -54,7 +54,7 @@ public class AbilityCardGenerator : MonoBehaviour
                 {
                     while (newAbilityList.Contains(abilityData[index]))
                     {
-                        index = UtilityMethods.GenerateRandomIndex(abilityData.Count);
+                        index = BaseUtilityMethods.GenerateRandomIndex(abilityData.Count);
                     }
 
                     newAbilityList.Add(abilityData[index]);
@@ -87,7 +87,7 @@ public class AbilityCardGenerator : MonoBehaviour
                     upgradeKeys.Add(upgradePair.Key);
                 }
 
-                int index = UtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
+                int index = BaseUtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
                 string randomUpgradeKey = upgradeKeys[index];
                 AbilityUpgrades selectedUpgradeData = abilityUpgradeData[randomUpgradeKey];
 
@@ -99,7 +99,7 @@ public class AbilityCardGenerator : MonoBehaviour
                 {
                     while (newUpgradeList.ContainsKey(randomUpgradeKey))
                     {
-                        index = UtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
+                        index = BaseUtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
                         randomUpgradeKey = upgradeKeys[index];
                     }
 

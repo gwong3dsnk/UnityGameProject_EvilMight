@@ -11,7 +11,6 @@ public class AbilityLibraryData : ScriptableObject
     {
         public string abilityName;
         public string abilityDescription;
-        public int maxLevel;
         public int damage;
         public int fireRate;
         public AbilityUpgrades[] abilityUpgrades;

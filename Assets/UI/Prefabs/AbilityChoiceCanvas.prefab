@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 4081762473348150337}
   - component: {fileID: 2261910766232399351}
   - component: {fileID: 2226102416222941143}
+  - component: {fileID: 4856489351655376342}
   m_Layer: 5
   m_Name: Card2_Image
   m_TagString: Untagged
@@ -649,6 +650,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardAssigner: {fileID: 1783058966032599383}
+--- !u!114 &4856489351655376342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2941430928912942591}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 0.101960786, a: 0.5}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &3254016984543471119
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +753,7 @@ GameObject:
   - component: {fileID: 8906567938194782508}
   - component: {fileID: 4265250785533083087}
   - component: {fileID: 4026109395032459241}
+  - component: {fileID: 5489702354647688668}
   m_Layer: 5
   m_Name: Card1_Image
   m_TagString: Untagged
@@ -817,6 +834,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardAssigner: {fileID: 1783058966032599383}
+--- !u!114 &5489702354647688668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398558054581924637}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 0.101960786, a: 0.5}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &5128855053529946884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1771,6 +1803,7 @@ GameObject:
   - component: {fileID: 7863934368478753179}
   - component: {fileID: 7891563271600334439}
   - component: {fileID: 1035151859008081451}
+  - component: {fileID: 8512922082720182621}
   m_Layer: 5
   m_Name: Card3_Image
   m_TagString: Untagged
@@ -1851,6 +1884,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardAssigner: {fileID: 1783058966032599383}
+--- !u!114 &8512922082720182621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8620346139696158309}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 0.101960786, a: 0.5}
+  m_EffectDistance: {x: 10, y: -10}
+  m_UseGraphicAlpha: 1
 --- !u!1 &8771185081312324316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,6 +1911,7 @@ GameObject:
   - component: {fileID: 4677509526690667946}
   - component: {fileID: 1427335676920690657}
   - component: {fileID: 5778002674080734003}
+  - component: {fileID: 8957348327529909560}
   m_Layer: 5
   m_Name: ChooseAbilityButton
   m_TagString: Untagged
@@ -1972,6 +2021,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8957348327529909560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8771185081312324316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e86c5886491344cab98484157a9dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCardClicked: {fileID: 0}
 --- !u!1 &8860726314507378946
 GameObject:
   m_ObjectHideFlags: 0
