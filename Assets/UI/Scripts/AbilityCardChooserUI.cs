@@ -36,7 +36,7 @@ public class AbilityCardChooserUI : MonoBehaviour
         AbilityCardGenerator cardGenerator = abilityChoiceCanvas.GetComponent<AbilityCardGenerator>();
         if (cardGenerator != null)
         {
-            cardGenerator.GenerateAbilityCards();
+            cardGenerator.BeginGeneration();
         }
         else
         {

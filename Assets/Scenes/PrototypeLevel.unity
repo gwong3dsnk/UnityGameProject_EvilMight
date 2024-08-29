@@ -127,7 +127,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8269357910722396818, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
   m_PrefabInstance: {fileID: 1718078261}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718078262}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a14bb5af288a694419e0bb74ce59aba3, type: 3}
@@ -503,10 +503,6 @@ PrefabInstance:
       propertyPath: abilityChooserUI
       value: 
       objectReference: {fileID: 1718078263}
-    - target: {fileID: 9183531370104865602, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-      propertyPath: abilityLibraryData
-      value: 
-      objectReference: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6715380684928002208, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
@@ -687,6 +683,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8862431950662961022, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 109696816220360738}
+    - target: {fileID: 8862431950662961022, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: abilityChoiceCanvas
+      value: 
+      objectReference: {fileID: 721856084}
     - target: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: m_Name
       value: GameSession
@@ -694,44 +698,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1718078263}
-    - targetCorrespondingSourceObject: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1718078265}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
---- !u!1 &1718078262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9194612043889151074, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+--- !u!114 &1718078263 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8862431950662961022, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
   m_PrefabInstance: {fileID: 1718078261}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1718078263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718078262}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55a1ec8948631c6488bb00cc7643d648, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityManager: {fileID: 1576660763}
-  abilityChoiceCanvas: {fileID: 721856084}
-  levelManager: {fileID: 109696816220360738}
---- !u!114 &1718078265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718078262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e86c5886491344cab98484157a9dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!21 &1861730034
