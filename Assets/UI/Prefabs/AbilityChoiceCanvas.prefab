@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 5956798996386888713}
   - component: {fileID: 6032380039279528699}
   - component: {fileID: 1783058966032599383}
+  - component: {fileID: 9201830879274460609}
+  - component: {fileID: 197754497941480497}
   m_Layer: 5
   m_Name: AbilityChoiceCanvas
   m_TagString: Untagged
@@ -162,6 +164,30 @@ MonoBehaviour:
   - {fileID: 634825457302405991}
   - {fileID: 3254016984543471119}
   - {fileID: 1817669305143154671}
+--- !u!114 &9201830879274460609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602004422873652931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb9ed8e7c2eb0e4eae758bc3cb65563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &197754497941480497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602004422873652931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1748b7db47481aa4c9a1510a17386595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &634825457302405991
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardAssigner: {fileID: 1783058966032599383}
+  displayAbilityCards: {fileID: 9201830879274460609}
+  displayUpgradeCards: {fileID: 197754497941480497}
 --- !u!114 &4856489351655376342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +885,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardAssigner: {fileID: 1783058966032599383}
+  displayAbilityCards: {fileID: 9201830879274460609}
+  displayUpgradeCards: {fileID: 197754497941480497}
 --- !u!114 &5489702354647688668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,7 +1936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9778ef9e4720804d8f30d7efd879246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardAssigner: {fileID: 1783058966032599383}
+  displayAbilityCards: {fileID: 9201830879274460609}
+  displayUpgradeCards: {fileID: 197754497941480497}
 --- !u!114 &8512922082720182621
 MonoBehaviour:
   m_ObjectHideFlags: 0

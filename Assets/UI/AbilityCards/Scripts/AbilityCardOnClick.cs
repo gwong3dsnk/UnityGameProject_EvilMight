@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,14 +8,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Outline))]
 public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] AbilityCardAssignment cardAssigner;
+    [SerializeField] DisplayAbilityCards displayAbilityCards;
+    [SerializeField] DisplayUpgradeCards displayUpgradeCards;
+    private static AbilityCardOnClick currentSelectedCard;
     private Dictionary<string, AbilityUpgrades> selectedUpgrade = null;
     public Dictionary<string, AbilityUpgrades> SelectedUpgrade => selectedUpgrade;
     private AbilityLibraryData.AbilityStats selectedAbility = null;
     public AbilityLibraryData.AbilityStats SelectedAbility => selectedAbility;
     public static event Action<AbilityLibraryData.AbilityStats, Dictionary<string, AbilityUpgrades>> OnCardSelection;
-
-    private static AbilityCardOnClick currentSelectedCard;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -70,13 +69,13 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 
     private void IdentifyClickedCardData(GameObject selectedCardPanel)
     {
-        if (cardAssigner.UpgradeCardRelationship.ContainsKey(selectedCardPanel))
+        if (displayUpgradeCards.UpgradeCardRelationship.ContainsKey(selectedCardPanel))
         {
-            selectedUpgrade = cardAssigner.UpgradeCardRelationship[selectedCardPanel];
+            selectedUpgrade = displayUpgradeCards.UpgradeCardRelationship[selectedCardPanel];
         }
-        else if (cardAssigner.AbilityCardRelationship.ContainsKey(selectedCardPanel))
+        else if (displayAbilityCards.AbilityCardRelationship.ContainsKey(selectedCardPanel))
         {
-            selectedAbility = cardAssigner.AbilityCardRelationship[selectedCardPanel];
+            selectedAbility = displayAbilityCards.AbilityCardRelationship[selectedCardPanel];
         }
         else
         {
