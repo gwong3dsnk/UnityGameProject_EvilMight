@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeField] bool enableDebug;
     // private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
     private PlayerAbilities currentPlayerAbility;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();

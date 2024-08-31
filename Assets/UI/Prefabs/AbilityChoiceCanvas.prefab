@@ -2087,6 +2087,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e86c5886491344cab98484157a9dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabOverride: {fileID: 0}
+  enableDebugMode: 0
 --- !u!1 &8860726314507378946
 GameObject:
   m_ObjectHideFlags: 0

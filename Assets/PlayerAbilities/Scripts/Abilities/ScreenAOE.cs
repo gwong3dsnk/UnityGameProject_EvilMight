@@ -9,23 +9,14 @@ public class ScreenAOE : PlayerAbilities
 
     public override void Awake()
     {
-        base.Awake();
-    }
-
-    private void Start()
-    {
-        Debug.Log("Start");
-        // mainCamera = Camera.main;
         mainCamera = FindObjectOfType<Camera>();
 
         if (mainCamera == null)
         {
             Debug.LogError("No main camera found in the scene", this);
         }
-        else
-        {
-            Debug.Log("Whaaat?");
-        }
+
+        base.Awake();
     }
 
     public override void ActivateAbility()
@@ -70,7 +61,6 @@ public class ScreenAOE : PlayerAbilities
 
     private bool IsVisible(GameObject enemy)
     {
-        Debug.Log("Testing");
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(enemy.transform.position);
 
         // Check if the object is within the screen's x, y bounds using z as the distance out from the camera.

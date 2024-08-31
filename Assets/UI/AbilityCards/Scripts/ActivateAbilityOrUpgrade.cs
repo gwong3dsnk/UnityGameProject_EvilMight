@@ -2,11 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ActivateAbilityOrUpgrade : MonoBehaviour
 {
+    #region Debug
+    [SerializeField] GameObject prefabOverride;
+    [SerializeField] bool enableDebugMode;
+    #endregion
+
     private Button activationButton;
     private Dictionary<string, AbilityUpgrades> selectedUpgrade = new Dictionary<string, AbilityUpgrades>();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
@@ -41,16 +47,30 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
     {
         if (selectedAbility != null)
         {
-            GameObject playerPrefab = selectedAbility.prefab;
-            PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(playerPrefab);
+            GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
+            PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(abilityPrefab);
         }
         else if (selectedUpgrade.Count > 0)
         {
-            // First add the new upgrade to ActiveUpgrades in PlayerAbilitiesManager
-            // Next process the upgrade by passing the new FX value into the respective PlayerAbilities UpgradeAbility()
-            // MAY have to grab reference to the prefab in the scene instead of using passed in PlayerAbilities from
-            // the AbilityLibraryData
             PlayerAbilitiesManager.AbilityManagerInstance.AddAbilityUpgrade(selectedUpgrade);
         }
     }
+
+    #region Debug
+    private GameObject DebugAbilityOverride(AbilityLibraryData.AbilityStats selectedAbility)
+    {
+        GameObject abilityPrefab = null;
+
+        if (enableDebugMode)
+        {
+            abilityPrefab = prefabOverride;
+        }
+        else
+        {
+            abilityPrefab = selectedAbility.prefab;
+        }    
+
+        return abilityPrefab;    
+    }    
+    #endregion
 }
