@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ScreenAOE : PlayerAbilities
@@ -10,14 +9,23 @@ public class ScreenAOE : PlayerAbilities
 
     public override void Awake()
     {
-        mainCamera = Camera.main;
+        base.Awake();
+    }
+
+    private void Start()
+    {
+        Debug.Log("Start");
+        // mainCamera = Camera.main;
+        mainCamera = FindObjectOfType<Camera>();
 
         if (mainCamera == null)
         {
             Debug.LogError("No main camera found in the scene", this);
         }
-
-        base.Awake();
+        else
+        {
+            Debug.Log("Whaaat?");
+        }
     }
 
     public override void ActivateAbility()
@@ -62,6 +70,7 @@ public class ScreenAOE : PlayerAbilities
 
     private bool IsVisible(GameObject enemy)
     {
+        Debug.Log("Testing");
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(enemy.transform.position);
 
         // Check if the object is within the screen's x, y bounds using z as the distance out from the camera.
@@ -75,11 +84,11 @@ public class ScreenAOE : PlayerAbilities
 
     public override void ActivateUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
     {
-        throw new System.NotImplementedException();
+        base.ActivateUpgrade(upgrade);
     }
 
     protected override void InitializeAbilityData()
     {
-        throw new System.NotImplementedException();
-    }    
+        base.InitializeAbilityData();
+    }
 }

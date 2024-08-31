@@ -15,6 +15,9 @@ public class VelocityReversalController : MonoBehaviour
         {
             Debug.LogError("Missing reference to local particle system", this);
         }
+
+        // Initialize the particles array with an initial size
+        particles = new ParticleSystem.Particle[meleeSlashFX.main.maxParticles];        
     }
 
     void Update()
@@ -30,6 +33,5 @@ public class VelocityReversalController : MonoBehaviour
 
             meleeSlashFX.SetParticles(particles, numParticlesAlive);
         }
-
     }
 }

@@ -14,7 +14,7 @@ public class MeleeExplode : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating ScreenAOE", this);
+        Debug.Log("Activating MeleeExplode", this);
     }
 
     public override void DeactivateAbility()
@@ -24,11 +24,11 @@ public class MeleeExplode : PlayerAbilities
 
     public override void ActivateUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
     {
-        throw new System.NotImplementedException();
+        base.ActivateUpgrade(upgrade);
     }
 
     protected override void InitializeAbilityData()
     {
-        throw new System.NotImplementedException();
-    }    
+        base.InitializeAbilityData();
+    }
 }

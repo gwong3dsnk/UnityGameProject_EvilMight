@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6043325753769299960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.982394, y: -8.683295, z: 10.346119}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -46,8 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityParticleSystem: {fileID: 6885471823698575809}
+  abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
+  abilityName: 
+  abilityDescription: 
   damage: 100
-  speedMultiplier: 50
+  fireRate: 0
+  abilityUpgrades: []
+  prefab: {fileID: 0}
+  playerAbilities: {fileID: 0}
 --- !u!1001 &4373364069197393808
 PrefabInstance:
   m_ObjectHideFlags: 0

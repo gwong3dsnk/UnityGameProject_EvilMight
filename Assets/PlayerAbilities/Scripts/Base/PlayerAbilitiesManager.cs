@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
+    // private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
     private PlayerAbilities currentPlayerAbility;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
@@ -64,10 +64,13 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void InstantiateAbility(GameObject ability)
     {
-        Vector3 particleSpawnPosition = player.transform.position + spawnPositionOffset;
+        // Vector3 particleSpawnPosition = player.transform.position + spawnPositionOffset;
+        Vector3 particleSpawnPosition = player.transform.position;
         GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
         currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
         AddAbility(currentPlayerAbility);
+
+        InvokeOnActivationCompletion();
     }
 
     private void InvokeOnActivationCompletion()
