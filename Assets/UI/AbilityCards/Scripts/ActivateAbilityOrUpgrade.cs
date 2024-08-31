@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,18 +15,22 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
     private Dictionary<string, AbilityUpgrades> selectedUpgrade = new Dictionary<string, AbilityUpgrades>();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
 
+    private void Start()
+    {
+        InitializeButton();
+    }
+
     private void OnEnable() 
     {
-        AbilityCardOnClick.OnCardSelection += SetAbilityUpradeProperties;
-        InitializeButton();
+        AbilityCardOnClick.OnCardSelection += SetAbilityUpgradeProperties;
     }
 
     private void OnDisable() 
     {
-        AbilityCardOnClick.OnCardSelection -= SetAbilityUpradeProperties;
+        AbilityCardOnClick.OnCardSelection -= SetAbilityUpgradeProperties;
     }
 
-    private void SetAbilityUpradeProperties(AbilityLibraryData.AbilityStats ability, Dictionary<string, AbilityUpgrades> upgrade)
+    private void SetAbilityUpgradeProperties(AbilityLibraryData.AbilityStats ability, Dictionary<string, AbilityUpgrades> upgrade)
     {
         selectedAbility = ability;
         selectedUpgrade = upgrade;

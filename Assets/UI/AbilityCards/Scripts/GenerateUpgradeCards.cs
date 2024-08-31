@@ -21,21 +21,24 @@ public class GenerateUpgradeCards : MonoBehaviour
 
         foreach (AbilityLibraryData.AbilityStats data in abilityLibraryData.abilityStatsArray)
         {
-            foreach (PlayerAbilities activeAbility in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
+            if (PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades.Count > 0)
             {
-                if (PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades.Count > 0)
+                for (int i = 0; i < data.abilityUpgrades.Length; i++)
                 {
-                    foreach (AbilityUpgrades upgrade in data.abilityUpgrades)
+                    foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
                     {
-                        foreach (KeyValuePair<string, AbilityUpgrades> item in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
+                        if (kvp.Key.Contains(data.abilityName) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
                         {
-                            Debug.Log("Some upgrades have been unlocked.  Need to compare locked vs unlocked and add only locked ones.");
+                            abilityUpgradeData.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                string compressedName = data.abilityName.Replace(" ", "");
+                foreach (PlayerAbilities activeAbility in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
                 {
-                    string compressedName = data.abilityName.Replace(" ", "");
                     if (activeAbility.name.Contains(compressedName))
                     {
                         for (int i = 0; i < data.abilityUpgrades.Length; i++)

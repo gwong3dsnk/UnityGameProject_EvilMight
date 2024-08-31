@@ -15,6 +15,11 @@ public class GenerateAbilityCards : MonoBehaviour
         return newAbilities;
     }
 
+    /// <summary>
+    /// Parses through the <see cref="AbilityLibraryData.AbilityStats"/> array in the given ability library data
+    /// and creates a list of abilities that have not yet been unlocked by the player.
+    /// </summary>
+    /// <param name="abilityLibraryData"></param>
     private void CreateListOfAvailableAbilities(AbilityLibraryData abilityLibraryData)
     {
         abilityData.Clear();
@@ -31,6 +36,11 @@ public class GenerateAbilityCards : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Parses through abilityData from <see cref="CreateListOfAvailableAbilities"/> and picks out 3 random
+    /// abilities.  We never display more than 3 cards on player levelup, so we only need to pick 3 here.
+    /// </summary>
+    /// <returns>List of 3 randomly chosen abilities</returns>
     private List<AbilityLibraryData.AbilityStats> CreateNewAbilityList()
     {
         List<AbilityLibraryData.AbilityStats> newAbilityList = new List<AbilityLibraryData.AbilityStats>();
@@ -66,6 +76,6 @@ public class GenerateAbilityCards : MonoBehaviour
 
             return newAbilityList;
         }
-    }    
+    }
 }
 

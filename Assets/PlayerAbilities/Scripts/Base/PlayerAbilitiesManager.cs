@@ -33,7 +33,6 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void AddAbility(PlayerAbilities ability)
     {
-
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
@@ -65,7 +64,6 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void InstantiateAbility(GameObject ability)
     {
-        // Vector3 particleSpawnPosition = player.transform.position + spawnPositionOffset;
         Vector3 particleSpawnPosition = player.transform.position;
         GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
         currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
