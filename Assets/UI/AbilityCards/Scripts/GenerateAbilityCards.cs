@@ -23,14 +23,26 @@ public class GenerateAbilityCards : MonoBehaviour
     private void CreateListOfAvailableAbilities(AbilityLibraryData abilityLibraryData)
     {
         abilityData.Clear();
+        List<PlayerAbilities> activePlayerAbilities = PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities;
 
-        foreach (AbilityLibraryData.AbilityStats data in abilityLibraryData.abilityStatsArray)
+        for (int i = 0; i < abilityLibraryData.abilityStatsArray.Length; i++)
         {
-            foreach (PlayerAbilities activeAbility in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
+            bool isFound = false;
+
+            foreach (PlayerAbilities ability in activePlayerAbilities)
             {
-                if (!activeAbility.name.Contains(data.playerAbilities.name))
+                if (ability.name.Contains(abilityLibraryData.abilityStatsArray[i].playerAbilities.name))
                 {
-                    abilityData.Add(data);
+                    isFound = true;
+                    break;
+                }
+            }
+
+            if (!isFound)
+            {
+                if (!abilityData.Contains(abilityLibraryData.abilityStatsArray[i]))
+                {
+                    abilityData.Add(abilityLibraryData.abilityStatsArray[i]);
                 }
             }
         }
