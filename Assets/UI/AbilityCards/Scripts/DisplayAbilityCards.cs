@@ -18,23 +18,47 @@ public class DisplayAbilityCards : MonoBehaviour
         this.shuffledList = shuffledList;
         this.generatedAbilities = generatedAbilities;
         List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(finalNumOfAbilitiesToDisplay);
-        DisplayAbilities(chosenAbilities);
+        
+        if (chosenAbilities.Count > 0)
+        {
+            DisplayAbilities(chosenAbilities);
+        }
+        else
+        {
+            Debug.Log("All abilities have been unlocked.  No new abilities to display.", this);
+        }
     }
 
     private List<AbilityLibraryData.AbilityStats> SelectRandomAbilitiesToDisplay(int numToSelect)
     {
         List<AbilityLibraryData.AbilityStats> randomlySelectedAbilities = new List<AbilityLibraryData.AbilityStats>();
-        AbilityLibraryData.AbilityStats chosenAbility = GetRandomAbilityData();
+        AbilityLibraryData.AbilityStats chosenAbility;
 
-        while (numToSelect > 0)
+        if (this.generatedAbilities.Count > 0)
         {
-            while (randomlySelectedAbilities.Contains(chosenAbility))
-            {
-                chosenAbility = GetRandomAbilityData();
-            }
+            chosenAbility = GetRandomAbilityData();
+        }
+        else
+        {
+            chosenAbility = null;
+        }
 
-            randomlySelectedAbilities.Add(chosenAbility);
-            numToSelect--;
+        if (chosenAbility != null)
+        {
+            while (numToSelect > 0)
+            {
+                while (randomlySelectedAbilities.Contains(chosenAbility))
+                {
+                    chosenAbility = GetRandomAbilityData();
+                }
+
+                randomlySelectedAbilities.Add(chosenAbility);
+                numToSelect--;
+            }
+        }
+        else
+        {
+            randomlySelectedAbilities.Clear();
         }
 
         return randomlySelectedAbilities;

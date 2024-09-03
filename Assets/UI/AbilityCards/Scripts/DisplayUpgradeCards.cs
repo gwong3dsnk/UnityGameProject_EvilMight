@@ -64,29 +64,72 @@ public class DisplayUpgradeCards : MonoBehaviour
     private void DisplayUpgrades(Dictionary<string, AbilityUpgrades> chosenUpgrades)
     {
         upgradeCardRelationship.Clear();
-        List<KeyValuePair<string, AbilityUpgrades>> chosenUpgradeList = chosenUpgrades.ToList();
+        List<KeyValuePair<string, AbilityUpgrades>> chosenUpgradeList = chosenUpgrades.ToList(); // TODO: DOn't ToList()
         int x = 0;
+        int j = 0;
+        bool isEverythingUnlocked = false;
 
-        while (chosenUpgrades.Count >= cardIndex)
+        if (cardIndex == 0 && chosenUpgradeList.Count < 3)
+        {
+            if (chosenUpgradeList.Count == 2)
+            {
+                Debug.Log("ONly 2 upgrades available");
+                j = chosenUpgradeList.Count - 1;
+                // shuffledList[shuffledList.Count - 1].SetActive(false);
+            }
+            else if (chosenUpgradeList.Count == 1)
+            {
+                Debug.Log($"ONly 1 upgrade available");
+                j = chosenUpgradeList.Count;
+                // shuffledList[shuffledList.Count - 1].SetActive(false);
+                // shuffledList[shuffledList.Count - 2].SetActive(false);
+            }
+            else if (chosenUpgradeList.Count == 0)
+            {
+                Debug.LogError("No upgrades are available to be displayed.", this);
+                // shuffledList[shuffledList.Count - 1].SetActive(false);
+                // shuffledList[shuffledList.Count - 2].SetActive(false);
+                j = chosenUpgradeList.Count;
+                isEverythingUnlocked = true;
+            }
+
+            // Call method that will remove the third ability card UI and shift the position of the remaining two.
+            // Start by disabling the last ability card UI panel
+            // Get full screen width and width of the remaining panel-images
+            // Split the screen in thirds and position each card at the third intervals.
+        }
+
+        while (chosenUpgradeList.Count >= j)
         {
             TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
 
-            // Format text to display
-            string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(chosenUpgradeList[x].Value.upgradeType.ToString());
-            string abilityName = AbilityUtilityMethods.FormatAbilityName(chosenUpgradeList[x].Key);
-            string upgradeDescription = chosenUpgradeList[x].Value.upgradeDescription;
+            if (!isEverythingUnlocked)
+            {
+                // Format text to display
+                string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(chosenUpgradeList[x].Value.upgradeType.ToString());
+                string abilityName = AbilityUtilityMethods.FormatAbilityName(chosenUpgradeList[x].Key);
+                string upgradeDescription = chosenUpgradeList[x].Value.upgradeDescription;
 
-            // Update UI text
-            textElements[0].text = "New Upgrade!!";
-            textElements[1].text = $"{abilityName}\n{upgradeType}";
-            textElements[2].text = upgradeDescription;
+                // Update UI text
+                textElements[0].text = "New Upgrade!!";
+                textElements[1].text = $"{abilityName}\n{upgradeType}";
+                textElements[2].text = upgradeDescription;
 
-            // Add new upgade-card relation
-            Dictionary <string, AbilityUpgrades> upgradeToAdd = new Dictionary<string, AbilityUpgrades>();
-            upgradeToAdd.Add(chosenUpgradeList[x].Key, chosenUpgradeList[x].Value);
-            upgradeCardRelationship.Add(shuffledList[cardIndex], upgradeToAdd);
+                // Add new upgade-card relation
+                Dictionary <string, AbilityUpgrades> upgradeToAdd = new Dictionary<string, AbilityUpgrades>();
+                upgradeToAdd.Add(chosenUpgradeList[x].Key, chosenUpgradeList[x].Value);
+                upgradeCardRelationship.Add(shuffledList[cardIndex], upgradeToAdd);
+            }
+            else
+            {
+                // Update UI text
+                textElements[0].text = "All Done!!";
+                textElements[1].text = "Everything is\nUnlocked!!";
+                textElements[2].text = "Congrats you've unlocked all abilities and upgrades!";
+            }
 
             x++;
+            j++;
             cardIndex++;
         }
     } 

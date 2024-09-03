@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AbilityData", menuName = "Game/AbilityData", order = 2)]
+[CreateAssetMenu(fileName = "AbilityData", menuName = "Game/AbilityData", order = 1)]
 public class AbilityLibraryData : ScriptableObject
 {
     [System.Serializable]

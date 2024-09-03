@@ -1,7 +1,7 @@
 [System.Serializable]
 public class AbilityUpgrades
 {
-    public AbilityUpgradeType upgradeType;
+    public UpgradeTypes upgradeType;
     public int newValue;
     public string upgradeDescription;
 }

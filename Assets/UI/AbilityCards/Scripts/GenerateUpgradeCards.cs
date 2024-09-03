@@ -25,13 +25,31 @@ public class GenerateUpgradeCards : MonoBehaviour
             {
                 for (int i = 0; i < data.abilityUpgrades.Length; i++)
                 {
+                    bool isFound = false;
+
                     foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
                     {
                         if (kvp.Key.Contains(data.abilityName) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
                         {
+                            isFound = true;
+                            break;
+                        }
+                    }
+
+                    if (!isFound)
+                    {
+                        if (!abilityUpgradeData.ContainsKey($"{data.abilityName}_idx{i}"))
+                        {
                             abilityUpgradeData.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
                         }
                     }
+                }
+
+                foreach (var item in abilityUpgradeData)
+                {
+                    Debug.Log("Contents of AbilityUpgradeData after Generation");
+                    Debug.Log(item.Key);
+                    Debug.Log(item.Value.upgradeType);
                 }
             }
             else

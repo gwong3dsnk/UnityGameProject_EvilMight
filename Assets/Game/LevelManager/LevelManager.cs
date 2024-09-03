@@ -46,15 +46,7 @@ public class LevelManager : MonoBehaviour
         currentLevel += 1;
         playerHealth.ResetHealth();
         CalculateXPThreshold();
-
-        if (excessXP > 0)
-        {
-            currentXP = excessXP;
-        }
-        else
-        {
-            currentXP = 0;
-        }
+        currentXP = excessXP > 0 ? excessXP : 0;
     }
 
     private void CalculateXPThreshold()

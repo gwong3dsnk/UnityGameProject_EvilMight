@@ -74,11 +74,11 @@ public abstract class PlayerAbilities : MonoBehaviour
         {
             if (ability.name.Contains(upgradesAbilityName))
             {
-                if (upgradeKVP.Value.upgradeType == AbilityUpgradeType.DamageUp)
+                if (upgradeKVP.Value.upgradeType == UpgradeTypes.DamageUp)
                 {
                     ability.Damage = upgradeKVP.Value.newValue;
                 }
-                else if (upgradeKVP.Value.upgradeType == AbilityUpgradeType.FireRateUp)
+                else if (upgradeKVP.Value.upgradeType == UpgradeTypes.FireRateUp)
                 {
                     ParticleSystem.EmissionModule singleShotEmission = singleShotFX.emission;
                     singleShotEmission.rateOverTime = upgradeKVP.Value.newValue;

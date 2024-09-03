@@ -1,4 +1,4 @@
-public enum AbilityUpgradeType
+public enum UpgradeTypes
 {
     FireRateUp,
     DamageUp,
