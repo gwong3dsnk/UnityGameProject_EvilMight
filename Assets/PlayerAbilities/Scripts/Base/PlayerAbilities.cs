@@ -9,8 +9,8 @@ public abstract class PlayerAbilities : MonoBehaviour
     [SerializeField] protected ParticleSystem abilityParticleSystem;
     [SerializeField] protected AbilityLibraryData abilityData;
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
-    [SerializeField] protected string abilityName;
-    public string AbilityName => abilityName;
+    [SerializeField] protected AbilityNames abilityName;
+    public AbilityNames AbilityName => abilityName;
     [SerializeField] protected string abilityDescription;
     public string AbilityDescription => abilityDescription;
     [SerializeField] protected int damage;
@@ -49,8 +49,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     {
         foreach (var stats in abilityData.abilityStatsArray)
         {
-            string compressedName = stats.abilityName.Replace(" ", ""); // Remove spaces
-            if (transform.name.Contains(compressedName))
+            if (transform.name.Contains(stats.abilityName.ToString()))
             {
                 abilityName = stats.abilityName;
                 abilityDescription = stats.abilityDescription;

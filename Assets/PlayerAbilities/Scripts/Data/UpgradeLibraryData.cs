@@ -1,26 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AbilityData", menuName = "Game/AbilityData", order = 1)]
-public class AbilityLibraryData : ScriptableObject
+[CreateAssetMenu(menuName = "Game/UpgradeData", fileName = "UpgradeData", order = 2)]
+public class UpgradeLibraryData : ScriptableObject
 {
     [System.Serializable]
-    public class AbilityStats
+    public class UpgradeStats
     {
-        public AbilityNames abilityName;
-        public string abilityDescription;
-        public int damage;
-        public int fireRate;
-        public AbilityUpgrades[] abilityUpgrades;
-        public GameObject prefab;
-        public PlayerAbilities playerAbilities;
+        public AbilityNames parentAbility;
+        public UpgradeTypeData[] upgradeType;
     }
 
     private string abilityPrefabPath = "Assets/PlayerAbilities/Prefabs";
     private string enumFilePath = "Assets/PlayerAbilities/Scripts/Data/AbilityNames.cs";
-    public AbilityStats[] abilityStatsArray;
+    public UpgradeStats[] upgradeStatsData;
 
     /// <summary>
     /// Called when the user clicks on the button in the UpgradeLibraryData ScriptableObject.
@@ -29,5 +23,5 @@ public class AbilityLibraryData : ScriptableObject
     {
         List<string> abilityNames = DataUtilityMethods.GetAssetPrefabNamesByPath(abilityPrefabPath);
         DataUtilityMethods.WriteNewAbilityEnums(abilityNames, enumFilePath);
-    }    
+    }
 }

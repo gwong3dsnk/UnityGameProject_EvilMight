@@ -1,8 +1,8 @@
 public enum AbilityNames
 {
-    SingleShot,
-    RockShield,
-    MeleeExplode,
-    MeleeSlash,
-    ScreenAOE
+MeleeExplode,
+MeleeSlash,
+RockShield,
+ScreenAOE,
+SingleShot
 }

@@ -29,7 +29,7 @@ public class GenerateUpgradeCards : MonoBehaviour
 
                     foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
                     {
-                        if (kvp.Key.Contains(data.abilityName) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
+                        if (kvp.Key.Contains(data.abilityName.ToString()) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
                         {
                             isFound = true;
                             break;
@@ -54,10 +54,9 @@ public class GenerateUpgradeCards : MonoBehaviour
             }
             else
             {
-                string compressedName = data.abilityName.Replace(" ", "");
                 foreach (PlayerAbilities activeAbility in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
                 {
-                    if (activeAbility.name.Contains(compressedName))
+                    if (activeAbility.name.Contains(data.abilityName.ToString()))
                     {
                         for (int i = 0; i < data.abilityUpgrades.Length; i++)
                         {

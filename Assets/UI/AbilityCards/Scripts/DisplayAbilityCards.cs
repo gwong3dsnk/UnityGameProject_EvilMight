@@ -79,7 +79,7 @@ public class DisplayAbilityCards : MonoBehaviour
         {
             TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
             textElements[0].text = "New Ability!!";
-            textElements[1].text = chosenAbilities[cardIndex].abilityName;
+            textElements[1].text = chosenAbilities[cardIndex].abilityName.ToString();
             textElements[2].text = chosenAbilities[cardIndex].abilityDescription;
 
             abilityCardRelationship.Add(shuffledList[cardIndex], chosenAbilities[cardIndex]);
