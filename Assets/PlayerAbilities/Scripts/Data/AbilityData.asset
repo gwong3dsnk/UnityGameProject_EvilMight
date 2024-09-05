@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AbilityData
   m_EditorClassIdentifier: 
   abilityStatsArray:
-  - abilityName: 5
+  - abilityName: 4
     abilityDescription: FIre off a single shot projectile
     damage: 1
     fireRate: 1
