@@ -36,7 +36,7 @@ public class EnemyPool : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Reference to Enemy Wave Controller script not found.", this);
+            Logger.LogError("Reference to Enemy Wave Controller script not found.", this);
         }
     }
 
@@ -61,7 +61,7 @@ public class EnemyPool : MonoBehaviour
 
                     if (enemyToInstantiate == null)
                     {
-                        Debug.LogError($"No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
+                        Logger.LogError($"No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
                         continue;
                     }
                                         
@@ -74,7 +74,7 @@ public class EnemyPool : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Reference to EnemyPrefabLibrary script component is not found.", this);
+            Logger.LogError("Reference to EnemyPrefabLibrary script component is not found.", this);
         }
     }
 

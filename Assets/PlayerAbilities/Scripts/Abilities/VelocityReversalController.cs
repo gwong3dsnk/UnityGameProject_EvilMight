@@ -13,7 +13,7 @@ public class VelocityReversalController : MonoBehaviour
 
         if (meleeSlashFX == null)
         {
-            Debug.LogError("Missing reference to local particle system", this);
+            Logger.LogError("Missing reference to local particle system", this);
         }
 
         // Initialize the particles array with an initial size

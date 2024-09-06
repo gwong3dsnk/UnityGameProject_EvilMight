@@ -14,7 +14,7 @@ public class MeleeSlash : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating MeleeSlash", this);
+        Logger.Log("Activating MeleeSlash", this);
     }
 
     public override void DeactivateAbility()

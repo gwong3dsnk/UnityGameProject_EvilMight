@@ -13,7 +13,7 @@ public class RockShield : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating RockShield", this);
+        Logger.Log("Activating RockShield", this);
     }
     public override void DeactivateAbility()
     {

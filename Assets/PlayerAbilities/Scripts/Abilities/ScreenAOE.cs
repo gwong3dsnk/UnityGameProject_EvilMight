@@ -13,7 +13,7 @@ public class ScreenAOE : PlayerAbilities
 
         if (mainCamera == null)
         {
-            Debug.LogError("No main camera found in the scene", this);
+            Logger.LogError("No main camera found in the scene", this);
         }
 
         base.Awake();
@@ -22,7 +22,7 @@ public class ScreenAOE : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating ScreenAOE", this);
+        Logger.Log("Activating ScreenAOE", this);
         KillVisibleEnemies();
     }
 
@@ -36,7 +36,7 @@ public class ScreenAOE : PlayerAbilities
 
             if (enemyHealth == null)
             {
-                Debug.LogError("Missing reference to EnemyHealth", this);
+                Logger.LogError("Missing reference to EnemyHealth", this);
             }
 
             enemyHealth.ApplyAOEDamage(damage);

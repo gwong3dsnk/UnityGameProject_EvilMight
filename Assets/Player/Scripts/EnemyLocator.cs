@@ -24,7 +24,7 @@ public class EnemyLocator : MonoBehaviour
     {
         if (gridManager == null)
         {
-            Debug.LogError("Missing Grid Manager reference", this);
+            Logger.LogError("Missing Grid Manager reference", this);
         }
 
         StartCoroutine(FindNearestEnemy());

@@ -14,6 +14,6 @@ public class PlayerDeathUI : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        Debug.Log("Returning to Main Menu Screen");
+        Logger.Log("Returning to Main Menu Screen");
     }
 }

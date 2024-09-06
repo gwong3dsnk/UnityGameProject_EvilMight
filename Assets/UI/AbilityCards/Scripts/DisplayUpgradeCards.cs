@@ -73,20 +73,20 @@ public class DisplayUpgradeCards : MonoBehaviour
         {
             if (chosenUpgradeList.Count == 2)
             {
-                Debug.Log("ONly 2 upgrades available");
+                Logger.Log("ONly 2 upgrades available");
                 j = chosenUpgradeList.Count - 1;
                 // shuffledList[shuffledList.Count - 1].SetActive(false);
             }
             else if (chosenUpgradeList.Count == 1)
             {
-                Debug.Log($"ONly 1 upgrade available");
+                Logger.Log($"ONly 1 upgrade available");
                 j = chosenUpgradeList.Count;
                 // shuffledList[shuffledList.Count - 1].SetActive(false);
                 // shuffledList[shuffledList.Count - 2].SetActive(false);
             }
             else if (chosenUpgradeList.Count == 0)
             {
-                Debug.LogError("No upgrades are available to be displayed.", this);
+                Logger.LogError("No upgrades are available to be displayed.", this);
                 // shuffledList[shuffledList.Count - 1].SetActive(false);
                 // shuffledList[shuffledList.Count - 2].SetActive(false);
                 j = chosenUpgradeList.Count;

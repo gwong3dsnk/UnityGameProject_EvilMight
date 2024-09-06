@@ -18,19 +18,19 @@ public class EnemyAI : MonoBehaviour
         player = FindObjectOfType<PlayerMovement>().transform;
         if (player == null)
         {
-            Debug.LogError("PlayerMovement script is not found on any active gameObject in the scene.  Does the player gameobject exist?", this);
+            Logger.LogError("PlayerMovement script is not found on any active gameObject in the scene.  Does the player gameobject exist?", this);
         }
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
         {
-            Debug.LogError($"NavMeshAgent component is not found on {gameObject.name}", this);
+            Logger.LogError($"NavMeshAgent component is not found on {gameObject.name}", this);
         }
 
         enemy = GetComponent<Enemy>();
         if (enemy == null)
         {
-            Debug.LogError("Enemy not found on enemy unit", this);
+            Logger.LogError("Enemy not found on enemy unit", this);
         }
     }
 
@@ -73,10 +73,10 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackTarget()
     {
-        Debug.Log("Attacking player.");
+        Logger.Log("Attacking player.");
         if (enemy.EnemyClass == EnemyClass.Range && enemy.EnemyDifficulty == EnemyDifficulty.Easy)
         {
-            Debug.Log("Ranged enemy starting to attack with projectile");
+            Logger.Log("Ranged enemy starting to attack with projectile");
             var projectileEmission = projectileFX.emission;
             projectileEmission.enabled = true;
         }
@@ -90,7 +90,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("NavMeshAgent cannot navigate because it is not active or not on NavMesh.");
+            Logger.LogWarning("NavMeshAgent cannot navigate because it is not active or not on NavMesh.");
         }
     }
 
@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Gizmo is not drawn for Enemy Prefab because enemy script component is not assigned.");
+            Logger.LogWarning("Gizmo is not drawn for Enemy Prefab because enemy script component is not assigned.");
         }
     }
 }

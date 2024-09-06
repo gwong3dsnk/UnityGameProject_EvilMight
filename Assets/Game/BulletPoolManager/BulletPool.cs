@@ -32,7 +32,7 @@ public class BulletPool : MonoBehaviour
 
     //                 if (enemyToInstantiate == null)
     //                 {
-    //                     Debug.LogError($"No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
+    //                     Logger.LogError($"No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
     //                     continue;
     //                 }
                                         
@@ -45,7 +45,7 @@ public class BulletPool : MonoBehaviour
     //     }
     //     else
     //     {
-    //         Debug.LogError("Reference to EnemyPrefabLibrary script component is not found.", this);
+    //         Logger.LogError("Reference to EnemyPrefabLibrary script component is not found.", this);
     //     }
     // }
 

@@ -25,7 +25,7 @@ public class DisplayAbilityCards : MonoBehaviour
         }
         else
         {
-            Debug.Log("All abilities have been unlocked.  No new abilities to display.", this);
+            Logger.Log("All abilities have been unlocked.  No new abilities to display.", this);
         }
     }
 

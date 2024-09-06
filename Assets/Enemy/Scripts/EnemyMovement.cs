@@ -26,7 +26,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (navMeshAgent == null || enemy == null)
         {
-            Debug.LogError("NavMeshAgent or Enemy script component is missing", this);
+            Logger.LogError("NavMeshAgent or Enemy script component is missing", this);
         }
     }
 
@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (player == null)
         {
-            Debug.LogError("PlayerMovement script is not found in the scene.", this);
+            Logger.LogError("PlayerMovement script is not found in the scene.", this);
         }
 
         if (GridManager.GridManagerInstance != null)
@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GridManager Instance is not found in the scene.", this);
+            Logger.LogError("GridManager Instance is not found in the scene.", this);
         }
 
         lastPosition = transform.position;
@@ -103,7 +103,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Missing EnemyAttack script component.", this);
+                Logger.LogError("Missing EnemyAttack script component.", this);
             }
         }        
     }
@@ -143,7 +143,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Gizmo is not drawn for Enemy Prefab because enemy script component is not assigned.");
+            Logger.LogWarning("Gizmo is not drawn for Enemy Prefab because enemy script component is not assigned.");
         }
     }
 }

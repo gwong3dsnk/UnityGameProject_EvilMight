@@ -12,7 +12,7 @@ public class AbilityCardChooserUI : MonoBehaviour
     {
         if (levelManager == null)
         {
-            Debug.LogError("Missing level manager reference", this);
+            Logger.LogError("Missing level manager reference", this);
         }
     }
 
@@ -40,7 +40,7 @@ public class AbilityCardChooserUI : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Missing reference to AbilityCardGenerator", this);
+            Logger.LogError("Missing reference to AbilityCardGenerator", this);
         }
     }
 

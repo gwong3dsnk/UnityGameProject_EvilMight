@@ -25,7 +25,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Unable to find GridManagerInstance", this);
+            Logger.LogError("Unable to find GridManagerInstance", this);
         }
 
         if (enemyHealth != null)
@@ -34,7 +34,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Missing EnemyHealth script component.", this);
+            Logger.LogError("Missing EnemyHealth script component.", this);
         }    
     }
 
@@ -48,7 +48,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Missing either collider component or grid manager reference.", this);
+            Logger.LogError("Missing either collider component or grid manager reference.", this);
         }
     }
 
@@ -60,7 +60,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Missing reference to Enemy and/or LevelManager", this);
+            Logger.LogError("Missing reference to Enemy and/or LevelManager", this);
         }
     }
 

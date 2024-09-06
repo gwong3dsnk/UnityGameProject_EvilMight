@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     {
         if (enemyData == null)
         {
-            Debug.LogError("EnemyData is not assigned.", this);
+            Logger.LogError("EnemyData is not assigned.", this);
         }
         else
         {

@@ -15,7 +15,7 @@ public class EnemyHealth : HealthManagement
 
         if (enemy == null)
         {
-            Debug.LogError("Enemy is missing Enemy script component.", this);
+            Logger.LogError("Enemy is missing Enemy script component.", this);
         } 
 
         maxHealth = enemy.HitPoints;
@@ -31,7 +31,7 @@ public class EnemyHealth : HealthManagement
         }
         else
         {
-            Debug.LogError("Missing PlayerAbilities.", this);
+            Logger.LogError("Missing PlayerAbilities.", this);
         }
     }
 

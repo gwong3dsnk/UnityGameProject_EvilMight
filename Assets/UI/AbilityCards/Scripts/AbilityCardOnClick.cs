@@ -29,7 +29,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Debug.LogWarning("PointerPress is null.");
+            Logger.LogWarning("PointerPress is null.");
         }
     }
 
@@ -59,7 +59,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
     {
         if (outline == null)
         {
-            Debug.LogError("No Outline component found", this);
+            Logger.LogError("No Outline component found", this);
         }
         else
         {
@@ -79,7 +79,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Debug.LogError("No matching Panel Key found!", this);
+            Logger.LogError("No matching Panel Key found!", this);
         }
     }
 }

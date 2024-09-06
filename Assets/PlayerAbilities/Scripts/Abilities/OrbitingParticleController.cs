@@ -57,6 +57,6 @@ public class OrbitingParticleController : MonoBehaviour
         // Handle collision
         // For example, stop the particle system or change particle behavior
         orbitingFX.Stop();
-        Debug.Log("Collision detected! Stopping particle system.");
+        Logger.Log("Collision detected! Stopping particle system.");
     }
 }

@@ -14,7 +14,7 @@ public class MeleeExplode : PlayerAbilities
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Debug.Log("Activating MeleeExplode", this);
+        Logger.Log("Activating MeleeExplode", this);
     }
 
     public override void DeactivateAbility()

@@ -18,7 +18,7 @@ public class EnemyPoolSpawner : MonoBehaviour
 
         if (enemyPool == null)
         {
-            Debug.LogError("Missing EnemyPool script component.", this);
+            Logger.LogError("Missing EnemyPool script component.", this);
         }
 
         if (GridManager.GridManagerInstance != null)
@@ -27,7 +27,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Missing reference to GridManager singleton instance", this);
+            Logger.LogError("Missing reference to GridManager singleton instance", this);
         }
         
         StartCoroutine(SpawnWaves());

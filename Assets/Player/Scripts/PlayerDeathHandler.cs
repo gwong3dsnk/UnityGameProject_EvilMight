@@ -16,7 +16,7 @@ public class PlayerDeathHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
+            Logger.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
         }
     }
 
@@ -26,12 +26,12 @@ public class PlayerDeathHandler : MonoBehaviour
 
         if (playerDeathCanvas != null)
         {
-            Debug.Log("Enabling Player Death Canvas");
+            Logger.Log("Enabling Player Death Canvas");
             playerDeathCanvas.transform.gameObject.SetActive(true);
         }
         else
         {
-            Debug.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
+            Logger.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
         }        
         
         Time.timeScale = 0;

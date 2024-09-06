@@ -12,7 +12,7 @@ public class EnemyAttack : MonoBehaviour
         {
             if (attackFX == null)
             {
-                Debug.LogError("Missing enemy projectile FX reference.");
+                Logger.LogError("Missing enemy projectile FX reference.");
             }
             else
             {

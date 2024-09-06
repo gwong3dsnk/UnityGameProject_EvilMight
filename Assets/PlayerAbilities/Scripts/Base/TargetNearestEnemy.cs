@@ -15,7 +15,7 @@ public class TargetNearestEnemy : MonoBehaviour
     //     }
     //     else
     //     {
-    //         Debug.LogError("EnemyLocator Instance not found!", this);
+    //         Logger.LogError("EnemyLocator Instance not found!", this);
     //     }
     // }
 
@@ -28,9 +28,9 @@ public class TargetNearestEnemy : MonoBehaviour
             if (nearestEnemy != null)
             {
                 Vector3 nearestEnemyPosition = nearestEnemy.transform.position;
-                // Debug.Log($"Enemy Position - {nearestEnemyPosition}");
+                // Logger.Log($"Enemy Position - {nearestEnemyPosition}");
                 Vector3 direction = (nearestEnemyPosition - transform.position).normalized;
-                // Debug.Log($"Enemy Direction - {direction}");
+                // Logger.Log($"Enemy Direction - {direction}");
 
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);             

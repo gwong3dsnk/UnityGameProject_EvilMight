@@ -25,7 +25,7 @@ public class DisplayCardManager : MonoBehaviour
 
         if (cardGenerator == null)
         {
-            Debug.LogError("Missing reference to AbilityCardGenerator component", this);
+            Logger.LogError("Missing reference to AbilityCardGenerator component", this);
         }
     }
 
@@ -51,7 +51,7 @@ public class DisplayCardManager : MonoBehaviour
 
         if (abilities.Count == 0 && upgrades.Count == 0)
         {
-            Debug.Log("All abilities and upgrades have been unlocked!");
+            Logger.Log("All abilities and upgrades have been unlocked!");
             // TODO: If everything is unlocked, don't levelup anymore and don't freeze time/show cards anymore.
             return;
         }
@@ -78,7 +78,7 @@ public class DisplayCardManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Strange occurrence of ability/upgrade count.", this);
+            Logger.LogWarning("Strange occurrence of ability/upgrade count.", this);
         }
 
         ProcessDisplayAbilitiesAndUpgrades(finalNumOfAbilitiesToDisplay, finalNumOfUpgradesToDisplay);

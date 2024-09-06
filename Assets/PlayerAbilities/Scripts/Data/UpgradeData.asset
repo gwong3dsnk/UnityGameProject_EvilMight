@@ -13,21 +13,13 @@ MonoBehaviour:
   m_Name: UpgradeData
   m_EditorClassIdentifier: 
   upgradeStatsData:
-  - parentAbility: 1
-    upgradeType:
-    - upgradeType: 1
-      levelData:
-      - description: bglah
-        newValue: 5
-  - parentAbility: 2
-    upgradeType:
-    - upgradeType: 1
-      levelData:
-      - description: bglah
-        newValue: 5
   - parentAbility: 4
     upgradeType:
+    - upgradeType: 0
+      levelData:
+      - newValue: 2
+        description: Boost your single shot firerate!
     - upgradeType: 1
       levelData:
-      - description: bglah
-        newValue: 5
+      - newValue: 2
+        description: Boost your single shot damage!

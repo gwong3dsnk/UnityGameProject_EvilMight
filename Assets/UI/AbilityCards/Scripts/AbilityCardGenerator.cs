@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(GenerateAbilityCards))]
+[RequireComponent(typeof(GenerateUpgradeCards))]
 public class AbilityCardGenerator : MonoBehaviour
 {
     [SerializeField] AbilityLibraryData abilityLibraryData;
@@ -14,6 +16,9 @@ public class AbilityCardGenerator : MonoBehaviour
     {
         generateAbilityCards = GetComponent<GenerateAbilityCards>();
         generateUpgradeCards = GetComponent<GenerateUpgradeCards>();
+        Logger.Log(abilityLibraryData == null ? "Missing reference to AbilityLibraryData" : "AbilityLibraryData reference found.");
+        Logger.Log(generateAbilityCards == null ? "Missing local component GenerateAbilityCards" : "GenerateAbilityCards component found.");
+        Logger.Log(generateAbilityCards == null ? "Missing local component GenerateUpgradeCards" : "GenerateUpgradeCards component found.");
     }
 
     public void BeginGeneration()

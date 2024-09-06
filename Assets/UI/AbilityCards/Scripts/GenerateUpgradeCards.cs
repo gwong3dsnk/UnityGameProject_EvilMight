@@ -47,9 +47,9 @@ public class GenerateUpgradeCards : MonoBehaviour
 
                 foreach (var item in abilityUpgradeData)
                 {
-                    Debug.Log("Contents of AbilityUpgradeData after Generation");
-                    Debug.Log(item.Key);
-                    Debug.Log(item.Value.upgradeType);
+                    Logger.Log("Contents of AbilityUpgradeData after Generation");
+                    Logger.Log(item.Key);
+                    Logger.Log(item.Value.upgradeType.ToString());
                 }
             }
             else

@@ -2,3 +2,9 @@
 2024-09-05 16:14:23 - Finished saving current ability choices in upgradeData to abilityNames.txt file
 2024-09-05 16:14:32 - Starting to load ability choices from abilityNames.txt to upgradeData parent ability...
 2024-09-05 16:14:32 - Finished loading ability choices from abilityNames.txt to upgradeData parent ability
+[2024-09-06 13:04:51] [INFO] - Leveling Up
+[2024-09-06 13:04:52] [INFO] - AbilityLibraryData reference found.
+[2024-09-06 13:04:52] [INFO] - GenerateAbilityCards component found.
+[2024-09-06 13:04:52] [INFO] - GenerateUpgradeCards component found.
+[2024-09-06 13:04:52] [INFO] - All abilities have been unlocked.  No new abilities to display.
+[2024-09-06 13:04:52] [INFO] - ONly 2 upgrades available

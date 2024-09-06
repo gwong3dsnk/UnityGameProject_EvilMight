@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour
     {
         if (playerHealth == null)
         {
-            Debug.LogError("Missing reference to PlayerHealth script on LevelSystem object", this);
+            Logger.LogError("Missing reference to PlayerHealth script on LevelSystem object", this);
         }
     }
 
@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
 
     private void LevelUp()
     {
-        Debug.Log("Leveling Up");
+        Logger.Log("Leveling Up");
         OnLevelUp?.Invoke(this, EventArgs.Empty);
         currentLevel += 1;
         playerHealth.ResetHealth();
