@@ -1,0 +1,15 @@
+[20240907 10:10:43] [INFO] - Leveling Up
+[20240907 10:10:43] [INFO] - AbilityLibraryData reference found.
+[20240907 10:10:43] [INFO] - Missing reference to upgradeLibraryData
+[20240907 10:10:43] [INFO] - GenerateAbilityCards component found.
+[20240907 10:10:43] [INFO] - GenerateUpgradeCards component found.
+[20240907 10:12:19] [INFO] - Leveling Up
+[20240907 10:12:19] [INFO] - AbilityLibraryData reference found.
+[20240907 10:12:19] [INFO] - Missing reference to upgradeLibraryData
+[20240907 10:12:19] [INFO] - GenerateAbilityCards component found.
+[20240907 10:12:19] [INFO] - GenerateUpgradeCards component found.
+[10:13:33] [INFO] - Leveling Up
+[10:13:33] [INFO] - AbilityLibraryData reference found.
+[10:13:33] [INFO] - Missing reference to upgradeLibraryData
+[10:13:33] [INFO] - GenerateAbilityCards component found.
+[10:13:33] [INFO] - GenerateUpgradeCards component found.

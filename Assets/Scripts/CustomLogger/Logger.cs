@@ -1,20 +1,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
 public class Logger
 {
-    private static LogFileManager logFileManager;
-    // private static string logFilePath = Path.Combine(Application.dataPath, "Editor/Logs/Log.txt");
-
-    static Logger()
-    {
-        logFileManager = new LogFileManager();
-    }
-
     [Conditional("UNITY_EDITOR")]
     public static void Log(string message, Object context = null)
     {
@@ -65,7 +56,7 @@ public class Logger
         try
         {
             // Format message
-            string timeStamp = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+            string timeStamp = DateTime.Now.ToString("HH:mm:ss");
             string logMessage = $"[{timeStamp}] [{logLevel}] - {message}";
 
             // Write to the file
@@ -79,8 +70,8 @@ public class Logger
     
     private static string VerifyLogFilePath()
     {
-        string logFilePath = logFileManager.GetLogFilePath();
-        logFileManager.CheckFileSizeAndRotate(logFilePath);       
+        string logFilePath = LogFileManager.GetLogFilePath();
+        LogFileManager.CheckFileSizeAndRotate(logFilePath);
         return logFilePath; 
     }
 }

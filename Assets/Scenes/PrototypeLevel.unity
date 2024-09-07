@@ -839,6 +839,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2849157885244779572, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: upgradeLibraryData
+      value: 
+      objectReference: {fileID: 11400000, guid: a0df77e7986628e42936b0f94797fb67, type: 2}
+    - target: {fileID: 2849157885244779572, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: singleShotProjectilePrefab
       value: 
       objectReference: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}

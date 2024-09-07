@@ -5,65 +5,57 @@ using UnityEngine;
 
 public class GenerateUpgradeCards : MonoBehaviour
 {
-    Dictionary<string, AbilityUpgrades> abilityUpgradeData = new Dictionary<string, AbilityUpgrades>();      
+    Dictionary<string, AbilityUpgrades> allAvailableUpgrades = new Dictionary<string, AbilityUpgrades>(); // deprecate
 
-    public Dictionary<string, AbilityUpgrades> StartGeneratingUpgradeCards(AbilityLibraryData abilityLibraryData)
+    public Dictionary<string, AbilityUpgrades> StartGeneratingUpgradeCards(UpgradeLibraryData upgradeLibraryData)
     {
-        CreateListOfAvailableUpgrades(abilityLibraryData);
+        CreateListOfAvailableUpgrades(upgradeLibraryData);
         Dictionary<string, AbilityUpgrades> newUpgrades = CreateUpgradesList();
 
         return newUpgrades;
     }
 
-    private void CreateListOfAvailableUpgrades(AbilityLibraryData abilityLibraryData)
+    private void CreateListOfAvailableUpgrades(UpgradeLibraryData upgradeLibraryData)
     {
-        abilityUpgradeData.Clear();
+        allAvailableUpgrades.Clear();
 
-        foreach (AbilityLibraryData.AbilityStats data in abilityLibraryData.abilityStatsArray)
+        foreach (var data in upgradeLibraryData.upgradeStatsData)
         {
+            // Query ActiveAbilities, see if AbilityName can be found in Key in upgradeTypeDatabase
+            // If not, populate here
+            // If it is present, verify that the nested dictionary has upgrade types with leveldata
+            // If data is present, do nothing.
             if (PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades.Count > 0)
             {
-                for (int i = 0; i < data.abilityUpgrades.Length; i++)
-                {
-                    bool isFound = false;
+                Logger.Log("Some abilities have been unlocked", this);
+                // for (int i = 0; i < data.upgradeType.Length; i++)
+                // {
+                //     bool isFound = false;
 
-                    foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
-                    {
-                        if (kvp.Key.Contains(data.abilityName.ToString()) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
-                        {
-                            isFound = true;
-                            break;
-                        }
-                    }
+                //     foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
+                //     {
+                //         if (kvp.Key.Contains(data.abilityName.ToString()) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
+                //         {
+                //             isFound = true;
+                //             break;
+                //         }
+                //     }
 
-                    if (!isFound)
-                    {
-                        if (!abilityUpgradeData.ContainsKey($"{data.abilityName}_idx{i}"))
-                        {
-                            abilityUpgradeData.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
-                        }
-                    }
-                }
+                //     if (!isFound)
+                //     {
+                //         if (!allAvailableUpgrades.ContainsKey($"{data.abilityName}_idx{i}"))
+                //         {
+                //             allAvailableUpgrades.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
+                //         }
+                //     }
+                // }
 
-                foreach (var item in abilityUpgradeData)
-                {
-                    Logger.Log("Contents of AbilityUpgradeData after Generation");
-                    Logger.Log(item.Key);
-                    Logger.Log(item.Value.upgradeType.ToString());
-                }
-            }
-            else
-            {
-                foreach (PlayerAbilities activeAbility in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
-                {
-                    if (activeAbility.name.Contains(data.abilityName.ToString()))
-                    {
-                        for (int i = 0; i < data.abilityUpgrades.Length; i++)
-                        {
-                            abilityUpgradeData.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
-                        }
-                    }
-                }
+                // foreach (var item in allAvailableUpgrades)
+                // {
+                //     Logger.Log("Contents of AbilityUpgradeData after Generation");
+                //     Logger.Log(item.Key);
+                //     Logger.Log(item.Value.upgradeType.ToString());
+                // }
             }
         }
     }
@@ -73,9 +65,9 @@ public class GenerateUpgradeCards : MonoBehaviour
         Dictionary<string, AbilityUpgrades> newUpgradeList = new Dictionary<string, AbilityUpgrades>();
         List<string> upgradeKeys = new List<string>();
 
-        if (abilityUpgradeData.Count <= 3)
+        if (allAvailableUpgrades.Count <= 3)
         {
-            return abilityUpgradeData;
+            return allAvailableUpgrades;
         }
         else
         {
@@ -83,14 +75,14 @@ public class GenerateUpgradeCards : MonoBehaviour
 
             while (x < 3)
             {
-                foreach (KeyValuePair<string, AbilityUpgrades> upgradePair in abilityUpgradeData)
+                foreach (KeyValuePair<string, AbilityUpgrades> upgradePair in allAvailableUpgrades)
                 {
                     upgradeKeys.Add(upgradePair.Key);
                 }
 
-                int index = BaseUtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
+                int index = BaseUtilityMethods.GenerateRandomIndex(allAvailableUpgrades.Count);
                 string randomUpgradeKey = upgradeKeys[index];
-                AbilityUpgrades selectedUpgradeData = abilityUpgradeData[randomUpgradeKey];
+                AbilityUpgrades selectedUpgradeData = allAvailableUpgrades[randomUpgradeKey];
 
                 if (!newUpgradeList.ContainsKey(randomUpgradeKey))
                 {
@@ -100,11 +92,11 @@ public class GenerateUpgradeCards : MonoBehaviour
                 {
                     while (newUpgradeList.ContainsKey(randomUpgradeKey))
                     {
-                        index = BaseUtilityMethods.GenerateRandomIndex(abilityUpgradeData.Count);
+                        index = BaseUtilityMethods.GenerateRandomIndex(allAvailableUpgrades.Count);
                         randomUpgradeKey = upgradeKeys[index];
                     }
 
-                    selectedUpgradeData = abilityUpgradeData[randomUpgradeKey];
+                    selectedUpgradeData = allAvailableUpgrades[randomUpgradeKey];
                     newUpgradeList.Add(randomUpgradeKey, selectedUpgradeData);
                 }
 

@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class LogFileManager : MonoBehaviour
 {
-    private readonly long MaxFileSize = 10 * 1024 * 1024; // 10 MB
+    private static readonly long MaxFileSize = 10 * 1024 * 1024; // 10 MB
     private static readonly int MaxDaysOld = 7; // 7 days old    
     private static readonly string LogDirectoryPath = Path.Combine(Application.dataPath, "Editor/Logs");
 
@@ -35,18 +33,20 @@ public class LogFileManager : MonoBehaviour
         }
     }
 
-    public string GetLogFilePath()
+    public static string GetLogFilePath()
     {
-        string timeStamp = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-        string baseFileName = $"{timeStamp}_Log";
+        string date = DateTime.Now.ToString("yyyyMMdd");
+        string baseFileName = $"{date}_Log";
         int index = 0;
 
         while (true)
         {
             string fileName = $"{baseFileName}_{index:000}.txt";
             string filePath = Path.Combine(LogDirectoryPath, fileName);
+            Debug.Log($"{filePath}");
+            FileInfo fileInfo = new FileInfo(filePath);
 
-            if (!File.Exists(filePath) || new FileInfo(filePath).Length < MaxFileSize)
+            if (!File.Exists(filePath) || fileInfo.Length < MaxFileSize)
             {
                 return filePath;
             }
@@ -55,7 +55,7 @@ public class LogFileManager : MonoBehaviour
         }
     }
 
-    public void CheckFileSizeAndRotate(string logFilePath)
+    public static void CheckFileSizeAndRotate(string logFilePath)
     {
         // If file exists and is larger than MaxFileSize, rename it.
         if (File.Exists(logFilePath) && new FileInfo(logFilePath).Length >= MaxFileSize)

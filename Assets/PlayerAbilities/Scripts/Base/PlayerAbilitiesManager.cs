@@ -11,6 +11,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
     [SerializeField] bool enableDebug;
     // private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
     private PlayerAbilities currentPlayerAbility;
+    public Dictionary<AbilityNames, Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>> upgradeTypeDatabase;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
     private Dictionary<string, AbilityUpgrades> activeUpgrades = new Dictionary<string, AbilityUpgrades>();
