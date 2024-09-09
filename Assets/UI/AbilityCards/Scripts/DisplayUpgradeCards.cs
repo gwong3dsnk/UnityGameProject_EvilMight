@@ -3,134 +3,155 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 [RequireComponent(typeof(DisplayCardManager))]
 public class DisplayUpgradeCards : MonoBehaviour
 {
     private List<GameObject> shuffledList;
-    private Dictionary<string, AbilityUpgrades> generatedUpgrades;
-    private Dictionary<GameObject, Dictionary<string, AbilityUpgrades>> upgradeCardRelationship = new Dictionary<GameObject, Dictionary<string, AbilityUpgrades>>();
-    public Dictionary<GameObject, Dictionary<string, AbilityUpgrades>> UpgradeCardRelationship => upgradeCardRelationship;
+    // private UpgradeTypesDatabase generatedUpgrades;
+    private Dictionary<GameObject, UpgradeTypesDatabase> upgradeCardRelationship = new Dictionary<GameObject, UpgradeTypesDatabase>();
+    public Dictionary<GameObject, UpgradeTypesDatabase> UpgradeCardRelationship => upgradeCardRelationship;
     private int cardIndex;
 
-    public void ProcessUpgradeDisplay(List<GameObject> shuffledList, int finalNumOfUpgradesToDisplay, Dictionary<string, AbilityUpgrades> generatedUpgrades)
+    public void ProcessUpgradeDisplay(List<GameObject> shuffledList, int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
-        this.cardIndex = DisplayAbilityCards.cardIndex;
+        // this.cardIndex = DisplayAbilityCards.cardIndex;
+        this.cardIndex = CardUtilityMethods.GetCardIndex();
         this.shuffledList = shuffledList;
-        this.generatedUpgrades = generatedUpgrades;
-        Dictionary<string, AbilityUpgrades> chosenUpgradeKeys = SelectRandomUpgradesToDisplay(finalNumOfUpgradesToDisplay);
-        DisplayUpgrades(chosenUpgradeKeys);
+        // this.generatedUpgrades = generatedUpgrades;
+        // UpgradeTypesDatabase chosenUpgradeKeys = SelectRandomUpgradesToDisplay(numToDisplay);
+        // DisplayUpgrades(chosenUpgradeKeys);
+        DisplayUpgrades(numToDisplay, upgradeDatabase);
     }
 
-    private Dictionary<string, AbilityUpgrades> SelectRandomUpgradesToDisplay(int numToSelect)
-    {
-        List<string> allUpgradeKeys = CreateListOfUpgradeKeys();
-        Dictionary<string, AbilityUpgrades> chosenUpgrades = new Dictionary<string, AbilityUpgrades>();
-        string randomUpgradeKey = GetRandomUpgradeKey(allUpgradeKeys);
+    // private UpgradeTypesDatabase SelectRandomUpgradesToDisplay(int numToSelect)
+    // {
+    //     UpgradeTypesDatabase chosenUpgrades = new UpgradeTypesDatabase();
 
-        while (numToSelect > 0)
-        {
-            while (chosenUpgrades.ContainsKey(randomUpgradeKey))
-            {
-                randomUpgradeKey = GetRandomUpgradeKey(allUpgradeKeys);
-            }
+    //     List<Dictionary<AbilityNames, UpgradeTypes>> allUpgradeOptions = CreateListOfUpgradeKeys();
+    //     // Dictionary<AbilityNames, UpgradeTypes> randomUpgradeOption = GetRandomUpgradeOption(allUpgradeOptions);
 
-            chosenUpgrades.Add(randomUpgradeKey, this.generatedUpgrades[randomUpgradeKey]);
-            numToSelect--;
-        }
+    //     while (numToSelect > 0)
+    //     {
+    //         while (chosenUpgrades.ContainsKey(randomUpgradeOption))
+    //         {
+    //             randomUpgradeOption = GetRandomUpgradeOption(allUpgradeOptions);
+    //         }
 
-        return chosenUpgrades;
-    }
+    //         // chosenUpgrades.Add(randomUpgradeKey, this.generatedUpgrades[randomUpgradeKey]);
+    //         numToSelect--;
+    //     }
 
-    private string GetRandomUpgradeKey(List<string> upgradeKeys)
-    {
-        int index = BaseUtilityMethods.GenerateRandomIndex(upgradeKeys.Count);
-        return upgradeKeys[index];
-    }
+    //     return chosenUpgrades;
+    // }
 
-    private List<string> CreateListOfUpgradeKeys()
-    {
-        List<string> upgradeKeys = new List<string>();
+    // private List<Dictionary<AbilityNames, UpgradeTypes>> CreateListOfUpgradeKeys()
+    // {
+    //     List<Dictionary<AbilityNames, UpgradeTypes>> upgradeOptions = new List<Dictionary<AbilityNames, UpgradeTypes>>();
 
-        foreach (KeyValuePair<string, AbilityUpgrades> kvp in this.generatedUpgrades)
-        {
-            upgradeKeys.Add(kvp.Key);
-        }
+    //     foreach (var kvp in this.generatedUpgrades)
+    //     {
+    //         foreach (var type in kvp.Value)
+    //         {
+    //             Dictionary<AbilityNames, UpgradeTypes> option = new Dictionary<AbilityNames, UpgradeTypes> { { kvp.Key, type.Key }};
+    //             upgradeOptions.Add(option);
+    //         }
+    //     }
 
-        return upgradeKeys;
-    }
+    //     return upgradeOptions;
+    // }
 
-    private void DisplayUpgrades(Dictionary<string, AbilityUpgrades> chosenUpgrades)
+    // private Dictionary<AbilityNames, UpgradeTypes> GetRandomUpgradeOption(List<Dictionary<AbilityNames, UpgradeTypes>> allUpgradeOptions)
+    // {
+    //     int index = GeneralUtilityMethods.GenerateRandomIndex(allUpgradeOptions.Count);
+    //     return allUpgradeOptions[index];
+    // }    
+
+    private void DisplayUpgrades(int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
         upgradeCardRelationship.Clear();
-        List<KeyValuePair<string, AbilityUpgrades>> chosenUpgradeList = chosenUpgrades.ToList(); // TODO: DOn't ToList()
-        int x = 0;
-        int j = 0;
-        bool isEverythingUnlocked = false;
+        // int numAvailableUpgrades = CardUtilityMethods.GetNumValidLevelQueues(this.generatedUpgrades);
+        // bool isEverythingUnlocked = false;
+        // int j = 0;
 
-        if (cardIndex == 0 && chosenUpgradeList.Count < 3)
-        {
-            if (chosenUpgradeList.Count == 2)
-            {
-                Logger.Log("ONly 2 upgrades available");
-                j = chosenUpgradeList.Count - 1;
-                // shuffledList[shuffledList.Count - 1].SetActive(false);
-            }
-            else if (chosenUpgradeList.Count == 1)
-            {
-                Logger.Log($"ONly 1 upgrade available");
-                j = chosenUpgradeList.Count;
-                // shuffledList[shuffledList.Count - 1].SetActive(false);
-                // shuffledList[shuffledList.Count - 2].SetActive(false);
-            }
-            else if (chosenUpgradeList.Count == 0)
-            {
-                Logger.LogError("No upgrades are available to be displayed.", this);
-                // shuffledList[shuffledList.Count - 1].SetActive(false);
-                // shuffledList[shuffledList.Count - 2].SetActive(false);
-                j = chosenUpgradeList.Count;
-                isEverythingUnlocked = true;
-            }
+        // if (cardIndex == 0 && numAvailableUpgrades < 3)
+        // {
+        //     Logger.Log("No abilities displayed, less than 3 available upgrades to display", this);
+        //     switch (numAvailableUpgrades)
+        //     {
+        //         case 2:
+        //             Logger.Log("Only 2 upgrades available");
+        //             j = numAvailableUpgrades - 1;   
+        //             break;
+        //         case 1:
+        //             Logger.Log($"Only 1 upgrade available");
+        //             j = numAvailableUpgrades;
+        //             break;         
+        //         case 0:       
+        //             Logger.LogError("No abilities and No upgrades are available to be displayed.", this);
+        //             isEverythingUnlocked = true;   
+        //             break;                       
+        //     }
+        // }
 
             // Call method that will remove the third ability card UI and shift the position of the remaining two.
             // Start by disabling the last ability card UI panel
             // Get full screen width and width of the remaining panel-images
             // Split the screen in thirds and position each card at the third intervals.
-        }
 
-        while (chosenUpgradeList.Count >= j)
+        if (numToDisplay > 0)
         {
-            TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
+            int x = 0;
 
-            if (!isEverythingUnlocked)
+            while (x < numToDisplay)
             {
+                TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
+
+                UpgradeTypesDatabase upgradeDictionary = upgradeDatabase[x];
+
                 // Format text to display
-                string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(chosenUpgradeList[x].Value.upgradeType.ToString());
-                string abilityName = AbilityUtilityMethods.FormatAbilityName(chosenUpgradeList[x].Key);
-                string upgradeDescription = chosenUpgradeList[x].Value.upgradeDescription;
+                string abilityName = AbilityUtilityMethods.FormatAbilityName(upgradeDictionary.First().Key.ToString());
+                string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Value.First().Key.ToString());
+                string upgradeDescription = upgradeDictionary.First().Value.First().Value.First().description;
+                string upgradeLevel = upgradeDictionary.First().Value.First().Value.First().level.ToString();
+                //int newValue = upgradeDictionary.First().Value.First().Value.First().newValue;
 
                 // Update UI text
-                textElements[0].text = "New Upgrade!!";
+                textElements[0].text = $"Upgrade to level {upgradeLevel}!!";
                 textElements[1].text = $"{abilityName}\n{upgradeType}";
                 textElements[2].text = upgradeDescription;
 
                 // Add new upgade-card relation
-                Dictionary <string, AbilityUpgrades> upgradeToAdd = new Dictionary<string, AbilityUpgrades>();
-                upgradeToAdd.Add(chosenUpgradeList[x].Key, chosenUpgradeList[x].Value);
-                upgradeCardRelationship.Add(shuffledList[cardIndex], upgradeToAdd);
+                // Dictionary <string, AbilityUpgrades> upgradeToAdd = new Dictionary<string, AbilityUpgrades>();
+                // upgradeToAdd.Add(chosenUpgradeList[x].Key, chosenUpgradeList[x].Value);
+                upgradeCardRelationship.Add(shuffledList[cardIndex], upgradeDictionary);
+
+                x++;
+                cardIndex++;
             }
-            else
+        }
+
+        // NOTE: Below is unncessary once I have the logic to hide UI panels implemented.
+        if (cardIndex < 2)
+        {
+            int j = 0;
+            while (j < cardIndex)
             {
-                // Update UI text
+                TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
+
                 textElements[0].text = "All Done!!";
                 textElements[1].text = "Everything is\nUnlocked!!";
-                textElements[2].text = "Congrats you've unlocked all abilities and upgrades!";
-            }
+                textElements[2].text = "Congrats you've unlocked all abilities and upgrades!";  
 
-            x++;
-            j++;
-            cardIndex++;
+                j++;                      
+            }
         }
     } 
 }   

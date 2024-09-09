@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 [RequireComponent(typeof(Outline))]
 public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
@@ -11,11 +15,11 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
     [SerializeField] DisplayAbilityCards displayAbilityCards;
     [SerializeField] DisplayUpgradeCards displayUpgradeCards;
     private static AbilityCardOnClick currentSelectedCard;
-    private Dictionary<string, AbilityUpgrades> selectedUpgrade = null;
-    public Dictionary<string, AbilityUpgrades> SelectedUpgrade => selectedUpgrade;
+    private UpgradeTypesDatabase selectedUpgrade = null;
+    public UpgradeTypesDatabase SelectedUpgrade => selectedUpgrade;
     private AbilityLibraryData.AbilityStats selectedAbility = null;
     public AbilityLibraryData.AbilityStats SelectedAbility => selectedAbility;
-    public static event Action<AbilityLibraryData.AbilityStats, Dictionary<string, AbilityUpgrades>> OnCardSelection;
+    public static event Action<AbilityLibraryData.AbilityStats, UpgradeTypesDatabase> OnCardSelection;
 
     public void OnPointerClick(PointerEventData eventData)
     {

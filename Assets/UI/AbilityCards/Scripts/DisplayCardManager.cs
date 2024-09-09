@@ -3,17 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 [RequireComponent(typeof(AbilityCardGenerator))]
 [RequireComponent(typeof(DisplayAbilityCards))]
 [RequireComponent(typeof(DisplayUpgradeCards))]
 public class DisplayCardManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] cardPanels;
+    [SerializeField] private GameObject[] cardUIPanels;
     private AbilityCardGenerator cardGenerator;
     private List<GameObject> shuffledList;
-    private List<AbilityLibraryData.AbilityStats> generatedAbilities;
-    private Dictionary<string, AbilityUpgrades> generatedUpgrades;
+    private List<AbilityLibraryData.AbilityStats> abilities;
+    private List<UpgradeTypesDatabase> upgrades;
     private DisplayAbilityCards displayAbilityCards;
     private DisplayUpgradeCards displayUpgradeCards;
 
@@ -23,9 +27,9 @@ public class DisplayCardManager : MonoBehaviour
         displayAbilityCards = GetComponent<DisplayAbilityCards>();
         displayUpgradeCards = GetComponent<DisplayUpgradeCards>();
 
-        if (cardGenerator == null)
+        if (cardGenerator == null || displayAbilityCards == null || displayUpgradeCards == null)
         {
-            Logger.LogError("Missing reference to AbilityCardGenerator component", this);
+            Logger.LogError("Missing local component of AbilityCardGenerator, DisplayAbilitytCards or DisplayUpgradeCards", this);
         }
     }
 
@@ -39,40 +43,44 @@ public class DisplayCardManager : MonoBehaviour
         cardGenerator.OnAbilitiesGenerated -= CalculateTotalAbilitiesToDisplay;
     }
 
-    private void CalculateTotalAbilitiesToDisplay(List<AbilityLibraryData.AbilityStats> abilities, Dictionary<string, AbilityUpgrades> upgrades)
+    private void CalculateTotalAbilitiesToDisplay(List<AbilityLibraryData.AbilityStats> abilities, List<UpgradeTypesDatabase> upgrades)
     {
-        generatedAbilities = abilities; // Should never number > 3
-        generatedUpgrades = upgrades;
-
-        // Determine how many new abilities to display based on how many upgradesToDisplay are available.
-        int abilityCountBasedOnUpgradeCount = upgrades.Count >= 2 ? 1 : (upgrades.Count == 1 ? 2 : 3);
+        this.abilities = abilities;
+        this.upgrades = upgrades;
         int finalNumOfAbilitiesToDisplay = 0;
         int finalNumOfUpgradesToDisplay = 0;
 
-        if (abilities.Count == 0 && upgrades.Count == 0)
+        // Determine how many new abilities to display based on how many upgrades are available.
+        int abilityCountBasedOnUpgradeCount = this.upgrades.Count >= 2 ? 1 : (this.upgrades.Count == 1 ? 2 : 3);
+
+        if (this.abilities.Count == 0 && this.upgrades.Count == 0)
         {
             Logger.Log("All abilities and upgrades have been unlocked!");
             // TODO: If everything is unlocked, don't levelup anymore and don't freeze time/show cards anymore.
             return;
         }
 
-        if (abilities.Count == 0 && upgrades.Count > 0)
+        if (this.abilities.Count == 0 && this.upgrades.Count > 0)
         {
+            Logger.Log("0 abilities detected, More than 3 upgrades detected.");
             finalNumOfAbilitiesToDisplay = 0;
-            finalNumOfUpgradesToDisplay = upgrades.Count > 3 ? 3 : upgrades.Count;
+            finalNumOfUpgradesToDisplay = this.upgrades.Count > 3 ? 3 : this.upgrades.Count;
         }
-        else if (abilities.Count > 0 && upgrades.Count == 0)
+        else if (this.abilities.Count > 0 && this.upgrades.Count == 0)
         {
-            finalNumOfAbilitiesToDisplay = abilities.Count > 3 ? 3 : upgrades.Count;
+            Logger.Log("More than 3 abilities detected, 0 upgrades detected.");
+            finalNumOfAbilitiesToDisplay = this.abilities.Count > 3 ? 3 : this.upgrades.Count;
             finalNumOfUpgradesToDisplay = 0;
         }
-        else if (abilityCountBasedOnUpgradeCount > abilities.Count)
+        else if (abilityCountBasedOnUpgradeCount > this.abilities.Count)
         {
-            finalNumOfAbilitiesToDisplay = abilities.Count;
-            finalNumOfUpgradesToDisplay = 3 - abilities.Count;
+            Logger.Log("abilityCountBasedOnUpgradeCount > abilities.Count");
+            finalNumOfAbilitiesToDisplay = this.abilities.Count;
+            finalNumOfUpgradesToDisplay = 3 - this.abilities.Count;
         }
-        else if (abilityCountBasedOnUpgradeCount <= abilities.Count)
+        else if (abilityCountBasedOnUpgradeCount <= this.abilities.Count)
         {
+            Logger.Log("abilityCountBasedOnUpgradeCount <= abilities.Count");
             finalNumOfAbilitiesToDisplay = abilityCountBasedOnUpgradeCount;
             finalNumOfUpgradesToDisplay = 3 - abilityCountBasedOnUpgradeCount;
         }
@@ -86,17 +94,14 @@ public class DisplayCardManager : MonoBehaviour
 
     private void ProcessDisplayAbilitiesAndUpgrades(int finalNumOfAbilitiesToDisplay, int finalNumOfUpgradesToDisplay)
     {
-        ShufflePanelCards();
-        displayAbilityCards.ProcessAbilityDisplay(shuffledList, finalNumOfAbilitiesToDisplay, generatedAbilities);
+        // Shuffle the array of the three UI Panels
+        shuffledList = GeneralUtilityMethods.ShuffleList(cardUIPanels.ToList());
+
+        displayAbilityCards.ProcessAbilityDisplay(shuffledList, finalNumOfAbilitiesToDisplay, this.abilities);
 
         if (finalNumOfAbilitiesToDisplay < 3)
         {
-            displayUpgradeCards.ProcessUpgradeDisplay(shuffledList, finalNumOfUpgradesToDisplay, generatedUpgrades);
+            displayUpgradeCards.ProcessUpgradeDisplay(shuffledList, finalNumOfUpgradesToDisplay, this.upgrades);
         }
     }
-
-    private void ShufflePanelCards()
-    {
-        shuffledList = BaseUtilityMethods.ShuffleList(cardPanels.ToList());
-    }      
 }

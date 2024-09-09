@@ -1,109 +1,137 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 public class GenerateUpgradeCards : MonoBehaviour
 {
-    Dictionary<string, AbilityUpgrades> allAvailableUpgrades = new Dictionary<string, AbilityUpgrades>(); // deprecate
+    private UpgradeTypesDatabase upgradeTypeDatabase;
+    private UpgradeLibraryData upgradeLibraryData;
 
-    public Dictionary<string, AbilityUpgrades> StartGeneratingUpgradeCards(UpgradeLibraryData upgradeLibraryData)
+    public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards(UpgradeLibraryData upgradeLibraryData)
     {
-        CreateListOfAvailableUpgrades(upgradeLibraryData);
-        Dictionary<string, AbilityUpgrades> newUpgrades = CreateUpgradesList();
+        this.upgradeLibraryData = upgradeLibraryData;
+        ProcessDequeue();
+        // CreateListOfAvailableUpgrades(); // TODO: Should only be called once at game start
+        List<UpgradeTypesDatabase> newUpgrades = CreateUpgradesList();
 
         return newUpgrades;
     }
 
-    private void CreateListOfAvailableUpgrades(UpgradeLibraryData upgradeLibraryData)
+    private void Start()
     {
-        allAvailableUpgrades.Clear();
+        InitializeUpradeDatabase();
+    }
 
-        foreach (var data in upgradeLibraryData.upgradeStatsData)
+    private void InitializeUpradeDatabase()
+    {
+        foreach (var ability in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
         {
-            // Query ActiveAbilities, see if AbilityName can be found in Key in upgradeTypeDatabase
-            // If not, populate here
-            // If it is present, verify that the nested dictionary has upgrade types with leveldata
-            // If data is present, do nothing.
-            if (PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades.Count > 0)
+            bool isAbilityInDatabase = upgradeTypeDatabase.TryGetValue(ability.AbilityName, out var value);
+
+            if (!isAbilityInDatabase)
             {
-                Logger.Log("Some abilities have been unlocked", this);
-                // for (int i = 0; i < data.upgradeType.Length; i++)
-                // {
-                //     bool isFound = false;
+                Logger.Log("New ability detected.  Adding to upgradeTypeDatabase", this);
+                foreach (var data in this.upgradeLibraryData.upgradeStatsData)
+                {
+                    if (data.parentAbility == ability.AbilityName)
+                    {
+                        Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> upgradeTypeDictionary = new Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>();
 
-                //     foreach (KeyValuePair<string, AbilityUpgrades> kvp in PlayerAbilitiesManager.AbilityManagerInstance.ActiveUpgrades)
-                //     {
-                //         if (kvp.Key.Contains(data.abilityName.ToString()) && data.abilityUpgrades[i].upgradeType != kvp.Value.upgradeType)
-                //         {
-                //             isFound = true;
-                //             break;
-                //         }
-                //     }
+                        foreach (UpgradeTypeData type in data.upgradeType)
+                        {
+                            Queue<UpgradeLevelData> typeLevelData = new Queue<UpgradeLevelData>();
 
-                //     if (!isFound)
-                //     {
-                //         if (!allAvailableUpgrades.ContainsKey($"{data.abilityName}_idx{i}"))
-                //         {
-                //             allAvailableUpgrades.Add($"{data.abilityName}_idx{i}", data.abilityUpgrades[i]);
-                //         }
-                //     }
-                // }
+                            foreach (UpgradeLevelData levelData in type.levelData)
+                            {
+                                typeLevelData.Enqueue(levelData);
+                            }
+                        }
 
-                // foreach (var item in allAvailableUpgrades)
-                // {
-                //     Logger.Log("Contents of AbilityUpgradeData after Generation");
-                //     Logger.Log(item.Key);
-                //     Logger.Log(item.Value.upgradeType.ToString());
-                // }
+                        upgradeTypeDatabase.Add(data.parentAbility, upgradeTypeDictionary);
+                    }
+                }
+            }
+            else
+            {
+                Logger.Log("Ability exists in database.  Removing any where the Queue count is 0.", this);
+                foreach (var kvp in value)
+                {
+                    if (kvp.Value.Count == 0)
+                    {
+                        value.Remove(kvp.Key);
+                    }
+                }
             }
         }
     }
 
-    private Dictionary<string, AbilityUpgrades> CreateUpgradesList()
+    private void ProcessDequeue()
     {
-        Dictionary<string, AbilityUpgrades> newUpgradeList = new Dictionary<string, AbilityUpgrades>();
-        List<string> upgradeKeys = new List<string>();
-
-        if (allAvailableUpgrades.Count <= 3)
+        Dictionary<AbilityNames, UpgradeTypes> dataToDequeue = PlayerAbilitiesManager.AbilityManagerInstance.UpgradeToDequeue;
+        if (dataToDequeue.Count != 0)
         {
-            return allAvailableUpgrades;
+            upgradeTypeDatabase.TryGetValue(dataToDequeue.First().Key, out var typeDictionary);
+            typeDictionary.TryGetValue(dataToDequeue.First().Value, out var levelData);
+            levelData.Dequeue();
         }
-        else
+    }    
+
+    private List<UpgradeTypesDatabase> CreateUpgradesList()
+    {
+        int validQueueCount = CardUtilityMethods.GetNumValidLevelQueues(upgradeTypeDatabase);
+
+        int x = validQueueCount == 0 ? 3 : 
+            (validQueueCount == 1) ? 2 :
+            (validQueueCount == 2) ? 1 : 0;
+
+        if (x < 3)
         {
-            int x = 0;
+            List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
+
+            Logger.Log("Starting process to choose 3 random upgrades with existing level queues", this);
 
             while (x < 3)
             {
-                foreach (KeyValuePair<string, AbilityUpgrades> upgradePair in allAvailableUpgrades)
-                {
-                    upgradeKeys.Add(upgradePair.Key);
-                }
+                Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> chosenTypes = new Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>();
+                UpgradeTypesDatabase chosenUpgrade = new UpgradeTypesDatabase();
 
-                int index = BaseUtilityMethods.GenerateRandomIndex(allAvailableUpgrades.Count);
-                string randomUpgradeKey = upgradeKeys[index];
-                AbilityUpgrades selectedUpgradeData = allAvailableUpgrades[randomUpgradeKey];
+                AbilityNames randomAbilityName = ChooseRandomAbilityName();
+                upgradeTypeDatabase.TryGetValue(randomAbilityName, out var typeDictionary);
 
-                if (!newUpgradeList.ContainsKey(randomUpgradeKey))
-                {
-                    newUpgradeList.Add(randomUpgradeKey, selectedUpgradeData);
-                }
-                else
-                {
-                    while (newUpgradeList.ContainsKey(randomUpgradeKey))
-                    {
-                        index = BaseUtilityMethods.GenerateRandomIndex(allAvailableUpgrades.Count);
-                        randomUpgradeKey = upgradeKeys[index];
-                    }
+                UpgradeTypes randomUpgradeType = ChooseRandomUpgradeType(typeDictionary);
+                typeDictionary.TryGetValue(randomUpgradeType, out var levelQueue);
 
-                    selectedUpgradeData = allAvailableUpgrades[randomUpgradeKey];
-                    newUpgradeList.Add(randomUpgradeKey, selectedUpgradeData);
-                }
-
-                x++;
+                chosenTypes.Add(randomUpgradeType, levelQueue);
+                chosenUpgrade.Add(randomAbilityName, chosenTypes);
+                chosenUpgradeList.Add(chosenUpgrade);
             }
 
-            return newUpgradeList;
-        }        
-    }    
+            return chosenUpgradeList;
+        }
+        else
+        {
+            Logger.Log("x is greater than 3 which should never be possible", this);
+            return null;
+        }
+    }
+
+    private AbilityNames ChooseRandomAbilityName()
+    {
+        List<AbilityNames> abilityNameKeys = upgradeTypeDatabase.Keys.ToList();
+        int abilityIndex = GeneralUtilityMethods.GenerateRandomIndex(abilityNameKeys.Count);
+        return abilityNameKeys[abilityIndex];
+    }
+
+    private UpgradeTypes ChooseRandomUpgradeType(Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> typeDictionary)
+    {
+        List<UpgradeTypes> upgradeTypeKeys = typeDictionary.Keys.ToList();
+        int typeIndex = GeneralUtilityMethods.GenerateRandomIndex(upgradeTypeKeys.Count);
+        return upgradeTypeKeys[typeIndex];
+    }
 }

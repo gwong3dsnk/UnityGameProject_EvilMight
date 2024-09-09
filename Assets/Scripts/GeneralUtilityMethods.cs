@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static class BaseUtilityMethods
+public class GeneralUtilityMethods : MonoBehaviour
 {
     private static System.Random random = new System.Random();
 
@@ -12,7 +10,7 @@ public static class BaseUtilityMethods
     {
         int randomIndex = random.Next(maxCount);
         return randomIndex;
-    }
+    }   
 
     public static List<T> ShuffleList<T>(List<T> list)
     {
@@ -29,18 +27,4 @@ public static class BaseUtilityMethods
 
         return list;
     }    
-
-    public static string InsertSpaceBeforeCapitalLetters(string input)
-    {
-        // Use regex to insert a space before each capital letter, except the first one
-        return Regex.Replace(input, @"(?<!^)(?<!^)([A-Z])", " $1");
-    }    
-
-    public static void DoesDirectoryExist(string path)
-    {
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }        
-    }
 }

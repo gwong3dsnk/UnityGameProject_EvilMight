@@ -27,5 +27,5 @@ ehthumbs.db
 Thumbs.db
 
 # Custom Additions
-Editor/Logs/
-Editor/Temp/
+Assets/Editor/Logs/
+Assets/Editor/Temp/

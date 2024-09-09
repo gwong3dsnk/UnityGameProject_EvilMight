@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 public class ActivateAbilityOrUpgrade : MonoBehaviour
 {
@@ -12,7 +16,7 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
     #endregion
 
     private Button activationButton;
-    private Dictionary<string, AbilityUpgrades> selectedUpgrade = new Dictionary<string, AbilityUpgrades>();
+    private UpgradeTypesDatabase selectedUpgrade = new UpgradeTypesDatabase();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
 
     private void Start()
@@ -30,7 +34,7 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
         AbilityCardOnClick.OnCardSelection -= SetAbilityUpgradeProperties;
     }
 
-    private void SetAbilityUpgradeProperties(AbilityLibraryData.AbilityStats ability, Dictionary<string, AbilityUpgrades> upgrade)
+    private void SetAbilityUpgradeProperties(AbilityLibraryData.AbilityStats ability, UpgradeTypesDatabase upgrade)
     {
         selectedAbility = ability;
         selectedUpgrade = upgrade;

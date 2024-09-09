@@ -11,13 +11,12 @@ public class DisplayAbilityCards : MonoBehaviour
     private List<AbilityLibraryData.AbilityStats> generatedAbilities;
     private Dictionary<GameObject, AbilityLibraryData.AbilityStats> abilityCardRelationship = new Dictionary<GameObject, AbilityLibraryData.AbilityStats>();
     public Dictionary<GameObject, AbilityLibraryData.AbilityStats> AbilityCardRelationship => abilityCardRelationship;
-    public static int cardIndex;
 
-    public void ProcessAbilityDisplay(List<GameObject> shuffledList, int finalNumOfAbilitiesToDisplay, List<AbilityLibraryData.AbilityStats> generatedAbilities)
+    public void ProcessAbilityDisplay(List<GameObject> shuffledList, int numToDisplay, List<AbilityLibraryData.AbilityStats> generatedAbilities)
     {
         this.shuffledList = shuffledList;
         this.generatedAbilities = generatedAbilities;
-        List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(finalNumOfAbilitiesToDisplay);
+        List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(numToDisplay);
         
         if (chosenAbilities.Count > 0)
         {
@@ -34,14 +33,7 @@ public class DisplayAbilityCards : MonoBehaviour
         List<AbilityLibraryData.AbilityStats> randomlySelectedAbilities = new List<AbilityLibraryData.AbilityStats>();
         AbilityLibraryData.AbilityStats chosenAbility;
 
-        if (this.generatedAbilities.Count > 0)
-        {
-            chosenAbility = GetRandomAbilityData();
-        }
-        else
-        {
-            chosenAbility = null;
-        }
+        chosenAbility = this.generatedAbilities.Count > 0 ? GetRandomAbilityData() : null;
 
         if (chosenAbility != null)
         {
@@ -66,23 +58,24 @@ public class DisplayAbilityCards : MonoBehaviour
 
     private AbilityLibraryData.AbilityStats GetRandomAbilityData()
     {
-        int randomIndex = BaseUtilityMethods.GenerateRandomIndex(this.generatedAbilities.Count);
+        int randomIndex = GeneralUtilityMethods.GenerateRandomIndex(this.generatedAbilities.Count);
         return this.generatedAbilities[randomIndex];
     }
 
     private void DisplayAbilities(List<AbilityLibraryData.AbilityStats> chosenAbilities)
     {
-        cardIndex = 0;
+        CardUtilityMethods.SetCardIndex(0);
+        int cardIndex = CardUtilityMethods.GetCardIndex();
         abilityCardRelationship.Clear();
 
         while (chosenAbilities.Count > cardIndex)
         {
-            TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] textElements = this.shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
             textElements[0].text = "New Ability!!";
             textElements[1].text = chosenAbilities[cardIndex].abilityName.ToString();
             textElements[2].text = chosenAbilities[cardIndex].abilityDescription;
 
-            abilityCardRelationship.Add(shuffledList[cardIndex], chosenAbilities[cardIndex]);
+            abilityCardRelationship.Add(this.shuffledList[cardIndex], chosenAbilities[cardIndex]);
 
             cardIndex++;
         }

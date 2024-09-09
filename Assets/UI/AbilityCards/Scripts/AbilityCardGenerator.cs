@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 [RequireComponent(typeof(GenerateAbilityCards))]
 [RequireComponent(typeof(GenerateUpgradeCards))]
@@ -11,7 +15,7 @@ public class AbilityCardGenerator : MonoBehaviour
     [SerializeField] UpgradeLibraryData upgradeLibraryData;
     private GenerateAbilityCards generateAbilityCards;
     private GenerateUpgradeCards generateUpgradeCards;
-    public event Action<List<AbilityLibraryData.AbilityStats>, Dictionary<string, AbilityUpgrades>> OnAbilitiesGenerated;
+    public event Action<List<AbilityLibraryData.AbilityStats>, List<UpgradeTypesDatabase>> OnAbilitiesGenerated;
 
     private void Awake()
     {
@@ -26,7 +30,8 @@ public class AbilityCardGenerator : MonoBehaviour
     public void BeginGeneration()
     {
         List<AbilityLibraryData.AbilityStats> newAbilities = generateAbilityCards.StartGeneratingAbilityCards(abilityLibraryData);
-        Dictionary<string, AbilityUpgrades> newUpgrades = generateUpgradeCards.StartGeneratingUpgradeCards(upgradeLibraryData);
+        // Generate newUpgrades populated with up to 3 upgrades with available levelData
+        List<UpgradeTypesDatabase> newUpgrades = generateUpgradeCards.StartGeneratingUpgradeCards(upgradeLibraryData);
 
         if (newAbilities != null && newUpgrades != null)
         {

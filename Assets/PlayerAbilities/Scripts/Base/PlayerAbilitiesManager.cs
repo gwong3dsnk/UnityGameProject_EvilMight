@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    [SerializeField] bool enableDebug;
     // private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
     private PlayerAbilities currentPlayerAbility;
-    public Dictionary<AbilityNames, Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>> upgradeTypeDatabase;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
-    private Dictionary<string, AbilityUpgrades> activeUpgrades = new Dictionary<string, AbilityUpgrades>();
-    public Dictionary<string, AbilityUpgrades> ActiveUpgrades => activeUpgrades;
+    private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
+    public UpgradeTypesDatabase ActiveUpgrades => activeUpgrades;
+    private Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
+    public Dictionary<AbilityNames, UpgradeTypes> UpgradeToDequeue => upgradeToDequeue;
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
     public event EventHandler OnActivationCompletion;
 
@@ -50,15 +54,34 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
     }
 
-    public void AddAbilityUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
+    public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        KeyValuePair<string, AbilityUpgrades> upgradeKVP = upgrade.First();
+        // TODO: THe follow ability name, upgrade type and most importantly level data needs to be removed from the official 
+        // UpgradeTypesDatabase before the next player level up event.
+        AbilityNames newAbilityName = newUpgrade.First().Key;
+        UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
+        Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
+        UpgradeLevelData firstQueueItem = newQueue.Peek();
 
-        if (!activeUpgrades.ContainsKey(upgradeKVP.Key))
+        if (activeUpgrades.ContainsKey(newAbilityName))
         {
-            activeUpgrades.Add(upgradeKVP.Key, upgradeKVP.Value);
-            currentPlayerAbility.ActivateUpgrade(upgrade);
+            if (activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
+            {
+                activeUpgrades[newAbilityName][newUpgradeType].Enqueue(firstQueueItem);
+            }
+            else
+            {
+                Queue<UpgradeLevelData> newQueueEntry = new Queue<UpgradeLevelData>();
+                newQueueEntry.Enqueue(firstQueueItem);
+                activeUpgrades[newAbilityName].Add(newUpgradeType, newQueueEntry);
+            }
         }
+        else
+        {
+            Logger.LogError("Ability doesn't exist in ActiveUpgrades.  Should never reach this point.", this);
+        }
+
+        upgradeToDequeue.Add(newAbilityName, newUpgradeType);
 
         InvokeOnActivationCompletion();
     }

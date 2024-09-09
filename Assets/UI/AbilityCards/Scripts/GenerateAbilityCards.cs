@@ -67,7 +67,7 @@ public class GenerateAbilityCards : MonoBehaviour
 
             while (x < 3)
             {
-                int index = BaseUtilityMethods.GenerateRandomIndex(abilityData.Count);
+                int index = GeneralUtilityMethods.GenerateRandomIndex(abilityData.Count);
 
                 if (!newAbilityList.Contains(abilityData[index]))
                 {
@@ -77,7 +77,7 @@ public class GenerateAbilityCards : MonoBehaviour
                 {
                     while (newAbilityList.Contains(abilityData[index]))
                     {
-                        index = BaseUtilityMethods.GenerateRandomIndex(abilityData.Count);
+                        index = GeneralUtilityMethods.GenerateRandomIndex(abilityData.Count);
                     }
 
                     newAbilityList.Add(abilityData[index]);
