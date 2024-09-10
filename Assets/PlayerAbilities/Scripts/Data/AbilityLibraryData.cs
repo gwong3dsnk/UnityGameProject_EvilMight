@@ -13,7 +13,7 @@ public class AbilityLibraryData : ScriptableObject
         public string abilityDescription;
         public int damage;
         public int fireRate;
-        public AbilityUpgrades[] abilityUpgrades;
+        // public AbilityUpgrades[] abilityUpgrades;
         public GameObject prefab;
         public PlayerAbilities playerAbilities;
     }

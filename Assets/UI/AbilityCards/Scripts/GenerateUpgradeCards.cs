@@ -28,7 +28,7 @@ public class GenerateUpgradeCards : MonoBehaviour
 
     private void InitializeUpgradeDatabase()
     {
-        Logger.Log("Initializing UpgradeDatabase");
+        Logger.Log("Initializing UpgradeDatabase on Awake", this);
         foreach (var ability in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
         {
             bool isAbilityInDatabase = upgradeTypeDatabase.TryGetValue(ability.AbilityName, out var value);

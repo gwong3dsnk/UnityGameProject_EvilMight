@@ -21,8 +21,6 @@ public abstract class PlayerAbilities : MonoBehaviour
     public int Damage { get => damage; set => damage = value; }
     [SerializeField] protected int fireRate;
     public int FireRate => fireRate;
-    [SerializeField] protected AbilityUpgrades[] abilityUpgrades;
-    public AbilityUpgrades[] AbilityUpgrades => abilityUpgrades;
     [SerializeField] protected GameObject prefab;
     public GameObject Prefab => prefab;
     [SerializeField] protected PlayerAbilities playerAbilities;
@@ -59,7 +57,6 @@ public abstract class PlayerAbilities : MonoBehaviour
                 abilityDescription = stats.abilityDescription;
                 damage = stats.damage;
                 fireRate = stats.fireRate;
-                abilityUpgrades = stats.abilityUpgrades;
                 prefab = stats.prefab;
                 playerAbilities = stats.playerAbilities;
             }
@@ -68,13 +65,13 @@ public abstract class PlayerAbilities : MonoBehaviour
 
     public virtual void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        Logger.Log($"This - {this.name}");
-        // AbilityNames newAbilityName = newUpgrade.First().Key;
+        Logger.Log($"Activating Upgrade in - {this.name} PlayerAbilities.", this);
         UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
         Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
         int newValue = newQueue.Peek().newValue;
         ParticleSystem abilityFX = GetComponentInChildren<ParticleSystem>();
-        Logger.Log($"FX Name - {abilityFX.name}");
+
+        Logger.Log($"FX To Be Updated - {abilityFX.name}");
         
         if (newUpgradeType == UpgradeTypes.DamageUp)
         {
