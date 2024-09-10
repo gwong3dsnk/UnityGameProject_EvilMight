@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 public class SingleShot : PlayerAbilities
 {
@@ -20,9 +24,9 @@ public class SingleShot : PlayerAbilities
         base.DeactivateAbility();
     }
 
-    public override void ActivateUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
+    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        base.ActivateUpgrade(upgrade);
+        base.ActivateUpgrade(newUpgrade);
     }
 
     protected override void InitializeAbilityData()

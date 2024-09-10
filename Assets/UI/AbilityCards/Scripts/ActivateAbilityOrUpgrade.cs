@@ -59,6 +59,7 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
         else if (selectedUpgrade.Count > 0)
         {
             PlayerAbilitiesManager.AbilityManagerInstance.AddAbilityUpgrade(selectedUpgrade);
+            PlayerAbilitiesManager.AbilityManagerInstance.BeginUpgradeActivation(selectedUpgrade);
         }
     }
 

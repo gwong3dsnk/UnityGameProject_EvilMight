@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -12,7 +11,6 @@ using UpgradeTypesDatabase =
 public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    // private Vector3 spawnPositionOffset = new Vector3(0f, 1.7f, 2.5f);
     private PlayerAbilities currentPlayerAbility;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
@@ -54,6 +52,16 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
     }
 
+    public void InstantiateAbility(GameObject ability)
+    {
+        Vector3 particleSpawnPosition = player.transform.position;
+        GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
+        currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
+        AddAbility(currentPlayerAbility);
+
+        InvokeOnActivationCompletion();
+    }    
+
     public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
     {
         // TODO: THe follow ability name, upgrade type and most importantly level data needs to be removed from the official 
@@ -61,37 +69,35 @@ public class PlayerAbilitiesManager : MonoBehaviour
         AbilityNames newAbilityName = newUpgrade.First().Key;
         UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
         Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
-        UpgradeLevelData firstQueueItem = newQueue.Peek();
 
         if (activeUpgrades.ContainsKey(newAbilityName))
         {
-            if (activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
+            if (!activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
             {
-                activeUpgrades[newAbilityName][newUpgradeType].Enqueue(firstQueueItem);
-            }
-            else
-            {
-                Queue<UpgradeLevelData> newQueueEntry = new Queue<UpgradeLevelData>();
-                newQueueEntry.Enqueue(firstQueueItem);
-                activeUpgrades[newAbilityName].Add(newUpgradeType, newQueueEntry);
+                // Ability exists, upgrade type doesn't.  Add upgrade type.
+                activeUpgrades[newAbilityName].Add(newUpgradeType, newQueue);
             }
         }
         else
         {
-            Logger.LogError("Ability doesn't exist in ActiveUpgrades.  Should never reach this point.", this);
+            // First upgrade unlocked for existing ability.  Adding the entry.
+            activeUpgrades.Add(newAbilityName, newUpgrade.First().Value);
         }
 
         upgradeToDequeue.Add(newAbilityName, newUpgradeType);
-
-        InvokeOnActivationCompletion();
     }
 
-    public void InstantiateAbility(GameObject ability)
+    public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
     {
-        Vector3 particleSpawnPosition = player.transform.position;
-        GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
-        currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
-        AddAbility(currentPlayerAbility);
+        AbilityNames newAbilityName = newUpgrade.First().Key;
+
+        foreach (PlayerAbilities ability in activeAbilities)
+        {
+            if (ability.AbilityName == newAbilityName)
+            {
+                ability.ActivateUpgrade(newUpgrade);
+            }
+        }
 
         InvokeOnActivationCompletion();
     }

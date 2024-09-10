@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UpgradeTypesDatabase = 
+    System.Collections.Generic.Dictionary<AbilityNames, 
+    System.Collections.Generic.Dictionary<UpgradeTypes, 
+    System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
 public abstract class PlayerAbilities : MonoBehaviour
 {
@@ -62,28 +66,26 @@ public abstract class PlayerAbilities : MonoBehaviour
         }        
     }    
 
-    public virtual void ActivateUpgrade(Dictionary<string, AbilityUpgrades> upgrade)
+    public virtual void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        KeyValuePair<string, AbilityUpgrades> upgradeKVP = upgrade.First();
-        ParticleSystem singleShotFX = GetComponentInChildren<ParticleSystem>();
-        string compressedName = upgradeKVP.Key.Replace(" ", ""); // Remove any spaces.
-        string upgradesAbilityName = AbilityUtilityMethods.FormatAbilityName(compressedName);
-
-        foreach (PlayerAbilities ability in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
+        Logger.Log($"This - {this.name}");
+        // AbilityNames newAbilityName = newUpgrade.First().Key;
+        UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
+        Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
+        int newValue = newQueue.Peek().newValue;
+        ParticleSystem abilityFX = GetComponentInChildren<ParticleSystem>();
+        Logger.Log($"FX Name - {abilityFX.name}");
+        
+        if (newUpgradeType == UpgradeTypes.DamageUp)
         {
-            if (ability.name.Contains(upgradesAbilityName))
-            {
-                if (upgradeKVP.Value.upgradeType == UpgradeTypes.DamageUp)
-                {
-                    ability.Damage = upgradeKVP.Value.newValue;
-                }
-                else if (upgradeKVP.Value.upgradeType == UpgradeTypes.FireRateUp)
-                {
-                    ParticleSystem.EmissionModule singleShotEmission = singleShotFX.emission;
-                    singleShotEmission.rateOverTime = upgradeKVP.Value.newValue;
-                }
-            }
-        }        
+            Logger.Log("Updating damage value");
+            damage = newValue;
+        }
+        else if (newUpgradeType == UpgradeTypes.FireRateUp)
+        {
+            Logger.Log("Updating emission value");
+            ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
+            emissionModule.rateOverTime = newValue;
+        }   
     }
-
 }

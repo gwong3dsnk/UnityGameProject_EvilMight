@@ -25,6 +25,7 @@ public class DisplayUpgradeCards : MonoBehaviour
         // this.cardIndex = DisplayAbilityCards.cardIndex;
         this.cardIndex = CardUtilityMethods.GetCardIndex();
         this.shuffledList = shuffledList;
+        Logger.Log($"Shuffled List - {shuffledList.Count}");
         // this.generatedUpgrades = generatedUpgrades;
         // UpgradeTypesDatabase chosenUpgradeKeys = SelectRandomUpgradesToDisplay(numToDisplay);
         // DisplayUpgrades(chosenUpgradeKeys);
@@ -77,34 +78,6 @@ public class DisplayUpgradeCards : MonoBehaviour
     private void DisplayUpgrades(int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
         upgradeCardRelationship.Clear();
-        // int numAvailableUpgrades = CardUtilityMethods.GetNumValidLevelQueues(this.generatedUpgrades);
-        // bool isEverythingUnlocked = false;
-        // int j = 0;
-
-        // if (cardIndex == 0 && numAvailableUpgrades < 3)
-        // {
-        //     Logger.Log("No abilities displayed, less than 3 available upgrades to display", this);
-        //     switch (numAvailableUpgrades)
-        //     {
-        //         case 2:
-        //             Logger.Log("Only 2 upgrades available");
-        //             j = numAvailableUpgrades - 1;   
-        //             break;
-        //         case 1:
-        //             Logger.Log($"Only 1 upgrade available");
-        //             j = numAvailableUpgrades;
-        //             break;         
-        //         case 0:       
-        //             Logger.LogError("No abilities and No upgrades are available to be displayed.", this);
-        //             isEverythingUnlocked = true;   
-        //             break;                       
-        //     }
-        // }
-
-            // Call method that will remove the third ability card UI and shift the position of the remaining two.
-            // Start by disabling the last ability card UI panel
-            // Get full screen width and width of the remaining panel-images
-            // Split the screen in thirds and position each card at the third intervals.
 
         if (numToDisplay > 0)
         {
@@ -117,14 +90,15 @@ public class DisplayUpgradeCards : MonoBehaviour
                 UpgradeTypesDatabase upgradeDictionary = upgradeDatabase[x];
 
                 // Format text to display
-                string abilityName = AbilityUtilityMethods.FormatAbilityName(upgradeDictionary.First().Key.ToString());
+                Logger.Log($"Ability Name - {upgradeDictionary.First().Key.ToString()}");
+                string abilityName = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Key.ToString());
                 string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Value.First().Key.ToString());
                 string upgradeDescription = upgradeDictionary.First().Value.First().Value.First().description;
-                string upgradeLevel = upgradeDictionary.First().Value.First().Value.First().level.ToString();
+                string upgradeLevel = upgradeDictionary.First().Value.First().Value.Peek().level.ToString();
                 //int newValue = upgradeDictionary.First().Value.First().Value.First().newValue;
 
                 // Update UI text
-                textElements[0].text = $"Upgrade to level {upgradeLevel}!!";
+                textElements[0].text = $"Upgrade to\nlevel {upgradeLevel}!!";
                 textElements[1].text = $"{abilityName}\n{upgradeType}";
                 textElements[2].text = upgradeDescription;
 

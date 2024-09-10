@@ -10,26 +10,25 @@ using UpgradeTypesDatabase =
 
 public class GenerateUpgradeCards : MonoBehaviour
 {
-    private UpgradeTypesDatabase upgradeTypeDatabase;
-    private UpgradeLibraryData upgradeLibraryData;
+    [SerializeField] UpgradeLibraryData upgradeLibraryData;
+    private UpgradeTypesDatabase upgradeTypeDatabase = new UpgradeTypesDatabase();
 
-    public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards(UpgradeLibraryData upgradeLibraryData)
+    public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards()
     {
-        this.upgradeLibraryData = upgradeLibraryData;
         ProcessDequeue();
-        // CreateListOfAvailableUpgrades(); // TODO: Should only be called once at game start
         List<UpgradeTypesDatabase> newUpgrades = CreateUpgradesList();
 
         return newUpgrades;
     }
 
-    private void Start()
+    private void Awake()
     {
-        InitializeUpradeDatabase();
+        InitializeUpgradeDatabase();
     }
 
-    private void InitializeUpradeDatabase()
+    private void InitializeUpgradeDatabase()
     {
+        Logger.Log("Initializing UpgradeDatabase");
         foreach (var ability in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
         {
             bool isAbilityInDatabase = upgradeTypeDatabase.TryGetValue(ability.AbilityName, out var value);
@@ -37,12 +36,11 @@ public class GenerateUpgradeCards : MonoBehaviour
             if (!isAbilityInDatabase)
             {
                 Logger.Log("New ability detected.  Adding to upgradeTypeDatabase", this);
-                foreach (var data in this.upgradeLibraryData.upgradeStatsData)
+                foreach (var data in upgradeLibraryData.upgradeStatsData)
                 {
                     if (data.parentAbility == ability.AbilityName)
                     {
                         Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> upgradeTypeDictionary = new Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>();
-
                         foreach (UpgradeTypeData type in data.upgradeType)
                         {
                             Queue<UpgradeLevelData> typeLevelData = new Queue<UpgradeLevelData>();
@@ -51,6 +49,8 @@ public class GenerateUpgradeCards : MonoBehaviour
                             {
                                 typeLevelData.Enqueue(levelData);
                             }
+
+                            upgradeTypeDictionary.Add(type.upgradeType, typeLevelData);
                         }
 
                         upgradeTypeDatabase.Add(data.parentAbility, upgradeTypeDictionary);
@@ -84,16 +84,49 @@ public class GenerateUpgradeCards : MonoBehaviour
 
     private List<UpgradeTypesDatabase> CreateUpgradesList()
     {
+        List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
         int validQueueCount = CardUtilityMethods.GetNumValidLevelQueues(upgradeTypeDatabase);
+        // Logger.Log($"ValidQueueCount - {validQueueCount}");
 
         int x = validQueueCount == 0 ? 3 : 
             (validQueueCount == 1) ? 2 :
             (validQueueCount == 2) ? 1 : 0;
 
-        if (x < 3)
+        if (x == 1 || x == 2)
         {
-            List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
+            foreach (var kvp in upgradeTypeDatabase)
+            {
+                foreach (var type in kvp.Value)
+                {
+                    Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> chosenTypes = new Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>
+                    {
+                        { type.Key, type.Value }
+                    };
+                    UpgradeTypesDatabase chosenUpgrade = new UpgradeTypesDatabase() { { kvp.Key, chosenTypes } };
+                    chosenUpgradeList.Add(chosenUpgrade);
+                }
+            }
 
+            // Logger.Log($"List Count - {chosenUpgradeList.Count}");
+            // foreach (var item in chosenUpgradeList)
+            // {
+            //     foreach (var kvp in item)
+            //     {
+            //         Logger.Log($"Test AbilityName - {kvp.Key}");
+            //         Logger.Log($"Test Upgrade Type - {kvp.Value.First().Key}");
+            //         Logger.Log($"Test Queue Count - {kvp.Value.First().Value.Count}");
+            //     }
+            // }
+
+            return chosenUpgradeList;
+        }
+        else if (x == 3)
+        {
+            Logger.LogError("Upgrade database is empty.");
+            return null;
+        }
+        else
+        {
             Logger.Log("Starting process to choose 3 random upgrades with existing level queues", this);
 
             while (x < 3)
@@ -110,14 +143,11 @@ public class GenerateUpgradeCards : MonoBehaviour
                 chosenTypes.Add(randomUpgradeType, levelQueue);
                 chosenUpgrade.Add(randomAbilityName, chosenTypes);
                 chosenUpgradeList.Add(chosenUpgrade);
+
+                x++;
             }
 
             return chosenUpgradeList;
-        }
-        else
-        {
-            Logger.Log("x is greater than 3 which should never be possible", this);
-            return null;
         }
     }
 

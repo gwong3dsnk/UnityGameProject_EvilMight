@@ -28,12 +28,12 @@ MonoBehaviour:
         description: Boost your single shot firerate!
     - upgradeType: 1
       levelData:
-      - level: 0
-        newValue: 2
-        description: Boost your single shot damage!
       - level: 1
         newValue: 2
         description: Boost your single shot damage!
       - level: 2
+        newValue: 2
+        description: Boost your single shot damage!
+      - level: 3
         newValue: 2
         description: Boost your single shot damage!

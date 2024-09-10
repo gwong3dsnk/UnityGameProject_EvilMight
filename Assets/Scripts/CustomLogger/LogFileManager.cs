@@ -43,7 +43,6 @@ public class LogFileManager : MonoBehaviour
         {
             string fileName = $"{baseFileName}_{index:000}.txt";
             string filePath = Path.Combine(LogDirectoryPath, fileName);
-            Debug.Log($"{filePath}");
             FileInfo fileInfo = new FileInfo(filePath);
 
             if (!File.Exists(filePath) || fileInfo.Length < MaxFileSize)

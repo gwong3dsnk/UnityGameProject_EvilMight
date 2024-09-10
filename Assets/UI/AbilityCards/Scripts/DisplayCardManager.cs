@@ -62,13 +62,13 @@ public class DisplayCardManager : MonoBehaviour
 
         if (this.abilities.Count == 0 && this.upgrades.Count > 0)
         {
-            Logger.Log("0 abilities detected, More than 3 upgrades detected.");
+            Logger.Log("0 abilities detected, More than 1 upgrade detected.");
             finalNumOfAbilitiesToDisplay = 0;
             finalNumOfUpgradesToDisplay = this.upgrades.Count > 3 ? 3 : this.upgrades.Count;
         }
         else if (this.abilities.Count > 0 && this.upgrades.Count == 0)
         {
-            Logger.Log("More than 3 abilities detected, 0 upgrades detected.");
+            Logger.Log("More than 1 abilities detected, 0 upgrades detected.");
             finalNumOfAbilitiesToDisplay = this.abilities.Count > 3 ? 3 : this.upgrades.Count;
             finalNumOfUpgradesToDisplay = 0;
         }
