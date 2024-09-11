@@ -10,7 +10,7 @@ using UpgradeTypesDatabase =
 public class UpgradeDatabaseManager : MonoBehaviour
 {
     [SerializeField] UpgradeLibraryData upgradeLibraryData;
-    private static UpgradeTypesDatabase upgradeDatabase = new UpgradeTypesDatabase();
+    private UpgradeTypesDatabase upgradeDatabase = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase UpgradeDatabase => upgradeDatabase;
 
     private void Awake()
@@ -63,13 +63,12 @@ public class UpgradeDatabaseManager : MonoBehaviour
         }
     }
 
-    public static void ProcessDequeue()
+    public void ProcessDequeue(Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue)
     {
-        Dictionary<AbilityNames, UpgradeTypes> dataToDequeue = PlayerAbilitiesManager.AbilityManagerInstance.UpgradeToDequeue;
-        if (dataToDequeue.Count != 0)
+        if (upgradeToDequeue.Count != 0)
         {
-            upgradeDatabase.TryGetValue(dataToDequeue.First().Key, out var typeDictionary);
-            typeDictionary.TryGetValue(dataToDequeue.First().Value, out var levelData);
+            upgradeDatabase.TryGetValue(upgradeToDequeue.First().Key, out var typeDictionary);
+            typeDictionary.TryGetValue(upgradeToDequeue.First().Value, out var levelData);
             levelData.Dequeue();
         }
     }    

@@ -56,14 +56,10 @@ public class ActivateButtonOnClick : MonoBehaviour
         {
             GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
             OnAbilityChosen?.Invoke(abilityPrefab);
-            // PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(abilityPrefab);
         }
         else if (selectedUpgrade.Count > 0)
         {
             OnUpgradeChosen?.Invoke(selectedUpgrade);
-            // PlayerAbilitiesManager.AbilityManagerInstance.AddAbilityUpgrade(selectedUpgrade);
-            // PlayerAbilitiesManager.AbilityManagerInstance.BeginUpgradeActivation(selectedUpgrade);
-            // UpgradeDatabaseManager.ProcessDequeue();
         }
     }
 

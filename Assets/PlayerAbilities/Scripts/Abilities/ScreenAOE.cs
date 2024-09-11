@@ -10,6 +10,7 @@ using UpgradeTypesDatabase =
 public class ScreenAOE : PlayerAbilities
 {
     private Camera mainCamera;
+    private float spawnFrequency = 0.0f;
 
     public override void Awake()
     {
@@ -25,8 +26,8 @@ public class ScreenAOE : PlayerAbilities
 
     public override void ActivateAbility()
     {
-        base.ActivateAbility();
         Logger.Log("Activating ScreenAOE", this);
+        base.ActivateAbility();
         KillVisibleEnemies();
     }
 

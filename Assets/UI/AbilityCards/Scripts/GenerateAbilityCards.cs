@@ -27,6 +27,7 @@ public class GenerateAbilityCards : MonoBehaviour
 
         if (abilityDatabase.Count <= 3)
         {
+            Logger.Log($"Returning abilityDatabase.  Count is - {abilityDatabase.Count}");
             return abilityDatabase;
         }
         else

@@ -44,4 +44,27 @@ public class AbilityDatabaseManager : MonoBehaviour
             }
         }
     }
+
+    public void RemoveAbilityFromDatabase(PlayerAbilities unlockedAbility)
+    {
+        AbilityLibraryData.AbilityStats abilityToRemove = new AbilityLibraryData.AbilityStats();;
+        
+        foreach (var stat in abilityDatabase)
+        {
+            if (stat.abilityName == unlockedAbility.AbilityName)
+            {
+                abilityToRemove = stat;
+                break;
+            }
+            else
+            {
+                abilityToRemove = null;
+            }
+        }
+
+        if (abilityToRemove != null)
+        {
+            abilityDatabase.Remove(abilityToRemove);
+        }
+    }
 }

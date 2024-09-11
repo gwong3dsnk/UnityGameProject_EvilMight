@@ -907,6 +907,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6086345300317977831, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: abilityDatabaseManager
+      value: 
+      objectReference: {fileID: 1718078266}
+    - target: {fileID: 6086345300317977831, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: upgradeDatabaseManager
+      value: 
+      objectReference: {fileID: 1718078264}
+    - target: {fileID: 6086345300317977831, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: debugAbilityPrefabToInstantiate
       value: 
       objectReference: {fileID: 6043325753769299960, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}

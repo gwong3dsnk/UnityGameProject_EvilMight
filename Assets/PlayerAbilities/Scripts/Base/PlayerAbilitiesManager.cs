@@ -11,13 +11,12 @@ using UpgradeTypesDatabase =
 public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    private PlayerAbilities currentPlayerAbility;
+    [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
+    [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
     private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase ActiveUpgrades => activeUpgrades;
-    private Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
-    public Dictionary<AbilityNames, UpgradeTypes> UpgradeToDequeue => upgradeToDequeue;
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
     public event EventHandler OnActivationCompletion;
 
@@ -31,6 +30,11 @@ public class PlayerAbilitiesManager : MonoBehaviour
         else if (AbilityManagerInstance != this)
         {
             Destroy(gameObject);
+        }
+
+        if (abilityDatabaseManager == null || upgradeDatabaseManager == null)
+        {
+            Logger.LogError("Missing references to either ability or upgrade database manager scripts.", this);
         }
     }
 
@@ -68,16 +72,18 @@ public class PlayerAbilitiesManager : MonoBehaviour
     {
         Vector3 particleSpawnPosition = player.transform.position;
         GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
-        currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
+        PlayerAbilities currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
         AddAbility(currentPlayerAbility);
 
+        // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
+        abilityDatabaseManager.RemoveAbilityFromDatabase(currentPlayerAbility);
+
         InvokeOnActivationCompletion();
-    }    
+    }
 
     public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        // TODO: THe follow ability name, upgrade type and most importantly level data needs to be removed from the official 
-        // UpgradeTypesDatabase before the next player level up event.
+        Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
         AbilityNames newAbilityName = newUpgrade.First().Key;
         UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
         Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
@@ -96,8 +102,13 @@ public class PlayerAbilitiesManager : MonoBehaviour
             activeUpgrades.Add(newAbilityName, newUpgrade.First().Value);
         }
 
-        upgradeToDequeue.Add(newAbilityName, newUpgradeType);
         BeginUpgradeActivation(newUpgrade);
+
+        // Remove the upgrade LevelData from the UpgradeDatabase so it won't be displayed again on future level-ups.
+        upgradeToDequeue.Add(newAbilityName, newUpgradeType);
+        upgradeDatabaseManager.ProcessDequeue(upgradeToDequeue);
+
+        InvokeOnActivationCompletion();        
     }
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
@@ -111,9 +122,6 @@ public class PlayerAbilitiesManager : MonoBehaviour
                 ability.ActivateUpgrade(newUpgrade);
             }
         }
-
-        UpgradeDatabaseManager.ProcessDequeue();
-        InvokeOnActivationCompletion();
     }
 
     private void InvokeOnActivationCompletion()

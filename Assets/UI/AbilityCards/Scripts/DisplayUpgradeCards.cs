@@ -57,8 +57,8 @@ public class DisplayUpgradeCards : MonoBehaviour
             }
         }
 
-        // NOTE: Below is unncessary once I have the logic to hide UI panels implemented.
-        if (cardIndex < 2)
+        // NOTE: TODO: Below is unncessary once I have the logic to hide UI panels implemented.
+        if (cardIndex <= 2)
         {
             int j = 0;
             while (j < cardIndex)
