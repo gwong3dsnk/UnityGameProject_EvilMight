@@ -11,7 +11,6 @@ using UpgradeTypesDatabase =
 [RequireComponent(typeof(GenerateUpgradeCards))]
 public class AbilityCardGenerator : MonoBehaviour
 {
-    [SerializeField] AbilityLibraryData abilityLibraryData;
     private GenerateAbilityCards generateAbilityCards;
     private GenerateUpgradeCards generateUpgradeCards;
     public event Action<List<AbilityLibraryData.AbilityStats>, List<UpgradeTypesDatabase>> OnAbilitiesGenerated;
@@ -29,7 +28,7 @@ public class AbilityCardGenerator : MonoBehaviour
 
     public void BeginGeneration()
     {
-        List<AbilityLibraryData.AbilityStats> newAbilities = generateAbilityCards.StartGeneratingAbilityCards(abilityLibraryData);
+        List<AbilityLibraryData.AbilityStats> newAbilities = generateAbilityCards.StartGeneratingAbilityCards();
         List<UpgradeTypesDatabase> newUpgrades = generateUpgradeCards.StartGeneratingUpgradeCards();
 
         if (newAbilities != null && newUpgrades != null)

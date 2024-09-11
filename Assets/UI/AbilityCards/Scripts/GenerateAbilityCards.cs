@@ -5,47 +5,15 @@ using UnityEngine;
 
 public class GenerateAbilityCards : MonoBehaviour
 {
-    List<AbilityLibraryData.AbilityStats> abilityData = new List<AbilityLibraryData.AbilityStats>();
+    [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
+    private List<AbilityLibraryData.AbilityStats> abilityDatabase;
 
-    public List<AbilityLibraryData.AbilityStats> StartGeneratingAbilityCards(AbilityLibraryData abilityLibraryData)
+    public List<AbilityLibraryData.AbilityStats> StartGeneratingAbilityCards()
     {
-        CreateListOfAvailableAbilities(abilityLibraryData);
+        abilityDatabase = abilityDatabaseManager.AbilityDatabase;
         List<AbilityLibraryData.AbilityStats> newAbilities = CreateNewAbilityList();
 
         return newAbilities;
-    }
-
-    /// <summary>
-    /// Parses through the <see cref="AbilityLibraryData.AbilityStats"/> array in the given ability library data
-    /// and creates a list of abilities that have not yet been unlocked by the player.
-    /// </summary>
-    /// <param name="abilityLibraryData"></param>
-    private void CreateListOfAvailableAbilities(AbilityLibraryData abilityLibraryData)
-    {
-        abilityData.Clear();
-        List<PlayerAbilities> activePlayerAbilities = PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities;
-
-        for (int i = 0; i < abilityLibraryData.abilityStatsArray.Length; i++)
-        {
-            bool isFound = false;
-
-            foreach (PlayerAbilities ability in activePlayerAbilities)
-            {
-                if (ability.name.Contains(abilityLibraryData.abilityStatsArray[i].playerAbilities.name))
-                {
-                    isFound = true;
-                    break;
-                }
-            }
-
-            if (!isFound)
-            {
-                if (!abilityData.Contains(abilityLibraryData.abilityStatsArray[i]))
-                {
-                    abilityData.Add(abilityLibraryData.abilityStatsArray[i]);
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -57,9 +25,9 @@ public class GenerateAbilityCards : MonoBehaviour
     {
         List<AbilityLibraryData.AbilityStats> newAbilityList = new List<AbilityLibraryData.AbilityStats>();
 
-        if (abilityData.Count <= 3)
+        if (abilityDatabase.Count <= 3)
         {
-            return abilityData;
+            return abilityDatabase;
         }
         else
         {
@@ -67,20 +35,20 @@ public class GenerateAbilityCards : MonoBehaviour
 
             while (x < 3)
             {
-                int index = GeneralUtilityMethods.GenerateRandomIndex(abilityData.Count);
+                int index = GeneralUtilityMethods.GenerateRandomIndex(abilityDatabase.Count);
 
-                if (!newAbilityList.Contains(abilityData[index]))
+                if (!newAbilityList.Contains(abilityDatabase[index]))
                 {
-                    newAbilityList.Add(abilityData[index]);
+                    newAbilityList.Add(abilityDatabase[index]);
                 }
                 else
                 {
-                    while (newAbilityList.Contains(abilityData[index]))
+                    while (newAbilityList.Contains(abilityDatabase[index]))
                     {
-                        index = GeneralUtilityMethods.GenerateRandomIndex(abilityData.Count);
+                        index = GeneralUtilityMethods.GenerateRandomIndex(abilityDatabase.Count);
                     }
 
-                    newAbilityList.Add(abilityData[index]);
+                    newAbilityList.Add(abilityDatabase[index]);
                 }
 
                 x++;

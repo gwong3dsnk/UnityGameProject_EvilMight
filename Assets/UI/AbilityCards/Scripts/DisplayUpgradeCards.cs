@@ -15,11 +15,10 @@ public class DisplayUpgradeCards : MonoBehaviour
     private List<GameObject> shuffledList;
     private Dictionary<GameObject, UpgradeTypesDatabase> upgradeCardRelationship = new Dictionary<GameObject, UpgradeTypesDatabase>();
     public Dictionary<GameObject, UpgradeTypesDatabase> UpgradeCardRelationship => upgradeCardRelationship;
-    private int cardIndex;
 
     public void ProcessUpgradeDisplay(List<GameObject> shuffledList, int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
-        cardIndex = CardUtilityMethods.GetCardIndex();
+        Logger.Log("Starting to display upgrade cards", this);
         this.shuffledList = shuffledList;
         DisplayUpgrades(numToDisplay, upgradeDatabase);
     }
@@ -27,6 +26,7 @@ public class DisplayUpgradeCards : MonoBehaviour
     private void DisplayUpgrades(int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
         upgradeCardRelationship.Clear();
+        int cardIndex = CardUtilityMethods.GetCardIndex();
 
         if (numToDisplay > 0)
         {
@@ -39,7 +39,6 @@ public class DisplayUpgradeCards : MonoBehaviour
                 UpgradeTypesDatabase upgradeDictionary = upgradeDatabase[x];
 
                 // Format text to display
-                Logger.Log($"Ability Name - {upgradeDictionary.First().Key.ToString()}");
                 string abilityName = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Key.ToString());
                 string upgradeType = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Value.First().Key.ToString());
                 string upgradeDescription = upgradeDictionary.First().Value.First().Value.First().description;
@@ -54,6 +53,7 @@ public class DisplayUpgradeCards : MonoBehaviour
 
                 x++;
                 cardIndex++;
+                CardUtilityMethods.SetCardIndex(cardIndex);
             }
         }
 

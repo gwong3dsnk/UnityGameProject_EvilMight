@@ -23,7 +23,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize singleton instance
+        Logger.Log($"Initializing player ability manager singleton instance");
         if (AbilityManagerInstance == null)
         {
             AbilityManagerInstance = this;
@@ -32,6 +32,18 @@ public class PlayerAbilitiesManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable() 
+    {
+        ActivateButtonOnClick.OnAbilityChosen += InstantiateAbility;
+        ActivateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;
+    }
+
+    private void OnDisable()
+    {
+        ActivateButtonOnClick.OnAbilityChosen -= InstantiateAbility;
+        ActivateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;
     }
 
     public void AddAbility(PlayerAbilities ability)
@@ -85,6 +97,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
 
         upgradeToDequeue.Add(newAbilityName, newUpgradeType);
+        BeginUpgradeActivation(newUpgrade);
     }
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
@@ -99,6 +112,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
             }
         }
 
+        UpgradeDatabaseManager.ProcessDequeue();
         InvokeOnActivationCompletion();
     }
 

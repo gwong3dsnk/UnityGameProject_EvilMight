@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UpgradeTypesDatabase = 
@@ -8,7 +7,7 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class ActivateAbilityOrUpgrade : MonoBehaviour
+public class ActivateButtonOnClick : MonoBehaviour
 {
     #region Debug
     [SerializeField] GameObject prefabOverride;
@@ -18,6 +17,8 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
     private Button activationButton;
     private UpgradeTypesDatabase selectedUpgrade = new UpgradeTypesDatabase();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
+    public static event Action<GameObject> OnAbilityChosen;
+    public static event Action<UpgradeTypesDatabase> OnUpgradeChosen;
 
     private void Start()
     {
@@ -54,12 +55,15 @@ public class ActivateAbilityOrUpgrade : MonoBehaviour
         if (selectedAbility != null)
         {
             GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
-            PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(abilityPrefab);
+            OnAbilityChosen?.Invoke(abilityPrefab);
+            // PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(abilityPrefab);
         }
         else if (selectedUpgrade.Count > 0)
         {
-            PlayerAbilitiesManager.AbilityManagerInstance.AddAbilityUpgrade(selectedUpgrade);
-            PlayerAbilitiesManager.AbilityManagerInstance.BeginUpgradeActivation(selectedUpgrade);
+            OnUpgradeChosen?.Invoke(selectedUpgrade);
+            // PlayerAbilitiesManager.AbilityManagerInstance.AddAbilityUpgrade(selectedUpgrade);
+            // PlayerAbilitiesManager.AbilityManagerInstance.BeginUpgradeActivation(selectedUpgrade);
+            // UpgradeDatabaseManager.ProcessDequeue();
         }
     }
 

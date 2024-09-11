@@ -7,7 +7,7 @@ public class PlayerSpawn : MonoBehaviour
 {
     [SerializeField] GameObject defaultStartingAbility;
 
-    void Start()
+    void Awake()
     {
         InitializePlayer();
     }

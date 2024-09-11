@@ -17,12 +17,11 @@ MonoBehaviour:
     abilityDescription: FIre off a single shot projectile
     damage: 1
     fireRate: 1
-    abilityUpgrades:
-    - upgradeType: 0
-      newValue: 2
-      upgradeDescription: Boost your single shot firerate!
-    - upgradeType: 1
-      newValue: 2
-      upgradeDescription: Boost your single shot damage!
     prefab: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
     playerAbilities: {fileID: 732283309839090374, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+  - abilityName: 3
+    abilityDescription: Damage all enemies on screen!
+    damage: 2
+    fireRate: 1
+    prefab: {fileID: 6043325753769299960, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}
+    playerAbilities: {fileID: 1719185197974016433, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}

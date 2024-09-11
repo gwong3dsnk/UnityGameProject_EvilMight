@@ -14,6 +14,7 @@ public class DisplayAbilityCards : MonoBehaviour
 
     public void ProcessAbilityDisplay(List<GameObject> shuffledList, int numToDisplay, List<AbilityLibraryData.AbilityStats> generatedAbilities)
     {
+        Logger.Log("Starting to display ability card", this);
         this.shuffledList = shuffledList;
         this.generatedAbilities = generatedAbilities;
         List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(numToDisplay);
@@ -78,6 +79,7 @@ public class DisplayAbilityCards : MonoBehaviour
             abilityCardRelationship.Add(this.shuffledList[cardIndex], chosenAbilities[cardIndex]);
 
             cardIndex++;
+            CardUtilityMethods.SetCardIndex(cardIndex);
         }
     }
 }
