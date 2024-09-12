@@ -10,8 +10,10 @@ using UpgradeTypesDatabase =
 
 public abstract class PlayerAbilities : MonoBehaviour
 {
-    [SerializeField] protected ParticleSystem abilityParticleSystem;
-    [SerializeField] protected AbilityLibraryData abilityData;
+    [SerializeField] protected AbilityLibraryData abilityData; 
+    protected ParticleSystem abilityParticleSystem;
+    protected float activationDelay;
+    protected bool isEffectRepeating = false;
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
     [SerializeField] protected AbilityNames abilityName;
     public AbilityNames AbilityName => abilityName;
@@ -31,11 +33,42 @@ public abstract class PlayerAbilities : MonoBehaviour
         InitializeAbilityData();
     }
 
-    public virtual void ActivateAbility()
+    public virtual void ActivateAbility(PlayerAbilities ability)
     {
-        if (abilityParticleSystem != null)
+        // Retrieve the runtime gameobject's particle system component.
+        abilityParticleSystem = ability.gameObject.GetComponentInChildren<ParticleSystem>();
+        if (abilityParticleSystem == null)
         {
-            abilityParticleSystem.Play();
+            Logger.LogError("Failed to get ability gameobject's particle system component", this);
+        }
+
+        // isEffectRepeating = true only for abilities that will be replyed continuously until level end with n second delays.
+        if (isEffectRepeating)
+        {
+            StartCoroutine(ReplayActivation());
+        }
+        else
+        {
+            if (abilityParticleSystem != null)
+            {
+                abilityParticleSystem.Play();
+            }
+        }
+    }
+
+    protected virtual IEnumerator ReplayActivation()
+    {
+        while(true)
+        {
+            if (abilityParticleSystem != null)
+            {
+                abilityParticleSystem.Play();
+            }
+
+            ExecuteSecondaryActivationBehavior();
+
+            yield return new WaitForSeconds(activationDelay);
+            DeactivateAbility();
         }
     }
 
@@ -43,6 +76,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     {
         if (abilityParticleSystem != null)
         {
+            Logger.Log("Deactivating Ability");
             abilityParticleSystem.Stop();
         }
     }
@@ -70,19 +104,17 @@ public abstract class PlayerAbilities : MonoBehaviour
         Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
         int newValue = newQueue.Peek().newValue;
         ParticleSystem abilityFX = GetComponentInChildren<ParticleSystem>();
-
-        Logger.Log($"FX To Be Updated - {abilityFX.name}");
         
         if (newUpgradeType == UpgradeTypes.DamageUp)
         {
-            Logger.Log("Updating damage value");
             damage = newValue;
         }
         else if (newUpgradeType == UpgradeTypes.FireRateUp)
         {
-            Logger.Log("Updating emission value");
             ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
             emissionModule.rateOverTime = newValue;
         }   
     }
+
+    protected abstract void ExecuteSecondaryActivationBehavior();
 }

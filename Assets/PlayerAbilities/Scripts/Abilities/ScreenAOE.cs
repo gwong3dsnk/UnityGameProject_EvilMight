@@ -10,7 +10,6 @@ using UpgradeTypesDatabase =
 public class ScreenAOE : PlayerAbilities
 {
     private Camera mainCamera;
-    private float spawnFrequency = 0.0f;
 
     public override void Awake()
     {
@@ -24,15 +23,22 @@ public class ScreenAOE : PlayerAbilities
         base.Awake();
     }
 
-    public override void ActivateAbility()
+    public override void ActivateAbility(PlayerAbilities ability)
     {
         Logger.Log("Activating ScreenAOE", this);
-        base.ActivateAbility();
+        activationDelay = 5.0f;
+        isEffectRepeating = true;
+        base.ActivateAbility(ability); 
+    }
+
+    protected override void ExecuteSecondaryActivationBehavior()
+    {
         KillVisibleEnemies();
     }
 
     private void KillVisibleEnemies()
     {
+        Logger.Log("Executing KillVisibleEnemies method.");
         GameObject[] visibleEnemies = GetVisibleEnemies();
 
         foreach (GameObject enemy in visibleEnemies)
@@ -74,7 +80,7 @@ public class ScreenAOE : PlayerAbilities
 
     public override void DeactivateAbility()
     {
-        throw new System.NotImplementedException();
+        base.DeactivateAbility();
     }
 
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)

@@ -15,21 +15,26 @@ public class MeleeSlash : PlayerAbilities
         base.Awake();
     }
 
-    public override void ActivateAbility()
+    public override void ActivateAbility(PlayerAbilities ability)
     {
-        base.ActivateAbility();
+        base.ActivateAbility(ability);
         Logger.Log("Activating MeleeSlash", this);
     }
 
     public override void DeactivateAbility()
     {
-        throw new System.NotImplementedException();
+        base.DeactivateAbility();
     }
 
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
         base.ActivateUpgrade(newUpgrade);
     }
+
+    protected override void ExecuteSecondaryActivationBehavior()
+    {
+        Logger.Log("Executing ExecuteSecondaryActivationBehavior");
+    }    
 
     protected override void InitializeAbilityData()
     {

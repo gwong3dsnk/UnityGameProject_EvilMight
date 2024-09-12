@@ -47,11 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityParticleSystem: {fileID: 7151526369559866961, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
   abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
-  abilityName: 
+  abilityName: 0
   abilityDescription: 
   damage: 5
   fireRate: 0
-  abilityUpgrades: []
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
 --- !u!1001 &2215128631522551713
@@ -65,14 +64,6 @@ PrefabInstance:
     - target: {fileID: 4861280373453204051, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
       propertyPath: m_Name
       value: FX_Player_ScreenAOE
-      objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
-      propertyPath: lengthInSec
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7151526369559866961, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time

@@ -14,10 +14,15 @@ public class SingleShot : PlayerAbilities
         base.Awake();
     }
 
-    public override void ActivateAbility()
+    public override void ActivateAbility(PlayerAbilities ability)
     {
-        base.ActivateAbility();
+        base.ActivateAbility(ability);
     }
+
+    protected override void ExecuteSecondaryActivationBehavior()
+    {
+        Logger.Log("Executing ExecuteSecondaryActivationBehavior");
+    }    
 
     public override void DeactivateAbility()
     {

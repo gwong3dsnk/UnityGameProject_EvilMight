@@ -55,7 +55,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
-            ability.ActivateAbility();
+            ability.ActivateAbility(ability);
         }
     }
 
