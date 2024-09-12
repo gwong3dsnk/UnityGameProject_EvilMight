@@ -5,11 +5,9 @@ using UnityEngine;
 
 public abstract class HealthManagement : MonoBehaviour
 {
-    public int CurrentHealth => currentHealth;
-
     [SerializeField] protected int maxHealth = 1;
     protected int currentHealth;
-
+    public int CurrentHealth => currentHealth;
     public event EventHandler OnDeath;
 
     protected virtual void Start()

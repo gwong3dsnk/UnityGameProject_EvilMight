@@ -20,12 +20,15 @@ public class DisplayUpgradeCards : MonoBehaviour
     {
         Logger.Log("Starting to display upgrade cards", this);
         this.shuffledList = shuffledList;
-        DisplayUpgrades(numToDisplay, upgradeDatabase);
+        upgradeCardRelationship.Clear();
+        if (numToDisplay > 0)
+        {
+            DisplayUpgrades(numToDisplay, upgradeDatabase);
+        }
     }
 
     private void DisplayUpgrades(int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
-        upgradeCardRelationship.Clear();
         int cardIndex = CardUtilityMethods.GetCardIndex();
 
         if (numToDisplay > 0)

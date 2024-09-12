@@ -12,7 +12,6 @@ public class EnemyHealth : HealthManagement
     protected override void Start()
     {
         enemy = GetComponent<Enemy>();
-
         if (enemy == null)
         {
             Logger.LogError("Enemy is missing Enemy script component.", this);
@@ -40,9 +39,16 @@ public class EnemyHealth : HealthManagement
         TakeDamage(damage);
     }
 
+    // public void ApplyAOEDamage(int damage, GameObject[] killedEnemies)
+    // {
+    //     foreach (GameObject enemy in killedEnemies)
+    //     {
+    //         TakeDamage(damage);
+    //     }
+    // }
+
     protected override void HandleDeath()
     {
         TriggerDeathEvent();
     }
-    
 }

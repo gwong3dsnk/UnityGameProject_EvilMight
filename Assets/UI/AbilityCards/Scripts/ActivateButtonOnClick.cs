@@ -54,11 +54,13 @@ public class ActivateButtonOnClick : MonoBehaviour
     {
         if (selectedAbility != null)
         {
+            Logger.Log("Ability Chosen");
             GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
             OnAbilityChosen?.Invoke(abilityPrefab);
         }
         else if (selectedUpgrade.Count > 0)
         {
+            Logger.Log("Upgrade Chosen");
             OnUpgradeChosen?.Invoke(selectedUpgrade);
         }
     }

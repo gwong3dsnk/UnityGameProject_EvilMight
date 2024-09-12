@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class EnemyDeathHandler : MonoBehaviour
     private Collider enemyCollider;
     private GridManager gridManager;
     private LevelManager levelManager;
+    // public event Action<int> OnEnemyDeath_PassPlayerXP;
 
     private void Start()
     {
@@ -38,6 +40,11 @@ public class EnemyDeathHandler : MonoBehaviour
         }    
     }
 
+    // private void OnDisable() 
+    // {
+    //     enemyHealth.OnDeath -= DeathHandler_OnDeath;
+    // }
+
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
         if (enemyCollider != null && gridManager != null)
@@ -56,19 +63,12 @@ public class EnemyDeathHandler : MonoBehaviour
     {
         if (enemy != null && levelManager != null)
         {
+            // OnEnemyDeath_PassPlayerXP?.Invoke(enemy.Experience);
             levelManager.AddXP(enemy.Experience);
         }
         else
         {
             Logger.LogError("Missing reference to Enemy and/or LevelManager", this);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (enemyHealth != null)
-        {
-            enemyHealth.OnDeath -= DeathHandler_OnDeath;
         }
     }
 }

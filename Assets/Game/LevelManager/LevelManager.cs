@@ -6,8 +6,6 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
-    [SerializeField] AbilityCardChooserUI abilitychoiceUI;
-    [SerializeField] AbilityCardGenerator cardGenerator;
     // Unserialize below later.
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
@@ -27,7 +25,7 @@ public class LevelManager : MonoBehaviour
             Logger.LogError("Missing reference to PlayerHealth script on LevelSystem object", this);
         }
     }
-
+    
     public void AddXP(int amount)
     {
         currentXP += amount;

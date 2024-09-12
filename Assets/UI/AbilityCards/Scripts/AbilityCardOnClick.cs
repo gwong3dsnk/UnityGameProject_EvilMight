@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,6 +24,9 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        selectedAbility = null;
+        selectedUpgrade = null;
+
         if (eventData.pointerPress != null)
         {
             ToggleCardOutline();
@@ -43,6 +47,22 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         currentSelectedCard = this;
         EnableCardOutline();
     }
+
+    private void IdentifyClickedCardData(GameObject selectedCardPanel)
+    {
+        if (displayUpgradeCards.UpgradeCardRelationship.ContainsKey(selectedCardPanel))
+        {
+            selectedUpgrade = displayUpgradeCards.UpgradeCardRelationship[selectedCardPanel];
+        }
+        else if (displayAbilityCards.AbilityCardRelationship.ContainsKey(selectedCardPanel))
+        {
+            selectedAbility = displayAbilityCards.AbilityCardRelationship[selectedCardPanel];
+        }
+        else
+        {
+            Logger.LogError("No matching Panel Key found!", this);
+        }
+    }    
 
     private void DisableCardOutline()
     {
@@ -68,22 +88,6 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         else
         {
             outline.enabled = state;
-        }
-    }
-
-    private void IdentifyClickedCardData(GameObject selectedCardPanel)
-    {
-        if (displayUpgradeCards.UpgradeCardRelationship.ContainsKey(selectedCardPanel))
-        {
-            selectedUpgrade = displayUpgradeCards.UpgradeCardRelationship[selectedCardPanel];
-        }
-        else if (displayAbilityCards.AbilityCardRelationship.ContainsKey(selectedCardPanel))
-        {
-            selectedAbility = displayAbilityCards.AbilityCardRelationship[selectedCardPanel];
-        }
-        else
-        {
-            Logger.LogError("No matching Panel Key found!", this);
         }
     }
 }

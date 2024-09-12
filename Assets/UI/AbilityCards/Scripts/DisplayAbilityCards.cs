@@ -16,12 +16,13 @@ public class DisplayAbilityCards : MonoBehaviour
     {
         Logger.Log("Starting to display ability card", this);
         CardUtilityMethods.SetCardIndex(0);
+        abilityCardRelationship.Clear();
         this.shuffledList = shuffledList;
         this.generatedAbilities = generatedAbilities;
-        List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(numToDisplay);
         
-        if (chosenAbilities.Count > 0)
+        if (numToDisplay > 0)
         {
+            List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(numToDisplay);
             DisplayAbilities(chosenAbilities);
         }
         else
@@ -67,7 +68,6 @@ public class DisplayAbilityCards : MonoBehaviour
     private void DisplayAbilities(List<AbilityLibraryData.AbilityStats> chosenAbilities)
     {
         int cardIndex = CardUtilityMethods.GetCardIndex();
-        abilityCardRelationship.Clear();
 
         while (chosenAbilities.Count > cardIndex)
         {
