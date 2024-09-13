@@ -45,8 +45,17 @@ public class DisplayCardManager : MonoBehaviour
 
     private void CalculateTotalAbilitiesToDisplay(List<AbilityLibraryData.AbilityStats> abilities, List<UpgradeTypesDatabase> upgrades)
     {
+        Logger.Log("Starting to calculate total abilities to display in DisplayCardManager.\nDisplaying Content...", this);
         this.abilities = abilities;
+        foreach (var item in this.abilities) // log
+        {
+            Logger.Log($"Ability Contents - {item.abilityName}", this);
+        }
         this.upgrades = upgrades;
+        foreach (var item in this.upgrades) // log
+        {
+            Logger.Log($"Upgrade Contents - {item.First().Value.First().Key}", this);
+        }        
         int finalNumOfAbilitiesToDisplay = 0;
         int finalNumOfUpgradesToDisplay = 0;
 
@@ -62,25 +71,25 @@ public class DisplayCardManager : MonoBehaviour
 
         if (this.abilities.Count == 0 && this.upgrades.Count > 0)
         {
-            Logger.Log("0 abilities detected, More than 1 upgrade detected.");
+            Logger.Log($"0 abilities detected, {this.upgrades.Count} upgrade(s) detected.");
             finalNumOfAbilitiesToDisplay = 0;
             finalNumOfUpgradesToDisplay = this.upgrades.Count > 3 ? 3 : this.upgrades.Count;
         }
         else if (this.abilities.Count > 0 && this.upgrades.Count == 0)
         {
-            Logger.Log("More than 1 abilities detected, 0 upgrades detected.");
+            Logger.Log($"{this.abilities.Count} abilities detected, 0 upgrades detected.");
             finalNumOfAbilitiesToDisplay = this.abilities.Count > 3 ? 3 : this.upgrades.Count;
             finalNumOfUpgradesToDisplay = 0;
         }
         else if (abilityCountBasedOnUpgradeCount > this.abilities.Count)
         {
-            Logger.Log("abilityCountBasedOnUpgradeCount > abilities.Count");
+            Logger.Log($"abilityCountBasedOnUpgradeCount - {abilityCountBasedOnUpgradeCount} > abilities.Count - {this.abilities.Count}");
             finalNumOfAbilitiesToDisplay = this.abilities.Count;
             finalNumOfUpgradesToDisplay = 3 - this.abilities.Count;
         }
         else if (abilityCountBasedOnUpgradeCount <= this.abilities.Count)
         {
-            Logger.Log("abilityCountBasedOnUpgradeCount <= abilities.Count");
+            Logger.Log($"abilityCountBasedOnUpgradeCount - {abilityCountBasedOnUpgradeCount} <= abilities.Count - {this.abilities.Count}");
             finalNumOfAbilitiesToDisplay = abilityCountBasedOnUpgradeCount;
             finalNumOfUpgradesToDisplay = 3 - abilityCountBasedOnUpgradeCount;
         }

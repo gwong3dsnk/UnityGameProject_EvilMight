@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -18,7 +16,7 @@ public class DisplayUpgradeCards : MonoBehaviour
 
     public void ProcessUpgradeDisplay(List<GameObject> shuffledList, int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
-        Logger.Log("Starting to display upgrade cards", this);
+        Logger.Log("Starting to DISPLAY UPGRADE cards", this);
         this.shuffledList = shuffledList;
         upgradeCardRelationship.Clear();
         if (numToDisplay > 0)
@@ -30,16 +28,21 @@ public class DisplayUpgradeCards : MonoBehaviour
     private void DisplayUpgrades(int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
         int cardIndex = CardUtilityMethods.GetCardIndex();
+        Logger.Log($"Current CardIndex Value - {cardIndex}", this);
 
         if (numToDisplay > 0)
         {
             int x = 0;
 
+            Logger.Log($"Starting while loop to display upgrades with x [{x}] and numToDisplay [{numToDisplay}]", this);
             while (x < numToDisplay)
             {
+                Logger.Log($"LOOPING, x [{x}], numToDisplay [{numToDisplay}]", this);
+                Logger.Log($"Card Panel to Edit - {this.shuffledList[cardIndex].name}", this);
                 TextMeshProUGUI[] textElements = shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
 
                 UpgradeTypesDatabase upgradeDictionary = upgradeDatabase[x];
+                Logger.Log($"Ability to Assign to Card -[{upgradeDictionary.First().Key}], Upgrade - [{upgradeDictionary.First().Value.First().Key}]");
 
                 // Format text to display
                 string abilityName = BaseUtilityMethods.InsertSpaceBeforeCapitalLetters(upgradeDictionary.First().Key.ToString());
@@ -58,6 +61,8 @@ public class DisplayUpgradeCards : MonoBehaviour
                 cardIndex++;
                 CardUtilityMethods.SetCardIndex(cardIndex);
             }
+
+            Logger.Log($"While loop ended.  Final CardIndex Value - {CardUtilityMethods.GetCardIndex()}", this);
         }
 
         // NOTE: TODO: Below is unncessary once I have the logic to hide UI panels implemented.
@@ -72,7 +77,7 @@ public class DisplayUpgradeCards : MonoBehaviour
                 textElements[1].text = "Everything is\nUnlocked!!";
                 textElements[2].text = "Congrats you've unlocked all abilities and upgrades!";  
 
-                j++;                      
+                j++;
             }
         }
     } 

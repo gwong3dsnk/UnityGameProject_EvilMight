@@ -20,6 +20,7 @@ public class AbilityDatabaseManager : MonoBehaviour
     /// <param name="abilityLibraryData"></param>
     private void InitializeAbilityDatabase()
     {
+        Logger.Log("Initializing ABILITY DATABASE MANAGER OnAwake", this);
         List<PlayerAbilities> activePlayerAbilities = PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities;
 
         for (int i = 0; i < abilityLibraryData.abilityStatsArray.Length; i++)
@@ -43,28 +44,62 @@ public class AbilityDatabaseManager : MonoBehaviour
                 }
             }
         }
+
+        Logger.Log("Finished ability database initialization", this);
+        Logger.Log("Logging Initialized Ability Database Contents:", this);
+        foreach (var item in abilityDatabase)
+        {
+            Logger.Log($">>> {item.abilityName}");
+        }
+        Logger.Log("End Logging", this);
     }
 
     public void RemoveAbilityFromDatabase(PlayerAbilities unlockedAbility)
     {
-        AbilityLibraryData.AbilityStats abilityToRemove = new AbilityLibraryData.AbilityStats();;
-        
-        foreach (var stat in abilityDatabase)
+        Logger.Log($"Starting RemoveAbilityFromDatabase to possibly remove {unlockedAbility.AbilityName} from ability database.", this);
+
+        Logger.Log("Logging Ability Database Contents BEFORE removal in RemoveAbility method:", this);
+        foreach (var item in abilityDatabase)
         {
-            if (stat.abilityName == unlockedAbility.AbilityName)
+            Logger.Log($">>> {item.abilityName}");
+        }
+        Logger.Log("End Logging", this);
+
+        AbilityLibraryData.AbilityStats abilityToRemove = new AbilityLibraryData.AbilityStats();
+
+        if (abilityDatabase.Count > 0)
+        {
+            foreach (var stat in abilityDatabase)
             {
-                abilityToRemove = stat;
-                break;
+                if (stat.abilityName == unlockedAbility.AbilityName)
+                {
+                    Logger.Log($"Ability to remove is {unlockedAbility.AbilityName}.  Verified.", this);
+                    abilityToRemove = stat;
+                    break;
+                }
+                else
+                {
+                    Logger.Log("Ability to remove is null, not removing anything", this);
+                    abilityToRemove = null;
+                }
             }
-            else
+
+            if (abilityToRemove != null)
             {
-                abilityToRemove = null;
+                Logger.Log($"Starting removal of {abilityToRemove.abilityName}", this);
+                abilityDatabase.Remove(abilityToRemove);
+
+                Logger.Log("Logging Ability Database Contents AFTER removal:", this);
+                foreach (var item in abilityDatabase)
+                {
+                    Logger.Log($">>> {item.abilityName}");
+                }
+                Logger.Log("End Logging", this);                
             }
         }
-
-        if (abilityToRemove != null)
+        else
         {
-            abilityDatabase.Remove(abilityToRemove);
+            Logger.Log("Ability database not yet populated.  Not processing any ability removals.", this);
         }
     }
 }

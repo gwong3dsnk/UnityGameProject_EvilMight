@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -25,7 +26,6 @@ public class ScreenAOE : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
-        Logger.Log("Activating ScreenAOE", this);
         activationDelay = 10.0f;
         isEffectRepeating = true;
         base.ActivateAbility(ability); 
@@ -38,36 +38,46 @@ public class ScreenAOE : PlayerAbilities
 
     private void KillVisibleEnemies()
     {
-        Logger.Log("Executing KillVisibleEnemies method.");
+        Logger.Log("Executing KillVisibleEnemies method for ScreenAOE ability.");
         GameObject[] visibleEnemies = GetVisibleEnemies();
-
-        foreach (GameObject enemy in visibleEnemies)
+        if (visibleEnemies != null)
         {
-            EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-
-            if (enemyHealth == null)
+            foreach (GameObject enemy in visibleEnemies)
             {
-                Logger.LogError("Missing reference to EnemyHealth", this);
-            }
+                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
 
-            enemyHealth.ApplyAOEDamage(damage);
+                if (enemyHealth == null)
+                {
+                    Logger.LogError("Missing reference to EnemyHealth", this);
+                }
+
+                enemyHealth.ApplyAOEDamage(damage);
+            }
         }
+
     }
 
     private GameObject[] GetVisibleEnemies()
     {
         GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        List<GameObject> visibleEnemies = new List<GameObject>();
-
-        foreach (GameObject enemy in allEnemies)
+        if (allEnemies.Length > 0)
         {
-            if (IsVisible(enemy))
-            {
-                visibleEnemies.Add(enemy);
-            }
-        }
+            List<GameObject> visibleEnemies = new List<GameObject>();
 
-        return visibleEnemies.ToArray();
+            foreach (GameObject enemy in allEnemies)
+            {
+                if (IsVisible(enemy))
+                {
+                    visibleEnemies.Add(enemy);
+                }
+            }
+
+            return visibleEnemies.ToArray();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private bool IsVisible(GameObject enemy)

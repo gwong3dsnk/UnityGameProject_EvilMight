@@ -10,6 +10,7 @@ public class GenerateAbilityCards : MonoBehaviour
 
     public List<AbilityLibraryData.AbilityStats> StartGeneratingAbilityCards()
     {
+        Logger.Log("Starting to generate ability cards.", this);
         abilityDatabase = abilityDatabaseManager.AbilityDatabase;
         List<AbilityLibraryData.AbilityStats> newAbilities = CreateNewAbilityList();
 
@@ -27,12 +28,19 @@ public class GenerateAbilityCards : MonoBehaviour
 
         if (abilityDatabase.Count <= 3)
         {
-            Logger.Log($"Returning abilityDatabase.  Count is - {abilityDatabase.Count}");
+            Logger.Log($"Returning abilityDatabase <= 3.  Count is - {abilityDatabase.Count}", this);
+            Logger.Log("newAbilityList Contents ->", this);
+            foreach (var item in newAbilityList) // Log Only
+            {
+                Logger.Log($"{item.abilityName}", this);
+            }
             return abilityDatabase;
         }
         else
         {
             int x = 0;
+            Logger.Log($"AbilityDatabase > 3.  Count is - {abilityDatabase.Count}", this);
+            Logger.Log($"Starting while loop to generate random ability and add to ability database", this);
 
             while (x < 3)
             {
@@ -53,6 +61,13 @@ public class GenerateAbilityCards : MonoBehaviour
                 }
 
                 x++;
+            }
+
+            Logger.Log("While Loop is ended.  3 abilities have been selected.", this);
+            Logger.Log("newAbilityList Contents ->", this);
+            foreach (var item in newAbilityList) // Log Only
+            {
+                Logger.Log($"{item.abilityName}", this);
             }
 
             return newAbilityList;

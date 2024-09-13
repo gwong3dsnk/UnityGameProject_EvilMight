@@ -22,7 +22,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     private void Awake()
     {
-        Logger.Log($"Initializing player ability manager singleton instance");
+        Logger.Log($"Initializing PLAYER ABILITY MANAGER singleton instance OnAwake.", this);
         if (AbilityManagerInstance == null)
         {
             AbilityManagerInstance = this;
@@ -52,6 +52,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void AddAbility(PlayerAbilities ability)
     {
+        Logger.Log($"Adding ability [{ability.AbilityName}] to activeAbilities.", this);
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
@@ -70,6 +71,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void InstantiateAbility(GameObject ability)
     {
+        Logger.Log($"Instantiating ability [{ability.name}]");
         Vector3 particleSpawnPosition = player.transform.position;
         GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
         PlayerAbilities currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
@@ -83,6 +85,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
     {
+        Logger.Log("Starting AddAbilityUpgrade", this);
         Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
         AbilityNames newAbilityName = newUpgrade.First().Key;
         UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
@@ -92,15 +95,19 @@ public class PlayerAbilitiesManager : MonoBehaviour
         {
             if (!activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
             {
+                Logger.Log("Ability exists, upgrade type doesn't.  Adding upgrade entry.", this); 
                 // Ability exists, upgrade type doesn't.  Add upgrade type.
                 activeUpgrades[newAbilityName].Add(newUpgradeType, newQueue);
             }
         }
         else
         {
+            Logger.Log("Ability exists, upgrade type exists.  Adding upgrade entry.", this); 
             // First upgrade unlocked for existing ability.  Adding the entry.
             activeUpgrades.Add(newAbilityName, newUpgrade.First().Value);
         }
+
+        Logger.Log($"Upgrade Added: [{newUpgrade.First().Key}] + [{newUpgrade.First().Value.First().Key}]");
 
         BeginUpgradeActivation(newUpgrade);
 
@@ -113,12 +120,14 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
     {
+        Logger.Log("Starting BeginUpgradeActivation", this);
         AbilityNames newAbilityName = newUpgrade.First().Key;
 
         foreach (PlayerAbilities ability in activeAbilities)
         {
             if (ability.AbilityName == newAbilityName)
             {
+                Logger.Log("Matching ability found in activeAbilities. Calling ActivateUpgrade", this);
                 ability.ActivateUpgrade(newUpgrade);
             }
         }

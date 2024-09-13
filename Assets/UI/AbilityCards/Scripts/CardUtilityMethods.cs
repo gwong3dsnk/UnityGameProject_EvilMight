@@ -14,13 +14,19 @@ public class CardUtilityMethods : MonoBehaviour
     {
         int validQueueCount = 0;
 
+        Logger.Log("Start displaying Valid Upgrades");
         foreach (var kvp in upgradeTypeDatabase)
         {
             foreach (var type in kvp.Value)
             {
-                validQueueCount++;
+                if (type.Value.Count > 0)
+                {
+                    Logger.Log($"Valid Upgrade Found - [{kvp.Key}, {type.Key}, {type.Value.Count}]");
+                    validQueueCount++;
+                }
             }
         }
+        Logger.Log("End displaying Valid Upgrades");
 
         return validQueueCount;
     }    

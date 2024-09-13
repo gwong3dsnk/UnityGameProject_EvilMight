@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityCardChooserUI : MonoBehaviour
@@ -9,6 +7,7 @@ public class AbilityCardChooserUI : MonoBehaviour
 
     private void Start()
     {
+        Logger.Log("ABILITY CARD CHOOSE UI OnStart", this);
         if (levelManager == null)
         {
             Logger.LogError("Missing level manager reference", this);

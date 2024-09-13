@@ -39,12 +39,12 @@ public class LevelManager : MonoBehaviour
 
     private void LevelUp()
     {
-        Logger.Log("Leveling Up");
-        OnLevelUp?.Invoke(this, EventArgs.Empty);
+        Logger.Log($"Player is leveling from {currentLevel} to {currentLevel += 1}", this);
         currentLevel += 1;
         playerHealth.ResetHealth();
         CalculateXPThreshold();
         currentXP = excessXP > 0 ? excessXP : 0;
+        OnLevelUp?.Invoke(this, EventArgs.Empty);
     }
 
     private void CalculateXPThreshold()

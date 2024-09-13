@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,6 +21,12 @@ public class DisplayAbilityCards : MonoBehaviour
         if (numToDisplay > 0)
         {
             List<AbilityLibraryData.AbilityStats> chosenAbilities = SelectRandomAbilitiesToDisplay(numToDisplay);
+            Logger.Log("Starting to log chosen ability content.", this);
+            foreach (var item in chosenAbilities) // log
+            {
+                Logger.Log($"ChosenAbilities Content - {item.abilityName}");
+            }
+            Logger.Log("End logging chosen ability content.", this);
             DisplayAbilities(chosenAbilities);
         }
         else
@@ -69,8 +73,12 @@ public class DisplayAbilityCards : MonoBehaviour
     {
         int cardIndex = CardUtilityMethods.GetCardIndex();
 
+        Logger.Log($"Starting while loop while chosenAbilities.Count {chosenAbilities.Count} > cardIndex {cardIndex}", this);
         while (chosenAbilities.Count > cardIndex)
         {
+            Logger.Log($"LOOPING.  chosenAbilities.Count {chosenAbilities.Count}, cardIndex - {cardIndex}", this);
+            Logger.Log($"Card Panel to Edit - {this.shuffledList[cardIndex].name}", this);
+            Logger.Log($"Ability to Assign to Card - {chosenAbilities[cardIndex].abilityName}");
             TextMeshProUGUI[] textElements = this.shuffledList[cardIndex].GetComponentsInChildren<TextMeshProUGUI>();
             textElements[0].text = "New Ability!!";
             textElements[1].text = chosenAbilities[cardIndex].abilityName.ToString();
@@ -81,5 +89,7 @@ public class DisplayAbilityCards : MonoBehaviour
             cardIndex++;
             CardUtilityMethods.SetCardIndex(cardIndex);
         }
+
+        Logger.Log($"While loop ended.  Final CardIndex Value - {CardUtilityMethods.GetCardIndex()}", this);
     }
 }

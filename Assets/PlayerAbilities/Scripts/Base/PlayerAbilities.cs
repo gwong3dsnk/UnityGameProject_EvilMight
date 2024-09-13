@@ -35,6 +35,8 @@ public abstract class PlayerAbilities : MonoBehaviour
 
     public virtual void ActivateAbility(PlayerAbilities ability)
     {
+        Logger.Log($"Activating {this.name}", this);
+
         // Retrieve the runtime gameobject's particle system component.
         abilityParticleSystem = ability.gameObject.GetComponentInChildren<ParticleSystem>();
         if (abilityParticleSystem == null)
@@ -45,12 +47,14 @@ public abstract class PlayerAbilities : MonoBehaviour
         // isEffectRepeating = true only for abilities that will be replyed continuously until level end with n second delays.
         if (isEffectRepeating)
         {
+            Logger.Log($"Starting coroutine for {this.name}");
             StartCoroutine(ReplayActivation());
         }
         else
         {
             if (abilityParticleSystem != null)
             {
+                Logger.Log($"One time playing of VFX for {this.name}");
                 abilityParticleSystem.Play();
             }
         }
@@ -62,6 +66,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     {
         while(true)
         {
+            Logger.Log($"Executing replay activation loop for {this.name}");
             if (abilityParticleSystem != null)
             {
                 abilityParticleSystem.Play();
@@ -76,15 +81,16 @@ public abstract class PlayerAbilities : MonoBehaviour
 
     public virtual void DeactivateAbility()
     {
+        Logger.Log($"Deactivating {this.name}.", this);
         if (abilityParticleSystem != null)
         {
-            Logger.Log("Deactivating Ability");
             abilityParticleSystem.Stop();
         }
     }
 
     protected virtual void InitializeAbilityData()
     {
+        Logger.Log($"Initializing {this.name}'s ability data OnAwake.", this);
         foreach (var stats in abilityData.abilityStatsArray)
         {
             if (transform.name.Contains(stats.abilityName.ToString()))
@@ -101,7 +107,7 @@ public abstract class PlayerAbilities : MonoBehaviour
 
     public virtual void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
-        Logger.Log($"Activating Upgrade in - {this.name} PlayerAbilities.", this);
+        Logger.Log($"Activating Upgrade for {this.name}.", this);
         UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
         Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
         int newValue = newQueue.Peek().newValue;

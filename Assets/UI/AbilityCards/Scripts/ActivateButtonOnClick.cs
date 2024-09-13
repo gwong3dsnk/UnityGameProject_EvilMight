@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UpgradeTypesDatabase = 
@@ -52,15 +53,16 @@ public class ActivateButtonOnClick : MonoBehaviour
 
     private void HandleButtonClicked()
     {
+        Logger.Log("OnClick registered on Activate button", this);
         if (selectedAbility != null)
         {
-            Logger.Log("Ability Chosen");
+            Logger.Log($"Ability Chosen - {selectedAbility.abilityName}");
             GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
             OnAbilityChosen?.Invoke(abilityPrefab);
         }
         else if (selectedUpgrade.Count > 0)
         {
-            Logger.Log("Upgrade Chosen");
+            Logger.Log($"Upgrade Chosen - {selectedUpgrade.First().Value.First().Key}");
             OnUpgradeChosen?.Invoke(selectedUpgrade);
         }
     }

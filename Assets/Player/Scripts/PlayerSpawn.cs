@@ -14,6 +14,7 @@ public class PlayerSpawn : MonoBehaviour
 
     private void InitializePlayer()
     {
+        Logger.Log("Initializing PLAYER SPAWN and default player ability", this);
         InstantiateDefaultAbility();
     }
 

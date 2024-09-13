@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,7 +12,15 @@ public class GenerateUpgradeCards : MonoBehaviour
 
     public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards()
     {
+        Logger.Log("Starting to generate upgrade cards.", this);
         List<UpgradeTypesDatabase> newUpgrades = CreateUpgradesList();
+
+        Logger.Log("Upgrade generation done.", this);
+        foreach (var item in newUpgrades) // log
+        {
+            Logger.Log($"newUpgrades Content - [{item.First().Key}, {item.First().Value.First().Key}]", this);
+        }
+        Logger.Log("Done logging newUpgrades content");
 
         return newUpgrades;
     }
@@ -28,8 +34,11 @@ public class GenerateUpgradeCards : MonoBehaviour
         List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
         int x = CalculateNumExistingUpgrades();
 
+        Logger.Log($"Number of UpgradeTypes Available - [{x}]");
+
         if (x == 1 || x == 2)
         {
+            Logger.Log("Only 1 or 2 valid upgrades found.  Storing data into a list and returning.", this);
             // Less than 3 upgrades exist, store into list and return
             foreach (var kvp in upgradeDatabaseManager.UpgradeDatabase)
             {
@@ -53,7 +62,7 @@ public class GenerateUpgradeCards : MonoBehaviour
         }
         else
         {
-            Logger.Log("Starting process to choose 3 random upgrades with existing level queues", this);
+            Logger.Log("More than 3 upgrades available.  Starting process to choose 3 random upgrades", this);
 
             while (x < 3)
             {

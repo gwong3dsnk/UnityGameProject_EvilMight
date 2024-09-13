@@ -16,7 +16,6 @@ public class RockShield : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
-        Logger.Log("Activating RockShield", this);
         isEffectRepeating = false;
         base.ActivateAbility(ability);
     }

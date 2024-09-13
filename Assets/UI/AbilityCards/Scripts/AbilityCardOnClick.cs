@@ -29,6 +29,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 
         if (eventData.pointerPress != null)
         {
+            Logger.Log("OnClick registered on a card panel.", this);
             ToggleCardOutline();
 
             GameObject selectedCardPanel = eventData.pointerPress.transform.parent.gameObject;
@@ -37,7 +38,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Logger.LogWarning("PointerPress is null.");
+            Logger.LogWarning("PointerPress is null.", this);
         }
     }
 
@@ -50,13 +51,16 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 
     private void IdentifyClickedCardData(GameObject selectedCardPanel)
     {
+        Logger.Log($"Selected Card Panel - {selectedCardPanel.name}", this);
         if (displayUpgradeCards.UpgradeCardRelationship.ContainsKey(selectedCardPanel))
         {
             selectedUpgrade = displayUpgradeCards.UpgradeCardRelationship[selectedCardPanel];
+            Logger.Log($"Selected Upgrade - {selectedUpgrade.First().Value.First().Key}");
         }
         else if (displayAbilityCards.AbilityCardRelationship.ContainsKey(selectedCardPanel))
         {
             selectedAbility = displayAbilityCards.AbilityCardRelationship[selectedCardPanel];
+            Logger.Log($"Selected Ability - {selectedAbility.abilityName}");
         }
         else
         {
