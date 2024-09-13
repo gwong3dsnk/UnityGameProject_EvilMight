@@ -4,24 +4,27 @@ using System.Linq;
 using System.Text;
 using UnityEditor;
 
+/// <summary>
+/// EDITOR ONLY
+/// Sets up the 3-button GUI in AbilityData asset under Ability Name Management section
+/// Each button corresponds to one of the three defined methods.
+/// </summary>
 [CustomEditor(typeof(AbilityLibraryData))]
 public class AbilityLibraryDataEditor : BaseLibraryDataEditor<AbilityLibraryData>
 {
     private AbilityLibraryData abilityData;
-    protected string abilityDataPath;
+    protected string abilityDataPath = "Assets/PlayerAbilities/Scripts/Data/AbilityData.asset";
 
     private void OnEnable() 
     {
-        abilityDataPath = "Assets/PlayerAbilities/Scripts/Data/AbilityData.asset";
+        // abilityDataPath = "Assets/PlayerAbilities/Scripts/Data/AbilityData.asset";
         abilityData = AssetDatabase.LoadAssetAtPath<AbilityLibraryData>(abilityDataPath);
     }
 
-    protected override void RegenerateAbilityNames(AbilityLibraryData libraryData)
-    {
-        libraryData.RegenerateAbilityNames();
-        AssetDatabase.Refresh();
-    }
-
+    /// <summary>
+    /// Called when button with label "1. Save Ability Names" is clicked.  
+    /// Saves current ability name data to file.
+    /// </summary>
     protected override void SaveNamesToFile()
     {
         StringBuilder sb = new StringBuilder();
@@ -46,6 +49,19 @@ public class AbilityLibraryDataEditor : BaseLibraryDataEditor<AbilityLibraryData
         Logger.Log("Finished saving current ability choices in upgradeData to abilityNames.txt file");
     }
 
+    /// <summary>
+    /// Called when button with text "2. Regenerate Ability Names" is clicked.
+    /// New ability prefabs are discovered and written to the ability names text file.
+    /// </summary>
+    protected override void RegenerateAbilityNames()
+    {
+        base.RegenerateAbilityNames();
+    }    
+
+    /// <summary>
+    /// Called when button with text "3. Load Ability Names" is clicked.
+    /// Sets the data's ability name options to the new list
+    /// </summary>
     protected override void LoadAbilityNames()
     {
         var abilityNamesEnum = Enum.GetValues(typeof(AbilityNames)).Cast<AbilityNames>().ToArray();

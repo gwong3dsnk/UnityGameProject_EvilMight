@@ -31,15 +31,3 @@ MonoBehaviour:
     fireRate: 1
     prefab: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
     playerAbilities: {fileID: 864473063569061556, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
-  - abilityName: 2
-    abilityDescription: Damage enemies with orbiting rocks!
-    damage: 2
-    fireRate: 1
-    prefab: {fileID: 6043325753769299960, guid: 0688e7509cdeaf342ac5313dbb9a1ab9, type: 3}
-    playerAbilities: {fileID: 3948713620712116873, guid: 0688e7509cdeaf342ac5313dbb9a1ab9, type: 3}
-  - abilityName: 3
-    abilityDescription: Damage all visible enemies!
-    damage: 2
-    fireRate: 1
-    prefab: {fileID: 6043325753769299960, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}
-    playerAbilities: {fileID: 1719185197974016433, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}

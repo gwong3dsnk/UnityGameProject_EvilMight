@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -7,6 +7,8 @@ public abstract class BaseLibraryDataEditor<T> : Editor where T : ScriptableObje
 {
     private GUIStyle labelTextWrapping;
     protected string abilityNameFilePath = Path.Combine(Application.dataPath, "Editor/Temp/abilityNames.txt");
+    protected string abilityPrefabPath = "Assets/PlayerAbilities/Prefabs";
+    protected string enumFilePath = "Assets/PlayerAbilities/Scripts/Data/AbilityNames.cs";       
 
     public override void OnInspectorGUI()
     {
@@ -16,8 +18,6 @@ public abstract class BaseLibraryDataEditor<T> : Editor where T : ScriptableObje
         };
 
         DrawDefaultInspector();
-
-        T libraryData = (T)target; 
 
         // Design the GUI
         EditorGUILayout.LabelField("Ability Name Management", EditorStyles.boldLabel);
@@ -38,7 +38,7 @@ public abstract class BaseLibraryDataEditor<T> : Editor where T : ScriptableObje
 
         if (GUILayout.Button(buttonContent))
         {
-            RegenerateAbilityNames(libraryData);
+            RegenerateAbilityNames();
         }
 
         if (GUILayout.Button(loadAbilityNamebuttonContent))
@@ -47,9 +47,14 @@ public abstract class BaseLibraryDataEditor<T> : Editor where T : ScriptableObje
         }      
     }
 
-    protected abstract void SaveNamesToFile();
+    protected virtual void RegenerateAbilityNames()
+    {
+        List<string> abilityNames = DataUtilityMethods.GetAssetPrefabNamesByPath(abilityPrefabPath);
+        DataUtilityMethods.WriteNewAbilityEnums(abilityNames, enumFilePath);
+        AssetDatabase.Refresh();        
+    }
 
-    protected abstract void RegenerateAbilityNames(T libraryData);
+    protected abstract void SaveNamesToFile();
 
     protected abstract void LoadAbilityNames();
 }
