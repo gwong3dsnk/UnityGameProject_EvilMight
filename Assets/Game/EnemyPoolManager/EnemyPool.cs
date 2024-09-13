@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyWaveController))]
 public class EnemyPool : MonoBehaviour
 {
+    [SerializeField] private EnemyData enemyData;
     private Dictionary<string, EnemyWaveData[]> waveDataSets = new Dictionary<string, EnemyWaveData[]>();
     public Dictionary<string, EnemyWaveData[]> WaveDataSets => waveDataSets;
     private Dictionary<string, List<GameObject>> waveEnemies = new Dictionary<string, List<GameObject>>();
@@ -42,11 +43,11 @@ public class EnemyPool : MonoBehaviour
 
     private void PopulateEnemyPool()
     {
-        EnemyPrefabLibrary enemyPrefabLibrary = GetComponent<EnemyPrefabLibrary>();
-
-        if (enemyPrefabLibrary != null)
+        if (enemyData != null)
         {
-            EnemyPrefabAssignments[] enemyPrefabAssignments = enemyPrefabLibrary.EnemyPrefabAssignments;
+            EnemyData.EnemyStats[] enemyStats = enemyData.enemyStatsArray;
+
+            // WIP - replacing enemy prefab assignments with enmy data's prefab property.
             
             foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
             {
@@ -57,7 +58,7 @@ public class EnemyPool : MonoBehaviour
                 foreach (EnemyWaveData data in wave.Value)
                 {
                     // Start by finding the right enemy prefab that's to be instantiated, then instantiate it.
-                    GetPrefabToInstantiate(enemyPrefabAssignments, data);
+                    GetPrefabToInstantiate(enemyStats, data);
 
                     if (enemyToInstantiate == null)
                     {
@@ -74,17 +75,17 @@ public class EnemyPool : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Reference to EnemyPrefabLibrary script component is not found.", this);
+            Logger.LogError("Reference to Enemy Data script component is not found.", this);
         }
     }
 
-    private void GetPrefabToInstantiate(EnemyPrefabAssignments[] enemyPrefabAssignments, EnemyWaveData data)
+    private void GetPrefabToInstantiate(EnemyData.EnemyStats[] enemyStats, EnemyWaveData data)
     {
-        for (int i = 0; i < enemyPrefabAssignments.Length; i++)
+        for (int i = 0; i < enemyStats.Length; i++)
         {
-            if (data.enemyClass == enemyPrefabAssignments[i].enemyClass && data.enemyDifficulty == enemyPrefabAssignments[i].enemyDifficulty)
+            if (data.enemyClass == enemyStats[i].enemyClass && data.enemyDifficulty == enemyStats[i].difficulty)
             {
-                enemyToInstantiate = enemyPrefabAssignments[i].enemyPrefab;
+                enemyToInstantiate = enemyStats[i].prefab;
                 break;
             }
         }

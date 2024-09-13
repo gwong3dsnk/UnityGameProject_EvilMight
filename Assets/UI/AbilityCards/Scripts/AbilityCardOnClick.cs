@@ -60,7 +60,7 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Logger.LogError("No matching Panel Key found!", this);
+            Logger.LogError("Panel with null/invalid data selected.", this);
         }
     }    
 

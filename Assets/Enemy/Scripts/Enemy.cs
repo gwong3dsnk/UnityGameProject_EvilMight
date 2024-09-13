@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public float MovementSpeed { get { return t_movementSpeed; } }
     [SerializeField] int t_experience;
     public int Experience => t_experience;
+    [SerializeField] GameObject t_prefab;
+    public GameObject Prefab => t_prefab;
 
     public void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
                     this.t_attackRadius = stats.atkRadius;
                     this.t_movementSpeed = stats.movementSpeed;
                     this.t_experience = stats.experience;
+                    this.t_prefab = stats.prefab;
                     break;
                 }
             }

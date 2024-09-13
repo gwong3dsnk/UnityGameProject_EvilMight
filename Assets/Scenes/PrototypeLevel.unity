@@ -200,6 +200,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92e927e7ce499004dace66c30462d289, type: 3}
+--- !u!1 &427273765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5592519998316936867, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+  m_PrefabInstance: {fileID: 109696816220360735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!223 &428600675 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 8850434791562695508, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
@@ -522,17 +527,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
---- !u!114 &1193199664 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9183531370104865602, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
-  m_PrefabInstance: {fileID: 1193199663}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c7b99bb0c10d44da19d72b3ac34700, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1193199665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2974549487317993471, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
@@ -897,7 +891,7 @@ PrefabInstance:
     - target: {fileID: 6086345300317977831, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 109696816220360739}
+      objectReference: {fileID: 427273765}
     - target: {fileID: 6086345300317977831, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: abilityData
       value: 
@@ -940,7 +934,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8959277420992722768, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 427273765}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da00e7cebd98de4b8a0d88c6b2add05, type: 3}
@@ -959,17 +953,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 109696816220360737}
-  abilitychoiceUI: {fileID: 1718078263}
-  cardGenerator: {fileID: 1193199664}
   levelXPThreshold: 0
   currentLevel: 1
   currentXP: 0
   excessXP: 0
---- !u!1 &109696816220360739 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2057087431247126637, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
-  m_PrefabInstance: {fileID: 109696816220360735}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &987564362046679704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1069,7 +1056,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.size
@@ -1080,12 +1067,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[0].enemyClass
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[0].enemyCount
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[1].enemyClass
@@ -1101,7 +1092,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[0].enemyCount
-      value: 10
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[0].enemyClass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[0].enemyCount
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[0].enemyDifficulty
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[0].enemyDifficulty
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 295442695883785601, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyMinion
@@ -1261,14 +1268,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3662555353255407951, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyPrefabAssignments.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3662555353255407951, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyPrefabAssignments.Array.data[0].enemyClass
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3662555353255407951, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyPrefabAssignments.Array.data[1].enemyClass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662555353255407951, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyPrefabAssignments.Array.data[0].enemyPrefab
+      value: 
+      objectReference: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}
+    - target: {fileID: 3662555353255407951, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: enemyPrefabAssignments.Array.data[1].enemyPrefab
       value: 
       objectReference: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}
     - target: {fileID: 4576787393230112049, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
@@ -1279,6 +1294,10 @@ PrefabInstance:
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1557583892}
+    - target: {fileID: 4576787393230112049, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
+      propertyPath: timeBetweenEnemies
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

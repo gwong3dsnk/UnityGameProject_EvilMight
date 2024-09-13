@@ -16,6 +16,7 @@ public class SingleShot : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
+        isEffectRepeating = false;
         base.ActivateAbility(ability);
     }
 

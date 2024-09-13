@@ -17,8 +17,9 @@ public class MeleeSlash : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
-        base.ActivateAbility(ability);
         Logger.Log("Activating MeleeSlash", this);
+        isEffectRepeating = false;
+        base.ActivateAbility(ability);
     }
 
     public override void DeactivateAbility()

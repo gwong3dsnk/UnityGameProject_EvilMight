@@ -54,6 +54,8 @@ public abstract class PlayerAbilities : MonoBehaviour
                 abilityParticleSystem.Play();
             }
         }
+
+        isEffectRepeating = false;
     }
 
     protected virtual IEnumerator ReplayActivation()

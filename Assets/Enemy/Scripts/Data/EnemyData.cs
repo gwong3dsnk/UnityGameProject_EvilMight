@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Game/EnemyData", order = 0)]
@@ -15,6 +16,7 @@ public class EnemyData : ScriptableObject
         public float atkRadius;
         public float movementSpeed;
         public int experience;
+        public GameObject prefab;
     }
 
     public EnemyStats[] enemyStatsArray;    

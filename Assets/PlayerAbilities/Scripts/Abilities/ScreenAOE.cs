@@ -26,7 +26,7 @@ public class ScreenAOE : PlayerAbilities
     public override void ActivateAbility(PlayerAbilities ability)
     {
         Logger.Log("Activating ScreenAOE", this);
-        activationDelay = 5.0f;
+        activationDelay = 10.0f;
         isEffectRepeating = true;
         base.ActivateAbility(ability); 
     }

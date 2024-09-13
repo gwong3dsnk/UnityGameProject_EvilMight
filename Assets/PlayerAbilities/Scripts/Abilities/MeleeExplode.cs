@@ -17,8 +17,10 @@ public class MeleeExplode : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
-        base.ActivateAbility(ability);
         Logger.Log("Activating MeleeExplode", this);
+        activationDelay = 8.0f;
+        isEffectRepeating = true;
+        base.ActivateAbility(ability);
     }
 
     protected override void ExecuteSecondaryActivationBehavior()
