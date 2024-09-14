@@ -95,15 +95,17 @@ public class PlayerAbilitiesManager : MonoBehaviour
         {
             if (!activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
             {
-                Logger.Log("Ability exists, upgrade type doesn't.  Adding upgrade entry.", this); 
-                // Ability exists, upgrade type doesn't.  Add upgrade type.
+                Logger.Log("Ability exists in ActiveUpgrades, upgrade type doesn't.  Adding only upgrade entry.", this); 
                 activeUpgrades[newAbilityName].Add(newUpgradeType, newQueue);
+            }
+            else
+            {
+                Logger.Log("Ability exists in ActiveUpgrades, upgrade type exists.  Don't need to do anything.", this);
             }
         }
         else
         {
-            Logger.Log("Ability exists, upgrade type exists.  Adding upgrade entry.", this); 
-            // First upgrade unlocked for existing ability.  Adding the entry.
+            Logger.Log("Ability DOES NOT exist in ActiveUpgrades.  Adding ability & upgrade entry.", this); 
             activeUpgrades.Add(newAbilityName, newUpgrade.First().Value);
         }
 
@@ -120,6 +122,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
     {
+        Logger.Log("------------------------------------------------", this);
         Logger.Log("Starting BeginUpgradeActivation", this);
         AbilityNames newAbilityName = newUpgrade.First().Key;
 
@@ -127,7 +130,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
         {
             if (ability.AbilityName == newAbilityName)
             {
-                Logger.Log("Matching ability found in activeAbilities. Calling ActivateUpgrade", this);
+                Logger.Log("Ability match found in activeAbilities. Calling ActivateUpgrade", this);
                 ability.ActivateUpgrade(newUpgrade);
             }
         }

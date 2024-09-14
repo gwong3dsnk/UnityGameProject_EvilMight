@@ -29,7 +29,8 @@ public class AbilityCardOnClick : MonoBehaviour, IPointerClickHandler
 
         if (eventData.pointerPress != null)
         {
-            Logger.Log("OnClick registered on a card panel.", this);
+            Logger.Log("------------------------------------------------", this);
+            Logger.Log("USER ONCLICK REGISTERED ON CARD PANEL", this);
             ToggleCardOutline();
 
             GameObject selectedCardPanel = eventData.pointerPress.transform.parent.gameObject;

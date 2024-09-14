@@ -14,7 +14,7 @@ public class CardUtilityMethods : MonoBehaviour
     {
         int validQueueCount = 0;
 
-        Logger.Log("Start displaying Valid Upgrades");
+        Logger.Log("Start displaying Valid Upgrades in GetNumValidLevelQueues.");
         foreach (var kvp in upgradeTypeDatabase)
         {
             foreach (var type in kvp.Value)

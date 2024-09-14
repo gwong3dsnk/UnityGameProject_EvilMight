@@ -45,7 +45,7 @@ public class DisplayCardManager : MonoBehaviour
 
     private void CalculateTotalAbilitiesToDisplay(List<AbilityLibraryData.AbilityStats> abilities, List<UpgradeTypesDatabase> upgrades)
     {
-        Logger.Log("Starting to calculate total abilities to display in DisplayCardManager.\nDisplaying Content...", this);
+        Logger.Log("Starting CalculateTotalAbilitiesToDisplay in DisplayCardManager.\nDisplaying Content...", this);
         this.abilities = abilities;
         foreach (var item in this.abilities) // log
         {
@@ -54,7 +54,7 @@ public class DisplayCardManager : MonoBehaviour
         this.upgrades = upgrades;
         foreach (var item in this.upgrades) // log
         {
-            Logger.Log($"Upgrade Contents - {item.First().Value.First().Key}", this);
+            Logger.Log($"Upgrade Contents - {item.First().Value.First().Key} from {item.First().Key}", this);
         }        
         int finalNumOfAbilitiesToDisplay = 0;
         int finalNumOfUpgradesToDisplay = 0;

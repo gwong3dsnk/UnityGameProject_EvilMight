@@ -8,6 +8,9 @@ public class AbilityCardChooserUI : MonoBehaviour
     private void Start()
     {
         Logger.Log("ABILITY CARD CHOOSE UI OnStart", this);
+        Logger.Log("------------------------------------------------", this);
+        Logger.Log("All OnAwake logic and AbilityCardChoose OnStart logic FINISHED", this);
+        Logger.Log("------------------------------------------------", this);
         if (levelManager == null)
         {
             Logger.LogError("Missing level manager reference", this);

@@ -16,6 +16,7 @@ public class DisplayUpgradeCards : MonoBehaviour
 
     public void ProcessUpgradeDisplay(List<GameObject> shuffledList, int numToDisplay, List<UpgradeTypesDatabase> upgradeDatabase)
     {
+        Logger.Log("------------------------------------------------", this);
         Logger.Log("Starting to DISPLAY UPGRADE cards", this);
         this.shuffledList = shuffledList;
         upgradeCardRelationship.Clear();

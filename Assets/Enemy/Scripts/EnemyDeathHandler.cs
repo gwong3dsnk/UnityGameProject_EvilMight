@@ -63,7 +63,6 @@ public class EnemyDeathHandler : MonoBehaviour
     {
         if (enemy != null && levelManager != null)
         {
-            // OnEnemyDeath_PassPlayerXP?.Invoke(enemy.Experience);
             levelManager.AddXP(enemy.Experience);
         }
         else

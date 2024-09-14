@@ -14,6 +14,7 @@ public class GeneralUtilityMethods : MonoBehaviour
 
     public static List<T> ShuffleList<T>(List<T> list)
     {
+        Logger.Log("Shuffling the card ui panel list.");
         // Fisher-Yates Shuffle algorithm to mix up a provided list.
         int n = list.Count;
         while (n > 1)

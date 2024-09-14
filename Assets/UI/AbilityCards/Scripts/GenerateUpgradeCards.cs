@@ -15,7 +15,7 @@ public class GenerateUpgradeCards : MonoBehaviour
         Logger.Log("Starting to generate upgrade cards.", this);
         List<UpgradeTypesDatabase> newUpgrades = CreateUpgradesList();
 
-        Logger.Log("Upgrade generation done.", this);
+        Logger.Log("Upgrade generation done. Start logging newUpgrades content:", this);
         foreach (var item in newUpgrades) // log
         {
             Logger.Log($"newUpgrades Content - [{item.First().Key}, {item.First().Value.First().Key}]", this);
@@ -33,8 +33,6 @@ public class GenerateUpgradeCards : MonoBehaviour
     {
         List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
         int x = CalculateNumExistingUpgrades();
-
-        Logger.Log($"Number of UpgradeTypes Available - [{x}]");
 
         if (x == 1 || x == 2)
         {

@@ -53,7 +53,8 @@ public class ActivateButtonOnClick : MonoBehaviour
 
     private void HandleButtonClicked()
     {
-        Logger.Log("OnClick registered on Activate button", this);
+        Logger.Log("------------------------------------------------", this);
+        Logger.Log("USER ONCLICK REGISTERED ON ACTIVATE BUTTON", this);
         if (selectedAbility != null)
         {
             Logger.Log($"Ability Chosen - {selectedAbility.abilityName}");

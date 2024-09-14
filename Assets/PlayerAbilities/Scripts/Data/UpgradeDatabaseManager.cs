@@ -29,7 +29,7 @@ public class UpgradeDatabaseManager : MonoBehaviour
 
             if (!isAbilityInDatabase)
             {
-                Logger.Log($"Active ability [{ability.AbilityName}] is not in database.  Adding upgrades", this);
+                Logger.Log($"Active ability [{ability.AbilityName}]'s upgrades are not in upgrade database.  Adding upgrades", this);
                 foreach (var data in upgradeLibraryData.upgradeStatsData)
                 {
                     if (data.parentAbility == ability.AbilityName)
@@ -86,10 +86,12 @@ public class UpgradeDatabaseManager : MonoBehaviour
     {
         if (upgradeToDequeue.Count != 0)
         {
-            Logger.Log($"Starting {this.name}.ProcessDequeue", this);
+            Logger.Log($"Starting UpgradeDatabaseManager.ProcessDequeue", this);
             upgradeDatabase.TryGetValue(upgradeToDequeue.First().Key, out var typeDictionary);
             typeDictionary.TryGetValue(upgradeToDequeue.First().Value, out var levelData);
+            Logger.Log($"First Queue item BEFORE removal - {levelData.Peek()}");
             levelData.Dequeue();
+            Logger.Log($"First Queue item AFTER removal - {levelData.Peek()}");
         }
     }    
 }

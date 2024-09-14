@@ -12,7 +12,8 @@ public class DisplayAbilityCards : MonoBehaviour
 
     public void ProcessAbilityDisplay(List<GameObject> shuffledList, int numToDisplay, List<AbilityLibraryData.AbilityStats> generatedAbilities)
     {
-        Logger.Log("Starting to display ability card", this);
+        Logger.Log("------------------------------------------------", this);
+        Logger.Log("Starting to DISPLAY ABILITY card", this);
         CardUtilityMethods.SetCardIndex(0);
         abilityCardRelationship.Clear();
         this.shuffledList = shuffledList;
@@ -37,6 +38,7 @@ public class DisplayAbilityCards : MonoBehaviour
 
     private List<AbilityLibraryData.AbilityStats> SelectRandomAbilitiesToDisplay(int numToSelect)
     {
+        Logger.Log("Starting to choose random ability...", this);
         List<AbilityLibraryData.AbilityStats> randomlySelectedAbilities = new List<AbilityLibraryData.AbilityStats>();
         AbilityLibraryData.AbilityStats chosenAbility;
 
@@ -57,9 +59,11 @@ public class DisplayAbilityCards : MonoBehaviour
         }
         else
         {
+            Logger.Log("No ability chosen as chosenAbility is null.  Clearing randomlySelectedAbilities.", this);
             randomlySelectedAbilities.Clear();
         }
 
+        Logger.Log("Finished choosing random ability.", this);
         return randomlySelectedAbilities;
     }
 
@@ -73,7 +77,7 @@ public class DisplayAbilityCards : MonoBehaviour
     {
         int cardIndex = CardUtilityMethods.GetCardIndex();
 
-        Logger.Log($"Starting while loop while chosenAbilities.Count {chosenAbilities.Count} > cardIndex {cardIndex}", this);
+        Logger.Log($"Starting DisplayAbilities while loop while chosenAbilities.Count {chosenAbilities.Count} > cardIndex {cardIndex}", this);
         while (chosenAbilities.Count > cardIndex)
         {
             Logger.Log($"LOOPING.  chosenAbilities.Count {chosenAbilities.Count}, cardIndex - {cardIndex}", this);

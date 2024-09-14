@@ -28,7 +28,10 @@ public class LevelManager : MonoBehaviour
     
     public void AddXP(int amount)
     {
+        Logger.Log($"Current Exp (AddXP) - {currentXP}", this);
+        Logger.Log($"Amount of Exp to Add - {amount}", this);
         currentXP += amount;
+        Logger.Log($"New Current Exp (AddXP) - {currentXP}", this);
 
         if (currentXP >= levelXPThreshold)
         {
@@ -39,11 +42,18 @@ public class LevelManager : MonoBehaviour
 
     private void LevelUp()
     {
-        Logger.Log($"Player is leveling from {currentLevel} to {currentLevel += 1}", this);
+        Logger.Log("------------------------------------------------", this);
+        Logger.Log($"PLAYER LEVEL UP DETECTED", this);
+        Logger.Log($"Current Level - {currentLevel}", this);
         currentLevel += 1;
+        Logger.Log($"New Level - {currentLevel}", this);
         playerHealth.ResetHealth();
         CalculateXPThreshold();
+        Logger.Log($"Current Exp (LevelUp) - {currentXP}", this);
         currentXP = excessXP > 0 ? excessXP : 0;
+        Logger.Log($"New Current Exp (LevelUp) - {currentXP}", this);
+        Logger.Log("Processing player level-up complete.  Freezing time.", this);
+        Logger.Log("------------------------------------------------", this);
         OnLevelUp?.Invoke(this, EventArgs.Empty);
     }
 
