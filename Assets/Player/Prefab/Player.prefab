@@ -106,13 +106,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4843163735837109802}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.60876125, y: -0, z: -0, w: 0.7933535}
-  m_LocalPosition: {x: 0, y: 25, z: -6}
+  m_LocalRotation: {x: 0.5549879, y: -0, z: -0, w: 0.83185846}
+  m_LocalPosition: {x: 0, y: 13.15, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 507619735079525155}
-  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 67.42, y: 0, z: 0}
 --- !u!20 &900470326075416038
 Camera:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1036946498594865688}
@@ -229,7 +229,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eab0b8541ef83da4cb285f28998b5b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 5592519998316936867}
+  abilityDatabaseManager: {fileID: 0}
+  upgradeDatabaseManager: {fileID: 0}
 --- !u!1 &5592519998316936867
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,15 +241,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1036946498594865688}
-  - component: {fileID: 1917018055864512469}
+  - component: {fileID: 4450282296139397863}
   - component: {fileID: 5109585901985917513}
-  - component: {fileID: 182635996393916530}
+  - component: {fileID: 3564878389235060321}
   - component: {fileID: 8375900831703486986}
   - component: {fileID: 3378347712008903245}
   - component: {fileID: 5094802073796450431}
   - component: {fileID: 8959277420992722768}
   - component: {fileID: 1888536999915482598}
-  - component: {fileID: 450783085418865178}
   m_Layer: 0
   m_Name: MeshPlaceholder
   m_TagString: Untagged
@@ -264,21 +265,21 @@ Transform:
   m_GameObject: {fileID: 5592519998316936867}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3044528150992956525}
   m_Father: {fileID: 507619735079525155}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1917018055864512469
+--- !u!33 &4450282296139397863
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5592519998316936867}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: f047d8502d8fc844c90fcbd0a56fab0f, type: 3}
 --- !u!23 &5109585901985917513
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -321,7 +322,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &182635996393916530
+--- !u!65 &3564878389235060321
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,8 +341,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.498236, y: 3, z: 2.132242}
+  m_Center: {x: 0, y: 0.6, z: -0.16902697}
 --- !u!54 &8375900831703486986
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -427,18 +428,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeathCanvas: {fileID: 0}
---- !u!114 &450783085418865178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5592519998316936867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb794e7d0d28b264699aadc54f2c6287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
-  searchTimeInterval: 0.5
-  searchRadius: 30

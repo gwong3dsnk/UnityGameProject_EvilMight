@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         {
             movement.Normalize();
         }
-
+     
         rb.velocity = movement * movementSpeed;
     }
 
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // TODO: Test this code to see if player is still rotating a bunch or not
+            // Prevent player from strange rotation behavior
             rb.angularVelocity = Vector3.zero;
         }
     }

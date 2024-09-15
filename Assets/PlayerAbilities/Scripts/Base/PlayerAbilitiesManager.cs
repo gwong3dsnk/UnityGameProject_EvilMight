@@ -71,7 +71,6 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void InstantiateAbility(GameObject ability)
     {
-        Logger.Log($"Instantiating ability [{ability.name}]");
         Vector3 particleSpawnPosition = player.transform.position;
         GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
         PlayerAbilities currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();

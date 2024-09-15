@@ -20,20 +20,20 @@ MonoBehaviour:
     atkRadius: 20
     movementSpeed: 10
     experience: 5
-    prefab: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}
+    prefab: {fileID: 7539209899930774730, guid: 241078df1e90f294c9d32cfb6477788f, type: 3}
   - enemyClass: 1
     difficulty: 1
     hp: 5
     atk: 1
     atkRadius: 20
     movementSpeed: 10
-    experience: 5
-    prefab: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}
+    experience: 10
+    prefab: {fileID: 7539209899930774730, guid: 75cad540ef066424298f7cdbc20e8b10, type: 3}
   - enemyClass: 1
     difficulty: 2
     hp: 10
     atk: 1
     atkRadius: 20
     movementSpeed: 10
-    experience: 5
-    prefab: {fileID: 698273978741594474, guid: 1dd46a7d74d128a4396871f20dd42c69, type: 3}
+    experience: 15
+    prefab: {fileID: 7539209899930774730, guid: cbdd878178d8c0f4a93ae922e43cdfb0, type: 3}

@@ -16,6 +16,7 @@ public class PlayerHealth : HealthManagement
 
     private void OnParticleCollision(GameObject other) 
     {
+        Logger.LogWarning("Detecting particle collision hit on player", this);
         GameObject enemyPrefab = other.transform.parent?.gameObject;
         enemy = enemyPrefab.GetComponent<Enemy>();
 

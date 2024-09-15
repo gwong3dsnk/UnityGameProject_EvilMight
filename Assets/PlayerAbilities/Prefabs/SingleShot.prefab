@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3948856698939220209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.812126, y: -25.505365, z: -19.483908}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45,13 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4ab4d7e74aeb140839de9ac6f3f663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityParticleSystem: {fileID: 8239790212743361537}
   abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
-  abilityName: 
+  abilityName: 0
   abilityDescription: 
   damage: 0
   fireRate: 0
-  abilityUpgrades: []
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
 --- !u!1001 &985173355039288188
@@ -65,34 +63,6 @@ PrefabInstance:
     - target: {fileID: 2185798964007899379, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_Name
       value: FX_Player_SingleShotProjectile
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -114,10 +84,5 @@ PrefabInstance:
 --- !u!4 &2712497432267922221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
-  m_PrefabInstance: {fileID: 985173355039288188}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8239790212743361537 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 9220439057694531453, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
   m_PrefabInstance: {fileID: 985173355039288188}
   m_PrefabAsset: {fileID: 0}
