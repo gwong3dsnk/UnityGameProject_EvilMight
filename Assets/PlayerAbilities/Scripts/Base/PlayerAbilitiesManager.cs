@@ -10,7 +10,6 @@ using UpgradeTypesDatabase =
 
 public class PlayerAbilitiesManager : MonoBehaviour
 {
-    [SerializeField] GameObject player;
     [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
@@ -71,8 +70,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     public void InstantiateAbility(GameObject ability)
     {
-        Vector3 particleSpawnPosition = player.transform.position;
-        GameObject abilityGameObject = Instantiate(ability, particleSpawnPosition, Quaternion.identity, transform);
+        GameObject abilityGameObject = Instantiate(ability, transform.position, Quaternion.identity, transform);
         PlayerAbilities currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
         AddAbility(currentPlayerAbility);
 
