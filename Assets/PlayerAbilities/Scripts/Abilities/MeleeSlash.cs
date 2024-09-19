@@ -10,7 +10,7 @@ using UpgradeTypesDatabase =
 
 public class MeleeSlash : PlayerAbilities
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -20,6 +20,11 @@ public class MeleeSlash : PlayerAbilities
         isEffectRepeating = false;
         base.ActivateAbility(ability);
     }
+
+    protected override void SetParticleSystemLocationToSocket()
+    {
+        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
+    }        
 
     public override void DeactivateAbility()
     {

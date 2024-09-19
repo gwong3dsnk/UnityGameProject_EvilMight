@@ -9,7 +9,7 @@ using UpgradeTypesDatabase =
 
 public class RockShield : PlayerAbilities
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -19,6 +19,11 @@ public class RockShield : PlayerAbilities
         isEffectRepeating = false;
         base.ActivateAbility(ability);
     }
+
+    protected override void SetParticleSystemLocationToSocket()
+    {
+        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
+    }        
 
     protected override void ExecuteSecondaryActivationBehavior()
     {

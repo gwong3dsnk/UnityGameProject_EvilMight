@@ -16,6 +16,8 @@ public class PlayerAbilitiesManager : MonoBehaviour
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
     private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase ActiveUpgrades => activeUpgrades;
+    private PlayerAbilities activeAbilityForAnim;
+    public PlayerAbilities ActiveAbilityForAnim => activeAbilityForAnim;
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
     public event EventHandler OnActivationCompletion;
 
@@ -77,6 +79,9 @@ public class PlayerAbilitiesManager : MonoBehaviour
         // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
         abilityDatabaseManager.RemoveAbilityFromDatabase(currentPlayerAbility);
 
+        // Public property that is used by PlayerAnimController once OnActivationCompletion event is invoked.
+        activeAbilityForAnim = currentPlayerAbility;
+
         InvokeOnActivationCompletion();
     }
 
@@ -135,6 +140,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     private void InvokeOnActivationCompletion()
     {
+        Logger.Log("Invoking OnActivationCompletion in PlayerAbilitiesManager.", this);
         OnActivationCompletion?.Invoke(this, EventArgs.Empty);
     }
 }

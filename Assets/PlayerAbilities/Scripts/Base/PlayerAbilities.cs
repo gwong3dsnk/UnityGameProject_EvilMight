@@ -14,6 +14,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     protected ParticleSystem abilityParticleSystem;
     protected float activationDelay;
     protected bool isEffectRepeating = false;
+    protected GameObject[] playerSockets;
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
     [SerializeField] protected AbilityNames abilityName;
     public AbilityNames AbilityName => abilityName;
@@ -26,16 +27,28 @@ public abstract class PlayerAbilities : MonoBehaviour
     [SerializeField] protected GameObject prefab;
     public GameObject Prefab => prefab;
     [SerializeField] protected PlayerAbilities playerAbilities;
-    public PlayerAbilities PlayerAbilitiesScript => playerAbilities;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         InitializeAbilityData();
+        GetPlayerSockets();
+    }
+
+    protected virtual void GetPlayerSockets()
+    {
+        playerSockets = GameObject.FindGameObjectsWithTag("PlayerSocket");
+        Logger.Log("------- START Logging out Player SOckets --------", this);
+        foreach (var item in playerSockets) // log
+        {
+            Logger.Log(item.name);
+        }
+        Logger.Log("------- END Logging out Player SOckets --------", this);     
     }
 
     public virtual void ActivateAbility(PlayerAbilities ability)
     {
         Logger.Log($"Activating {this.name}", this);
+        SetParticleSystemLocationToSocket();
 
         // Retrieve the runtime gameobject's particle system component.
         abilityParticleSystem = ability.gameObject.GetComponentInChildren<ParticleSystem>();
@@ -125,4 +138,6 @@ public abstract class PlayerAbilities : MonoBehaviour
     }
 
     protected abstract void ExecuteSecondaryActivationBehavior();
+
+    protected abstract void SetParticleSystemLocationToSocket();
 }

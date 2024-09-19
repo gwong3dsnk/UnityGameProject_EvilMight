@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1036946498594865688}
+  - {fileID: 5552972640768200751}
   - {fileID: 3713381668422589651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -176,7 +177,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1036946498594865688
 Transform:
   m_ObjectHideFlags: 0
@@ -348,3 +349,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeathCanvas: {fileID: 0}
+--- !u!1001 &8675019701600895304
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 507619735079525155}
+    m_Modifications:
+    - target: {fileID: 745430260182568871, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+      propertyPath: m_IgnoreFromBuild
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851636815792197991, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851636815792197991, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851636815792197991, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483355326597041117, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+      propertyPath: m_Name
+      value: SK_CharacterHands
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+--- !u!4 &5552972640768200751 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3851636815792197991, guid: e95effc33b136564f9e0b10a09502215, type: 3}
+  m_PrefabInstance: {fileID: 8675019701600895304}
+  m_PrefabAsset: {fileID: 0}

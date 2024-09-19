@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
@@ -9,7 +7,7 @@ using UpgradeTypesDatabase =
 
 public class SingleShot : PlayerAbilities
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -18,6 +16,18 @@ public class SingleShot : PlayerAbilities
     {
         isEffectRepeating = false;
         base.ActivateAbility(ability);
+    }
+
+    protected override void SetParticleSystemLocationToSocket()
+    {
+        Logger.Log("Starting to set particle system location to socket indexSocket.L.", this);
+        string indexSocketLeft = "indexSocket.L";
+        // string indexSocketRight = "indexSocket.R";
+
+        GameObject indexLeftSocket = playerSockets.FirstOrDefault(socket => socket.name == indexSocketLeft);
+        Vector3 indexLeftSocketPosition = indexLeftSocket.transform.position;
+        Logger.Log($"indexSocket.L position - {indexLeftSocketPosition}");
+        transform.position = indexLeftSocketPosition;
     }
 
     protected override void ExecuteSecondaryActivationBehavior()

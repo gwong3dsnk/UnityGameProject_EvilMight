@@ -127,6 +127,17 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 900470326075416038, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &183935386 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6378233534303530109, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
+  m_PrefabInstance: {fileID: 1024502824206310551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab0b8541ef83da4cb285f28998b5b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &426236560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,6 +298,11 @@ Transform:
 Canvas:
   m_CorrespondingSourceObject: {fileID: 7218974778398150762, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
   m_PrefabInstance: {fileID: 1193199663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1186384626 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5552972640768200751, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+  m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1193199663
 PrefabInstance:
@@ -479,7 +495,7 @@ PrefabInstance:
     - target: {fileID: 7121560201355045913, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: abilityDatabaseManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1718078265}
     - target: {fileID: 7190350619087035115, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: upgradeDatabaseManager
       value: 
@@ -831,6 +847,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 697317098100249173, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: m_TagString
+      value: PlayerSocket
+      objectReference: {fileID: 0}
     - target: {fileID: 1888536999915482598, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: playerDeathCanvas
       value: 
@@ -839,6 +859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2351517162984312730, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: playerDeathCanvas
+      value: 
+      objectReference: {fileID: 428600675}
     - target: {fileID: 2849157885244779572, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: upgradeLibraryData
       value: 
@@ -847,9 +871,17 @@ PrefabInstance:
       propertyPath: singleShotProjectilePrefab
       value: 
       objectReference: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+    - target: {fileID: 2853289758988068880, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: playerHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3564878389235060321, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076467745652667949, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: m_TagString
+      value: PlayerSocket
       objectReference: {fileID: 0}
     - target: {fileID: 4843163735837109802, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_TagString
@@ -887,6 +919,14 @@ PrefabInstance:
       propertyPath: debugAbilityPrefabToInstantiate
       value: 
       objectReference: {fileID: 6043325753769299960, guid: 50fd3162f684eac448d56c4fa7385f3e, type: 3}
+    - target: {fileID: 6142106055668518990, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: abilityManager
+      value: 
+      objectReference: {fileID: 183935386}
+    - target: {fileID: 7470805169016748629, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: playerMesh
+      value: 
+      objectReference: {fileID: 1186384626}
     - target: {fileID: 8375900831703486986, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_AngularDrag
       value: 0
@@ -1020,7 +1060,7 @@ PrefabInstance:
     - target: {fileID: 3439396212596872942, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 109696816220360745}
+      objectReference: {fileID: 1186384626}
     - target: {fileID: 6378233534303530109, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
       propertyPath: abilityDatabaseManager
       value: 

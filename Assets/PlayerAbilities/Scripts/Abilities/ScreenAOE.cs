@@ -12,7 +12,7 @@ public class ScreenAOE : PlayerAbilities
 {
     private Camera mainCamera;
 
-    public override void Awake()
+    protected override void Awake()
     {
         mainCamera = FindObjectOfType<Camera>();
 
@@ -30,6 +30,11 @@ public class ScreenAOE : PlayerAbilities
         isEffectRepeating = true;
         base.ActivateAbility(ability); 
     }
+
+    protected override void SetParticleSystemLocationToSocket()
+    {
+        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
+    }    
 
     protected override void ExecuteSecondaryActivationBehavior()
     {

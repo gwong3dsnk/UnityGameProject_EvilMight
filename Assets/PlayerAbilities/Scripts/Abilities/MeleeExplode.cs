@@ -5,7 +5,7 @@ using UpgradeTypesDatabase =
 
 public class MeleeExplode : PlayerAbilities
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -16,6 +16,11 @@ public class MeleeExplode : PlayerAbilities
         isEffectRepeating = true;
         base.ActivateAbility(ability);
     }
+
+    protected override void SetParticleSystemLocationToSocket()
+    {
+        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
+    }        
 
     protected override void ExecuteSecondaryActivationBehavior()
     {

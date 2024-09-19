@@ -5,10 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float movementSpeed = 10.0f;
+    [SerializeField] private float rotationSpeed = 10.0f;
     private PlayerControls playerControls;
     private Vector2 moveVector;
-    private float movementSpeed = 10.0f;
-    private float rotationSpeed = 10.0f;
     private Rigidbody rb;
 
     private void Awake() 
