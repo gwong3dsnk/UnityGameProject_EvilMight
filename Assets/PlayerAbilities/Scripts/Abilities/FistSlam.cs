@@ -3,7 +3,7 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class MeleeExplode : PlayerAbilities
+public class FistSlam : PlayerAbilities
 {
     protected override void Awake()
     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 57328060552705184}
   - component: {fileID: 864473063569061556}
   m_Layer: 0
-  m_Name: MeleeSlash
+  m_Name: FingerFlick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,13 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c71f71fb95285c4cb8f05bc8552b346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityParticleSystem: {fileID: 5001033993051081082}
   abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
-  abilityName: 
+  abilityName: 0
   abilityDescription: 
   damage: 25
   fireRate: 0
-  abilityUpgrades: []
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
 --- !u!1001 &2763080125963757355
@@ -68,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4861280373453204051, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
       propertyPath: m_Name
-      value: FX_Player_MeleeSlash
+      value: FX_Player_FingerFlick
       objectReference: {fileID: 0}
     - target: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
       propertyPath: moveWithTransform
@@ -104,11 +102,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
---- !u!198 &5001033993051081082 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-  m_PrefabInstance: {fileID: 2763080125963757355}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6054031376768330021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8240553545587920398, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}

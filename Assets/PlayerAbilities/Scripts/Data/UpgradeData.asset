@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeData
   m_EditorClassIdentifier: 
   upgradeStatsData:
-  - parentAbility: 4
+  - parentAbility: 2
     upgradeType:
     - upgradeType: 0
       levelData:

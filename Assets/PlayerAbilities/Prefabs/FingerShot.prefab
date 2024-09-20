@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7017957672160078959}
   - component: {fileID: 732283309839090374}
   m_Layer: 0
-  m_Name: SingleShot
+  m_Name: FingerShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2185798964007899379, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_Name
-      value: FX_Player_SingleShotProjectile
+      value: FX_Player_FingerShot
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7151526369559866961}
   - component: {fileID: 3145404758249798002}
   m_Layer: 0
-  m_Name: FX_Player_MeleeExplode
+  m_Name: FX_Player_FistSlam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

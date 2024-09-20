@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 57328060552705184}
   - component: {fileID: 8806668786151840947}
   m_Layer: 0
-  m_Name: MeleeExplode
+  m_Name: FistSlam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,13 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6e5d3f9b2f1a24a9f148821f4dd74a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityParticleSystem: {fileID: 6885471823698575809}
   abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
-  abilityName: 
+  abilityName: 0
   abilityDescription: 
   damage: 100
   fireRate: 0
-  abilityUpgrades: []
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
 --- !u!1001 &4373364069197393808
@@ -64,7 +62,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4861280373453204051, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
       propertyPath: m_Name
-      value: FX_Player_MeleeExplode
+      value: FX_Player_FistSlam
       objectReference: {fileID: 0}
     - target: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -86,10 +84,5 @@ PrefabInstance:
 --- !u!4 &5687233486351311262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-  m_PrefabInstance: {fileID: 4373364069197393808}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &6885471823698575809 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7151526369559866961, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
   m_PrefabInstance: {fileID: 4373364069197393808}
   m_PrefabAsset: {fileID: 0}

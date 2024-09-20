@@ -10,7 +10,7 @@ public class PlayerAnimController : MonoBehaviour
     private void Start() 
     {
         animator = GetComponent<Animator>();
-        animator.SetTrigger("singleShotTrigger"); // Should be replaced by meleeSlash when ready to changed default ability.
+        animator.SetTrigger("fingerShotTrigger"); // Should be replaced by meleeSlash when ready to changed default ability.
     }
 
     private void OnEnable() 

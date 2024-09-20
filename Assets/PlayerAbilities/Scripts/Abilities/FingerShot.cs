@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
@@ -8,7 +5,7 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class MeleeSlash : PlayerAbilities
+public class FingerShot : PlayerAbilities
 {
     protected override void Awake()
     {
@@ -23,8 +20,20 @@ public class MeleeSlash : PlayerAbilities
 
     protected override void SetParticleSystemLocationToSocket()
     {
-        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
-    }        
+        Logger.Log("Starting to set particle system location to socket indexSocket.L.", this);
+        string indexSocketLeft = "indexSocket.L";
+        // string indexSocketRight = "indexSocket.R";
+
+        GameObject indexLeftSocket = playerSockets.FirstOrDefault(socket => socket.name == indexSocketLeft);
+        Vector3 indexLeftSocketPosition = indexLeftSocket.transform.position;
+        Logger.Log($"indexSocket.L position - {indexLeftSocketPosition}");
+        transform.position = indexLeftSocketPosition;
+    }
+
+    protected override void ExecuteSecondaryActivationBehavior()
+    {
+        Logger.Log("Executing ExecuteSecondaryActivationBehavior");
+    }    
 
     public override void DeactivateAbility()
     {
@@ -35,11 +44,6 @@ public class MeleeSlash : PlayerAbilities
     {
         base.ActivateUpgrade(newUpgrade);
     }
-
-    protected override void ExecuteSecondaryActivationBehavior()
-    {
-        Logger.Log("Executing ExecuteSecondaryActivationBehavior");
-    }    
 
     protected override void InitializeAbilityData()
     {
