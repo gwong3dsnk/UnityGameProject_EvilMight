@@ -15,11 +15,18 @@ public class PlayerSpawn : MonoBehaviour
     private void InitializePlayer()
     {
         Logger.Log("Initializing PLAYER SPAWN and default player ability", this);
-        InstantiateDefaultAbility();
+        if (defaultStartingAbility != null)
+        {
+            InstantiateDefaultAbility();
+        }
+        else
+        {
+            Logger.Log("No default ability prefab has been assigned to PlayerSpawn script.", this);
+        }
     }
 
     private void InstantiateDefaultAbility()
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.InstantiateAbility(defaultStartingAbility);
+        PlayerAbilitiesManager.AbilityManagerInstance.BeginUnlockingNewAbility(defaultStartingAbility);
     }
 }

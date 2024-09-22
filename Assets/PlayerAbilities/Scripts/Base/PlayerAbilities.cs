@@ -31,18 +31,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     protected virtual void Awake()
     {
         InitializeAbilityData();
-        GetPlayerSockets();
-    }
-
-    protected virtual void GetPlayerSockets()
-    {
-        playerSockets = GameObject.FindGameObjectsWithTag("PlayerSocket");
-        Logger.Log("------- START Logging out Player SOckets --------", this);
-        foreach (var item in playerSockets) // log
-        {
-            Logger.Log(item.name);
-        }
-        Logger.Log("------- END Logging out Player SOckets --------", this);     
+        playerSockets = AbilityUtilityMethods.GetPlayerSockets();
     }
 
     public virtual void ActivateAbility(PlayerAbilities ability)
@@ -56,26 +45,9 @@ public abstract class PlayerAbilities : MonoBehaviour
         {
             Logger.LogError("Failed to get ability gameobject's particle system component", this);
         }
-
-        // isEffectRepeating = true only for abilities that will be replyed continuously until level end with n second delays.
-        if (isEffectRepeating)
-        {
-            Logger.Log($"Starting coroutine for {this.name}");
-            StartCoroutine(ReplayActivation());
-        }
-        else
-        {
-            if (abilityParticleSystem != null)
-            {
-                Logger.Log($"One time playing of VFX for {this.name}");
-                abilityParticleSystem.Play();
-            }
-        }
-
-        isEffectRepeating = false;
     }
 
-    protected virtual IEnumerator ReplayActivation()
+    protected IEnumerator ReplayAbilityFX()
     {
         while(true)
         {
@@ -90,6 +62,12 @@ public abstract class PlayerAbilities : MonoBehaviour
             yield return new WaitForSeconds(activationDelay);
             DeactivateAbility();
         }
+    }
+
+    protected IEnumerator ReplayAnimation()
+    {
+        Logger.Log("ReplayAnimation area");
+        yield return new WaitForSeconds(activationDelay);
     }
 
     public virtual void DeactivateAbility()

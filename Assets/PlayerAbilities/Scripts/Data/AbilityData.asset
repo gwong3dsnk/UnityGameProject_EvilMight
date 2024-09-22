@@ -26,8 +26,8 @@ MonoBehaviour:
     prefab: {fileID: 6043325753769299960, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
     playerAbilities: {fileID: 8806668786151840947, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
   - abilityName: 1
-    abilityDescription: Slash at enemies in front of you!
-    damage: 2
+    abilityDescription: Flick away those annoying pests!
+    damage: 1
     fireRate: 1
     prefab: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
     playerAbilities: {fileID: 864473063569061556, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}

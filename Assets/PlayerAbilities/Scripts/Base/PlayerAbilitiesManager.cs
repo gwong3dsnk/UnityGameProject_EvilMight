@@ -41,13 +41,13 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
     private void OnEnable() 
     {
-        ActivateButtonOnClick.OnAbilityChosen += InstantiateAbility;
+        ActivateButtonOnClick.OnAbilityChosen += BeginUnlockingNewAbility;
         ActivateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;
     }
 
     private void OnDisable()
     {
-        ActivateButtonOnClick.OnAbilityChosen -= InstantiateAbility;
+        ActivateButtonOnClick.OnAbilityChosen -= BeginUnlockingNewAbility;
         ActivateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;
     }
 
@@ -70,17 +70,17 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
     }
 
-    public void InstantiateAbility(GameObject ability)
+    public void BeginUnlockingNewAbility(GameObject ability)
     {
+        // Start with instantiating the ability prefab.
         GameObject abilityGameObject = Instantiate(ability, transform.position, Quaternion.identity, transform);
-        PlayerAbilities currentPlayerAbility = abilityGameObject.GetComponent<PlayerAbilities>();
-        AddAbility(currentPlayerAbility);
+
+        // Process AddAbility
+        activeAbilityForAnim = abilityGameObject.GetComponent<PlayerAbilities>();
+        AddAbility(activeAbilityForAnim);
 
         // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
-        abilityDatabaseManager.RemoveAbilityFromDatabase(currentPlayerAbility);
-
-        // Public property that is used by PlayerAnimController once OnActivationCompletion event is invoked.
-        activeAbilityForAnim = currentPlayerAbility;
+        abilityDatabaseManager.RemoveAbilityFromDatabase(activeAbilityForAnim);
 
         InvokeOnActivationCompletion();
     }
@@ -138,7 +138,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
     }
 
-    private void InvokeOnActivationCompletion()
+    public void InvokeOnActivationCompletion()
     {
         Logger.Log("Invoking OnActivationCompletion in PlayerAbilitiesManager.", this);
         OnActivationCompletion?.Invoke(this, EventArgs.Empty);

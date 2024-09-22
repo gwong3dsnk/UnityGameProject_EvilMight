@@ -10,7 +10,6 @@ public class PlayerAnimController : MonoBehaviour
     private void Start() 
     {
         animator = GetComponent<Animator>();
-        animator.SetTrigger("fingerShotTrigger"); // Should be replaced by meleeSlash when ready to changed default ability.
     }
 
     private void OnEnable() 
@@ -23,7 +22,7 @@ public class PlayerAnimController : MonoBehaviour
         PlayerAbilitiesManager.AbilityManagerInstance.OnActivationCompletion -= DetermineAbility;
     }
 
-    private void DetermineAbility(object sender, System.EventArgs e)
+    public void DetermineAbility(object sender, System.EventArgs e)
     {
         Logger.Log("OnActivationComplete heard", this);
         PlayerAbilitiesManager abilityManager = sender as PlayerAbilitiesManager;
@@ -33,7 +32,30 @@ public class PlayerAnimController : MonoBehaviour
         }
         else
         {
-            Logger.LogError($"OnPlayerAbilityActivation EVENT - {abilityManager.ActiveAbilityForAnim.AbilityName}");
+            if (abilityManager.ActiveAbilityForAnim == null)
+            {
+                Logger.Log("No data found for ActiveAbilityForAnim property", this);
+            }
+            else
+            {
+                Logger.LogError($"OnPlayerAbilityActivation EVENT - {abilityManager.ActiveAbilityForAnim.AbilityName}");
+            }
         }
     }
+
+    private void SetAnimTrigger()
+    {
+        
+    }
+
+    private void SetAnimBool()
+    {
+
+    }
+
+    // private void SetAnimationTriggerToPlay(object sender, System.EventArgs e)
+    // {
+    //     Logger.Log("Event WithinFingerFlickRange heard.  Running SetAnimationTrigger", this);
+    //     animator.SetTrigger("fingerFlickBool");
+    // }
 }

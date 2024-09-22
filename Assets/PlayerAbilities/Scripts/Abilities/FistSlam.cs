@@ -13,7 +13,8 @@ public class FistSlam : PlayerAbilities
     public override void ActivateAbility(PlayerAbilities ability)
     {
         activationDelay = 8.0f;
-        isEffectRepeating = true;
+        Logger.Log($"Starting coroutine for {this.name}");
+        StartCoroutine(ReplayAbilityFX());
         base.ActivateAbility(ability);
     }
 

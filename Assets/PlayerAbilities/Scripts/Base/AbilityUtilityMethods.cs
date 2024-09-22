@@ -4,12 +4,16 @@ using UnityEngine;
 
 public static class AbilityUtilityMethods
 {
-    public static string FormatAbilityName(string unformattedName)
+    public static GameObject[] GetPlayerSockets()
     {
-        // unformattedName string is the ability name with an appended _idx# at the end which needs to be removed.
-        int lastIndex = unformattedName.LastIndexOf("_");
-        string formattedName = unformattedName.Substring(0, lastIndex);     
+        GameObject[] playerSockets = GameObject.FindGameObjectsWithTag("PlayerSocket");
+        Logger.Log("------- START Logging out Player SOckets --------");
+        foreach (var item in playerSockets) // log
+        {
+            Logger.Log(item.name);
+        }
+        Logger.Log("------- END Logging out Player SOckets --------");     
 
-        return formattedName;   
+        return playerSockets;
     }
 }

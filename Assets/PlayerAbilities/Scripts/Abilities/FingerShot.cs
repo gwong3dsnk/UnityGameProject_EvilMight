@@ -14,8 +14,10 @@ public class FingerShot : PlayerAbilities
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
-        isEffectRepeating = false;
         base.ActivateAbility(ability);
+        Logger.Log($"One time playing of VFX for {this.name}");
+        abilityParticleSystem.Play();
+
     }
 
     protected override void SetParticleSystemLocationToSocket()

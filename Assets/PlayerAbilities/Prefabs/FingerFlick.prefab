@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6054031376768330021}
+  - {fileID: 5119234443327426165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &864473063569061556
@@ -52,7 +52,7 @@ MonoBehaviour:
   fireRate: 0
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
---- !u!1001 &2763080125963757355
+--- !u!1001 &2782426441236491281
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -60,50 +60,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 57328060552705184}
     m_Modifications:
-    - target: {fileID: 767720929519096375, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4861280373453204051, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: m_Name
-      value: FX_Player_FingerFlick
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: moveWithTransform
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.15295827
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.81886786
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.25506526
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
+    - target: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 767720929519096375, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
+    - target: {fileID: 8615232671232346384, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+      propertyPath: m_Name
+      value: FX_FingerFlickImpact
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
---- !u!4 &6054031376768330021 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+--- !u!4 &5119234443327426165 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8240553545587920398, guid: 55815071e26af54429ddf5f0e2e95ae3, type: 3}
-  m_PrefabInstance: {fileID: 2763080125963757355}
+  m_CorrespondingSourceObject: {fileID: 7031815020647801444, guid: 0945216a24ebaa24f97e0539df40de1d, type: 3}
+  m_PrefabInstance: {fileID: 2782426441236491281}
   m_PrefabAsset: {fileID: 0}
