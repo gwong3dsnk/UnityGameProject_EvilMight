@@ -21,11 +21,16 @@ public class EnemyHealth : HealthManagement
         currentHealth = maxHealth;
     }
 
-    private void OnParticleCollision(GameObject other) 
+    private void OnParticleCollision(GameObject other)
     {
         Logger.LogWarning("Registering OnParticleCollision on Enemy unit", this);
         PlayerAbilities ability = other.GetComponentInParent<PlayerAbilities>();
 
+        HandleTakeCollisionDamage(ability);
+    }
+
+    private void HandleTakeCollisionDamage(PlayerAbilities ability)
+    {
         if (ability != null)
         {
             if (!hasCollided) // ensure vfx with multiple particles triggers TakeDamage only once and not once per particle.

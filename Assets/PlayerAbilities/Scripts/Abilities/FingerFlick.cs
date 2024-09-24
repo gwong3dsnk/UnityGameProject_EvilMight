@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UpgradeTypesDatabase = 
@@ -11,6 +10,7 @@ public class FingerFlick : PlayerAbilities
     private float meleeRange = 5.0f;
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;
+    private EnemyDeathHandler enemyDeathHandler;
     private Coroutine attackCoroutine;
 
     protected override void Awake()
@@ -26,6 +26,12 @@ public class FingerFlick : PlayerAbilities
             CheckIfEnemyInMeleeRange();
         }
     }
+
+    private void OnDisable() 
+    {
+        Logger.Log("[FingerFlick] - Unsubscribing from enemyDeathHandler.OnEnemyDeactivation", this);
+        enemyDeathHandler.OnEnemyDeactivation -= StopAttacking;
+    }
     
     private void CheckIfEnemyInMeleeRange()
     {
@@ -34,13 +40,14 @@ public class FingerFlick : PlayerAbilities
         {
             if (collider.CompareTag("Enemy"))
             {
-                Logger.Log($"Nearby Enemy collider detected - {collider.gameObject.name} witihn {meleeRange}m");
+                Logger.Log($"[FingerFlick] - Nearby Enemy collider detected - {collider.gameObject.name} witihn {meleeRange}m");
                 enemyPosition = collider.transform.position;
                 Vector3 directionToEnemy = (enemyPosition - transform.position).normalized;
                 
                 if (Vector3.Dot(transform.forward, directionToEnemy) > 0.5f)
                 {
-                    Logger.Log("Enemy in front of player, calling ActivateAbility.", this);
+                    Logger.Log("[FingerFlick] - Enemy in front of player, calling ActivateAbility.", this);
+                    SubscribeToEnemyDeathHandlerEvent(collider);
                     ActivateAbility(this);
                     return;
                 } 
@@ -57,6 +64,13 @@ public class FingerFlick : PlayerAbilities
         }
     }
 
+    private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
+    {
+        Logger.Log("[FingerFlick] - Subscribing to enemyDeathHandler.OnEnemyDeactivation", this);
+        enemyDeathHandler = collider.GetComponent<EnemyDeathHandler>();
+        enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
+    }
+
     public override void ActivateAbility(PlayerAbilities ability)
     {
         // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
@@ -67,7 +81,7 @@ public class FingerFlick : PlayerAbilities
                 activationDelay = 3.0f;
                 isAttacking = true;
                 base.ActivateAbility(ability);
-                Logger.Log("Starting AttackCoroutine", this);
+                Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
                 attackCoroutine = StartCoroutine(AttackCoroutine());
             }
         }
@@ -82,17 +96,18 @@ public class FingerFlick : PlayerAbilities
         while(isAttacking)
         {
             // Logic to set trigger to play animation, making sure to play it only once.
-            Logger.Log($"Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
+            Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
             PlayerAbilitiesManager.AbilityManagerInstance.InvokeOnActivationCompletion();
             yield return new WaitForSeconds(activationDelay);
         }
     }
 
-    private void StopAttacking() // Call this method from enemy when the enemy prefab dies and is disabled.
+    private void StopAttacking(object sender, System.EventArgs e)
     {
+        // Call this method from enemy when the enemy prefab dies and is disabled.
         if (isAttacking)
         {
-            Logger.Log("Stopping attack cycle for FingerFlick anim and coroutine", this);
+            Logger.Log("[FingerFlick] - Stopping attack cycle for FingerFlick anim and coroutine", this);
             isAttacking = false;
             DeactivateAbility();
         }

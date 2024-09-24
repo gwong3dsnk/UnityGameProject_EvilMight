@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -12,7 +10,7 @@ public class EnemyDeathHandler : MonoBehaviour
     private Collider enemyCollider;
     private GridManager gridManager;
     private LevelManager levelManager;
-    // public event Action<int> OnEnemyDeath_PassPlayerXP;
+    public event EventHandler OnEnemyDeactivation;
 
     private void Start()
     {
@@ -27,7 +25,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Unable to find GridManagerInstance", this);
+            Logger.LogError("[EnemyDeathHandler] - Unable to find GridManagerInstance", this);
         }
 
         if (enemyHealth != null)
@@ -36,26 +34,24 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Missing EnemyHealth script component.", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth script component.", this);
         }    
     }
-
-    // private void OnDisable() 
-    // {
-    //     enemyHealth.OnDeath -= DeathHandler_OnDeath;
-    // }
 
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
         if (enemyCollider != null && gridManager != null)
         {
+            Logger.Log("[EnemyDeathHandler] - Processing enemy death.", this);
+            enemyHealth.OnDeath -= DeathHandler_OnDeath;
             gridManager.RemoveEnemy(enemyCollider);
             gameObject.SetActive(false);
             PassXPToPlayer();
+            OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
         }
         else
         {
-            Logger.LogError("Missing either collider component or grid manager reference.", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing either collider component or grid manager reference.", this);
         }
     }
 
@@ -67,7 +63,7 @@ public class EnemyDeathHandler : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Missing reference to Enemy and/or LevelManager", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing reference to Enemy and/or LevelManager", this);
         }
     }
 }
