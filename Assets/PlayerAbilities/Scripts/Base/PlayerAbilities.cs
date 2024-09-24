@@ -15,6 +15,8 @@ public abstract class PlayerAbilities : MonoBehaviour
     protected float activationDelay;
     protected bool isEffectRepeating = false;
     protected GameObject[] playerSockets;
+    protected Vector3 enemyPosition = new Vector3();
+    public Vector3 EnemyPosition => enemyPosition;    
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
     [SerializeField] protected AbilityNames abilityName;
     public AbilityNames AbilityName => abilityName;
@@ -43,7 +45,7 @@ public abstract class PlayerAbilities : MonoBehaviour
         abilityParticleSystem = ability.gameObject.GetComponentInChildren<ParticleSystem>();
         if (abilityParticleSystem == null)
         {
-            Logger.LogError("Failed to get ability gameobject's particle system component", this);
+            Logger.LogWarning("Failed to get ability gameobject's particle system component", this);
         }
     }
 

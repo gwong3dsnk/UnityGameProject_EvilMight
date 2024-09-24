@@ -18,8 +18,10 @@ public class ActivateButtonOnClick : MonoBehaviour
     private Button activationButton;
     private UpgradeTypesDatabase selectedUpgrade = new UpgradeTypesDatabase();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
-    public static event Action<GameObject> OnAbilityChosen;
-    public static event Action<UpgradeTypesDatabase> OnUpgradeChosen;
+    private GameObject selectedAbilityPrefab;
+    public GameObject SelectedAbilityPrefab => selectedAbilityPrefab;
+    public event EventHandler OnAbilityChosen;
+    public event Action<UpgradeTypesDatabase> OnUpgradeChosen;
 
     private void Start()
     {
@@ -58,8 +60,8 @@ public class ActivateButtonOnClick : MonoBehaviour
         if (selectedAbility != null)
         {
             Logger.Log($"Ability Chosen - {selectedAbility.abilityName}");
-            GameObject abilityPrefab = DebugAbilityOverride(selectedAbility);
-            OnAbilityChosen?.Invoke(abilityPrefab);
+            selectedAbilityPrefab = DebugAbilityOverride(selectedAbility);
+            OnAbilityChosen?.Invoke(this, EventArgs.Empty);
         }
         else if (selectedUpgrade.Count > 0)
         {

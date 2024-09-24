@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Android.Gradle;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -14,10 +12,15 @@ public class UpgradeDatabaseManager : MonoBehaviour
     private UpgradeTypesDatabase upgradeDatabase = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase UpgradeDatabase => upgradeDatabase;
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     InitializeUpgradeDatabase();
+    // }
+
+    private void Start()
     {
         InitializeUpgradeDatabase();
-    }
+    }    
 
     private void InitializeUpgradeDatabase()
     {

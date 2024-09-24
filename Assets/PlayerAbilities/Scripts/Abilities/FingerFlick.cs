@@ -8,7 +8,7 @@ using UpgradeTypesDatabase =
 
 public class FingerFlick : PlayerAbilities
 {
-    private float meleeRange = 10.0f;
+    private float meleeRange = 5.0f;
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;
     private Coroutine attackCoroutine;
@@ -35,7 +35,9 @@ public class FingerFlick : PlayerAbilities
             if (collider.CompareTag("Enemy"))
             {
                 Logger.Log($"Nearby Enemy collider detected - {collider.gameObject.name} witihn {meleeRange}m");
-                Vector3 directionToEnemy = (collider.transform.position - transform.position).normalized;
+                enemyPosition = collider.transform.position;
+                Vector3 directionToEnemy = (enemyPosition - transform.position).normalized;
+                
                 if (Vector3.Dot(transform.forward, directionToEnemy) > 0.5f)
                 {
                     Logger.Log("Enemy in front of player, calling ActivateAbility.", this);
@@ -49,7 +51,6 @@ public class FingerFlick : PlayerAbilities
                     if (attackCoroutine != null)
                     {
                         StopCoroutine(attackCoroutine);
-                        // attackCoroutine = null;
                     }
                 }
             }

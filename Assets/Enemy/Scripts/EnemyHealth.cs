@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyHealth : HealthManagement
 {
     private Enemy enemy;
-    private PlayerAbilities ability;
+    private bool hasCollided = false;
 
     protected override void Start()
     {
@@ -24,15 +24,35 @@ public class EnemyHealth : HealthManagement
     private void OnParticleCollision(GameObject other) 
     {
         Logger.LogWarning("Registering OnParticleCollision on Enemy unit", this);
-        ability = other.GetComponentInParent<PlayerAbilities>();
+        PlayerAbilities ability = other.GetComponentInParent<PlayerAbilities>();
+
         if (ability != null)
         {
-            TakeDamage(ability.Damage);
+            if (!hasCollided) // ensure vfx with multiple particles triggers TakeDamage only once and not once per particle.
+            {
+                Logger.Log($"{this.name} takes [{ability.Damage}] damage.", this);
+                TakeDamage(ability.Damage);
+
+                if (this.gameObject.activeInHierarchy == true) // confirm the enemy prefab gameobject is active before attempting coroutine
+                {
+                    if (ability.AbilityName == AbilityNames.FingerFlick)
+                    {
+                        hasCollided = true;
+                        StartCoroutine(ResetCollisionFlag(1.0f));
+                    }
+                }
+            }
         }
         else
         {
             Logger.LogError("Missing PlayerAbilities.", this);
         }
+    }
+
+    private IEnumerator ResetCollisionFlag(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        hasCollided = false;
     }
 
     public void ApplyAOEDamage(int damage)

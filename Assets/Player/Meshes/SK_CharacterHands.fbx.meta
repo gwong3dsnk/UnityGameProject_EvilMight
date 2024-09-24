@@ -93,9 +93,9 @@ ModelImporter:
     - serializedVersion: 16
       name: FingerFlick
       takeName: FingerFlick
-      internalID: -1671930363831441212
+      internalID: 5493682700261664715
       firstFrame: 0
-      lastFrame: 5
+      lastFrame: 15
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

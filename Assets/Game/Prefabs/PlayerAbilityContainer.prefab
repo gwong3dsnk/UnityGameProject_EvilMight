@@ -60,3 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityDatabaseManager: {fileID: 0}
   upgradeDatabaseManager: {fileID: 0}
+  playerAnimController: {fileID: 0}
+  activateButtonOnClick: {fileID: 0}
+  playerDefaultAbility: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}

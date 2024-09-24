@@ -12,6 +12,9 @@ public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
+    [SerializeField] PlayerAnimController playerAnimController;
+    [SerializeField] ActivateButtonOnClick activateButtonOnClick;
+    [SerializeField] GameObject playerDefaultAbility;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
     private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
@@ -37,19 +40,49 @@ public class PlayerAbilitiesManager : MonoBehaviour
         {
             Logger.LogError("Missing references to either ability or upgrade database manager scripts.", this);
         }
+
+        if (activateButtonOnClick == null || playerAnimController == null)
+        {
+            Logger.LogError("Missing references to either activateButtonOnClick or playerAnimController scripts.", this);
+        }
+    }
+
+    private void Start()
+    {
+        // Call this to instantiate the player's default ability right away.
+        BeginUnlockingNewAbility(this, EventArgs.Empty);        
     }
 
     private void OnEnable() 
     {
-        ActivateButtonOnClick.OnAbilityChosen += BeginUnlockingNewAbility;
-        ActivateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;
+        activateButtonOnClick.OnAbilityChosen += BeginUnlockingNewAbility;
+        activateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;
+        playerAnimController.OnAnimFXPlay += PlayAnimEventFX;
     }
 
     private void OnDisable()
     {
-        ActivateButtonOnClick.OnAbilityChosen -= BeginUnlockingNewAbility;
-        ActivateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;
+        activateButtonOnClick.OnAbilityChosen -= BeginUnlockingNewAbility;
+        activateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;
+        playerAnimController.OnAnimFXPlay -= PlayAnimEventFX;
     }
+
+    private void PlayAnimEventFX(object sender, System.EventArgs e)
+    {
+        Logger.Log("PlayerAbilitiesManager hears OnAnimFXPlay.", this);
+        PlayerAbilities activePlayerAbilities = playerAnimController.ActiveAbility;
+        ParticleSystem particleFX = activePlayerAbilities.GetComponentInChildren<ParticleSystem>();
+        particleFX.transform.position = activePlayerAbilities.EnemyPosition;
+
+        if (particleFX.isPlaying)
+        {
+            Logger.Log("Stopping particle system.", this);
+            particleFX.Stop();
+        }
+        
+        Logger.Log("Starting particle system.", this);
+        particleFX.Play();
+    }    
 
     public void AddAbility(PlayerAbilities ability)
     {
@@ -70,19 +103,39 @@ public class PlayerAbilitiesManager : MonoBehaviour
         }
     }
 
-    public void BeginUnlockingNewAbility(GameObject ability)
+    public void BeginUnlockingNewAbility(object sender, System.EventArgs e)
     {
-        // Start with instantiating the ability prefab.
-        GameObject abilityGameObject = Instantiate(ability, transform.position, Quaternion.identity, transform);
+        ActivateButtonOnClick activateAbilityButtonClicked = sender as ActivateButtonOnClick;
+        GameObject abilityToInstantiate;
+        bool isPlayerDefaultAbility;
 
-        // Process AddAbility
+        if (activateAbilityButtonClicked != null)
+        {
+            Logger.Log("Cast Succeeded. Instantiating from CardPanel choice.", this);
+            abilityToInstantiate = activateButtonOnClick.SelectedAbilityPrefab;
+            isPlayerDefaultAbility = false;
+        }
+        else
+        {
+            Logger.Log("Cast Failed, one-time onAwake instantiation of playerDefaultAbility", this);
+            abilityToInstantiate = playerDefaultAbility;
+            isPlayerDefaultAbility = true;
+        }
+
+        // Start with instantiating the ability prefab.
+        GameObject abilityGameObject = Instantiate(abilityToInstantiate, transform.position, Quaternion.identity, transform);
+
+        // Process AddAbility.  activeAbilityForAnim also used by PlayerAnimController.DetermineAbilityName.
         activeAbilityForAnim = abilityGameObject.GetComponent<PlayerAbilities>();
         AddAbility(activeAbilityForAnim);
 
         // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
         abilityDatabaseManager.RemoveAbilityFromDatabase(activeAbilityForAnim);
 
-        InvokeOnActivationCompletion();
+        if (!isPlayerDefaultAbility)
+        {
+            InvokeOnActivationCompletion();
+        }
     }
 
     public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
