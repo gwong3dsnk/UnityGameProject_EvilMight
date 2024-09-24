@@ -22,7 +22,8 @@ public class PlayerAbilitiesManager : MonoBehaviour
     private PlayerAbilities activeAbilityForAnim;
     public PlayerAbilities ActiveAbilityForAnim => activeAbilityForAnim;
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
-    public event EventHandler OnActivationCompletion;
+    public event EventHandler OnAbilityActivationCompletion;
+    public event EventHandler OnUpgradeActivationCompletion;
 
     private void Awake()
     {
@@ -172,7 +173,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
         upgradeToDequeue.Add(newAbilityName, newUpgradeType);
         upgradeDatabaseManager.ProcessDequeue(upgradeToDequeue);
 
-        InvokeOnActivationCompletion();        
+        OnUpgradeActivationCompletion?.Invoke(this, EventArgs.Empty);
     }
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
@@ -194,6 +195,6 @@ public class PlayerAbilitiesManager : MonoBehaviour
     public void InvokeOnActivationCompletion()
     {
         Logger.Log("Invoking OnActivationCompletion in PlayerAbilitiesManager.", this);
-        OnActivationCompletion?.Invoke(this, EventArgs.Empty);
+        OnAbilityActivationCompletion?.Invoke(this, EventArgs.Empty);
     }
 }

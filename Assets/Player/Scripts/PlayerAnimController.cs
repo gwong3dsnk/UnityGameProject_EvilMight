@@ -19,12 +19,12 @@ public class PlayerAnimController : MonoBehaviour
 
     private void OnEnable() 
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.OnActivationCompletion += DetermineAbilityName;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DetermineAbilityName;
     }
 
     private void OnDisable() 
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.OnActivationCompletion -= DetermineAbilityName;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DetermineAbilityName;
     }
 
     public void DetermineAbilityName(object sender, System.EventArgs e)

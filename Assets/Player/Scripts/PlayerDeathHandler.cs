@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerDeathHandler : MonoBehaviour
@@ -16,7 +12,7 @@ public class PlayerDeathHandler : MonoBehaviour
         }
         else
         {
-            Logger.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
+            Logger.LogError("[PlayerDeathHandler] -  Missing PlayerDeathCanvas reference", this);
         }
     }
 
@@ -26,14 +22,15 @@ public class PlayerDeathHandler : MonoBehaviour
 
         if (playerDeathCanvas != null)
         {
-            Logger.Log("Enabling Player Death Canvas");
+            Logger.Log("[PlayerDeathHandler] - Enabling Player Death Canvas");
             playerDeathCanvas.transform.gameObject.SetActive(true);
         }
         else
         {
-            Logger.LogError("PlayerDeathHandle is missing PlayerDeathCanvas reference", this);
+            Logger.LogError("[PlayerDeathHandler] -  Missing PlayerDeathCanvas reference", this);
         }        
         
+        Logger.Log("[PlayerDeathHandler] - Freezing time on player death.", this);
         Time.timeScale = 0;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

@@ -7,26 +7,28 @@ public class AbilityCardChooserUI : MonoBehaviour
 
     private void Start()
     {
-        Logger.Log("ABILITY CARD CHOOSE UI OnStart", this);
+        Logger.Log("[AbilityCardChooseUI] - ABILITY CARD CHOOSE UI OnStart", this);
         Logger.Log("------------------------------------------------", this);
-        Logger.Log("All OnAwake logic and AbilityCardChoose OnStart logic FINISHED", this);
+        Logger.Log("[AbilityCardChooseUI] - All OnAwake logic and AbilityCardChoose OnStart logic FINISHED", this);
         Logger.Log("------------------------------------------------", this);
         if (levelManager == null)
         {
-            Logger.LogError("Missing level manager reference", this);
+            Logger.LogError("[AbilityCardChooseUI] - Missing level manager reference", this);
         }
     }
 
     private void OnEnable() 
     {
         levelManager.OnLevelUp += EnableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnActivationCompletion += DisableAbilityChoiceCanvas;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DisableAbilityChoiceCanvas;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnUpgradeActivationCompletion += DisableAbilityChoiceCanvas;
     }
 
     private void OnDisable() 
     {
         levelManager.OnLevelUp -= EnableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnActivationCompletion -= DisableAbilityChoiceCanvas;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DisableAbilityChoiceCanvas;
+        PlayerAbilitiesManager.AbilityManagerInstance.OnUpgradeActivationCompletion -= DisableAbilityChoiceCanvas;
     }
 
     public void EnableAbilityChoiceCanvas(object sender, System.EventArgs e)
@@ -41,12 +43,13 @@ public class AbilityCardChooserUI : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Missing reference to AbilityCardGenerator", this);
+            Logger.LogError("[AbilityCardChooseUI] - Missing reference to AbilityCardGenerator", this);
         }
     }
 
     public void DisableAbilityChoiceCanvas(object sender, System.EventArgs e)
     {
+        Logger.Log("[AbilityCardChooseUI] - Resuming time and disabling ability choice canvas.", this);
         Time.timeScale = 1;
         abilityChoiceCanvas.gameObject.SetActive(false);
     }
