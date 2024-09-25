@@ -35,7 +35,6 @@ public class AbilityCardChooserUI : MonoBehaviour
     {
         Time.timeScale = 0;
         abilityChoiceCanvas.gameObject.SetActive(true);
-        levelManager.StopOnLevelUpCoroutine();
 
         AbilityCardGenerator cardGenerator = abilityChoiceCanvas.GetComponent<AbilityCardGenerator>();
         if (cardGenerator != null)

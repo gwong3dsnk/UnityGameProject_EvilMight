@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -8,8 +9,9 @@ public class EnemyDeathHandler : MonoBehaviour
     private Enemy enemy;
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
-    private GridManager gridManager;
     private LevelManager levelManager;
+    private Animator animator;
+    private float deactivationDelay = 1.0f;
     public event EventHandler OnEnemyDeactivation;
 
     private void Start()
@@ -17,15 +19,13 @@ public class EnemyDeathHandler : MonoBehaviour
         enemy = GetComponent<Enemy>();
         enemyHealth = GetComponent<EnemyHealth>();
         enemyCollider = GetComponent<Collider>();
+        animator = GetComponentInChildren<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
         
-        if (GridManager.GridManagerInstance != null)
-        {
-            gridManager = GridManager.GridManagerInstance;
-        }
-        else
+        if (GridManager.GridManagerInstance == null)
         {
             Logger.LogError("[EnemyDeathHandler] - Unable to find GridManagerInstance", this);
+            return;
         }
 
         if (enemyHealth != null)
@@ -35,35 +35,39 @@ public class EnemyDeathHandler : MonoBehaviour
         else
         {
             Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth script component.", this);
+            return;
         }    
+
+        if (enemy == null || enemyCollider == null)
+        {
+            Logger.LogError("[EnemyDeathHandler] - Missing either Enemy or Collider components.", this);
+            return;
+        }
+
+        if (levelManager == null || animator == null)
+        {
+            Logger.LogError("[EnemyDeathHandler] - Missing reference to either LevelManager or Animator components.", this);
+            return;
+        }
     }
 
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
-        if (enemyCollider != null && gridManager != null)
-        {
-            Logger.Log("[EnemyDeathHandler] - Processing enemy death.", this);
-            enemyHealth.OnDeath -= DeathHandler_OnDeath;
-            gridManager.RemoveEnemy(enemyCollider);
-            gameObject.SetActive(false);
-            PassXPToPlayer();
-            OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
-        }
-        else
-        {
-            Logger.LogError("[EnemyDeathHandler] - Missing either collider component or grid manager reference.", this);
-        }
+        Logger.Log("[EnemyDeathHandler] - Play enemy death anim, wait, then process enemy deactivation.", this);
+        animator.SetTrigger("DeathTrigger");
+        OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
+        enemyHealth.OnDeath -= DeathHandler_OnDeath;
+        levelManager.AddXP(enemy.Experience);
+                
+        StartCoroutine(DelayProcessingEnemyDeactivation());
+        Logger.Log("[EnemyDeathHandler] - Finished processing enemy deactivation.", this);
     }
 
-    private void PassXPToPlayer()
+    private IEnumerator DelayProcessingEnemyDeactivation()
     {
-        if (enemy != null && levelManager != null)
-        {
-            levelManager.AddXP(enemy.Experience);
-        }
-        else
-        {
-            Logger.LogError("[EnemyDeathHandler] - Missing reference to Enemy and/or LevelManager", this);
-        }
+        yield return new WaitForSeconds(deactivationDelay);
+
+        GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
+        gameObject.SetActive(false);
     }
 }

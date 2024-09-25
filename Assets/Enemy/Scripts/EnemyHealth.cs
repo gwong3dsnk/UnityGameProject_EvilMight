@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -14,7 +12,7 @@ public class EnemyHealth : HealthManagement
         enemy = GetComponent<Enemy>();
         if (enemy == null)
         {
-            Logger.LogError("Enemy is missing Enemy script component.", this);
+            Logger.LogError("[EnemyHealth] - Enemy is missing Enemy script component.", this);
         } 
 
         maxHealth = enemy.HitPoints;
@@ -23,7 +21,7 @@ public class EnemyHealth : HealthManagement
 
     private void OnParticleCollision(GameObject other)
     {
-        Logger.LogWarning("Registering OnParticleCollision on Enemy unit", this);
+        Logger.LogWarning("[EnemyHealth] - Registering OnParticleCollision on Enemy unit", this);
         PlayerAbilities ability = other.GetComponentInParent<PlayerAbilities>();
 
         HandleTakeCollisionDamage(ability);
@@ -35,7 +33,7 @@ public class EnemyHealth : HealthManagement
         {
             if (!hasCollided) // ensure vfx with multiple particles triggers TakeDamage only once and not once per particle.
             {
-                Logger.Log($"{this.name} takes [{ability.Damage}] damage.", this);
+                Logger.Log($"[EnemyHealth] - {this.name} takes [{ability.Damage}] damage.", this);
                 TakeDamage(ability.Damage);
 
                 if (this.gameObject.activeInHierarchy == true) // confirm the enemy prefab gameobject is active before attempting coroutine
@@ -50,7 +48,7 @@ public class EnemyHealth : HealthManagement
         }
         else
         {
-            Logger.LogError("Missing PlayerAbilities.", this);
+            Logger.LogError("[EnemyHealth] - Missing PlayerAbilities.", this);
         }
     }
 
@@ -76,5 +74,10 @@ public class EnemyHealth : HealthManagement
     protected override void HandleDeath()
     {
         TriggerDeathEvent();
+    }
+
+    protected override void HandleStillAlive()
+    {
+        // Enemy still lives, play GetHit anim state.
     }
 }

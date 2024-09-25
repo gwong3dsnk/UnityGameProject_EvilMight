@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealth : HealthManagement
@@ -16,7 +13,7 @@ public class PlayerHealth : HealthManagement
 
     private void OnParticleCollision(GameObject other) 
     {
-        Logger.Log("Detecting particle collision hit on player", this);
+        Logger.Log("[PlayerHealth] - Detecting particle collision hit on player", this);
         GameObject enemyPrefab = other.transform.parent?.gameObject;
         enemy = enemyPrefab.GetComponent<Enemy>();
 
@@ -29,6 +26,11 @@ public class PlayerHealth : HealthManagement
     protected override void HandleDeath()
     {
         GetComponent<PlayerDeathHandler>().HandleDeath();
+    }
+
+    protected override void HandleStillAlive()
+    {
+        Logger.Log("[PlayerHealth] - NOTE: Will handle player get hit response anim play.", this);
     }
 
     public void ResetHealth()

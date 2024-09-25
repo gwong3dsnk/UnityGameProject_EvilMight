@@ -23,6 +23,10 @@ public abstract class HealthManagement : MonoBehaviour
         {
             HandleDeath();
         }
+        else
+        {
+            HandleStillAlive();
+        }
     }
 
     protected void TriggerDeathEvent()
@@ -31,4 +35,6 @@ public abstract class HealthManagement : MonoBehaviour
     }
 
     protected abstract void HandleDeath();
+
+    protected abstract void HandleStillAlive();
 }

@@ -6,13 +6,12 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
+    [SerializeField] private float onLevelUpDelay = 0.25f;
     // Unserialize below later.
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXP = 0;
     [SerializeField] private int excessXP;
-    private float onLevelUpDelay = 2.0f;
-    private Coroutine levelUpCoroutine;
     public event EventHandler OnLevelUp;
 
     private void Awake()
@@ -56,11 +55,7 @@ public class LevelManager : MonoBehaviour
         Logger.Log($"New Current Exp (LevelUp) - {currentXP}", this);
         Logger.Log("Processing player level-up complete.  Freezing time.", this);
         Logger.Log("------------------------------------------------", this);
-        // OnLevelUp?.Invoke(this, EventArgs.Empty); // DELAY THIS
-        if (levelUpCoroutine == null)
-        {
-            levelUpCoroutine = StartCoroutine(DelayInvokingOnLevelUpEvent());
-        }
+        StartCoroutine(DelayInvokingOnLevelUpEvent());
     }
 
     private void CalculateXPThreshold()
@@ -77,11 +72,5 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(onLevelUpDelay);
         OnLevelUp?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void StopOnLevelUpCoroutine()
-    {
-        StopCoroutine(levelUpCoroutine);
-        levelUpCoroutine = null;
     }
 }
