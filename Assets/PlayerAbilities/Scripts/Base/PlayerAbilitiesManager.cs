@@ -24,6 +24,7 @@ public class PlayerAbilitiesManager : MonoBehaviour
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
     public event EventHandler OnAbilityActivationCompletion;
     public event EventHandler OnUpgradeActivationCompletion;
+    public event EventHandler HandleAbilityPlayAnim;
 
     private void Awake()
     {
@@ -71,9 +72,9 @@ public class PlayerAbilitiesManager : MonoBehaviour
     private void PlayAnimEventFX(object sender, System.EventArgs e)
     {
         Logger.Log("PlayerAbilitiesManager hears OnAnimFXPlay.", this);
-        PlayerAbilities activePlayerAbilities = playerAnimController.ActiveAbility;
-        ParticleSystem particleFX = activePlayerAbilities.GetComponentInChildren<ParticleSystem>();
-        particleFX.transform.position = activePlayerAbilities.EnemyPosition;
+        // PlayerAbilities activePlayerAbilities = playerAnimController.ActiveAbility;
+        ParticleSystem particleFX = activeAbilityForAnim.GetComponentInChildren<ParticleSystem>();
+        particleFX.transform.position = activeAbilityForAnim.EnemyPosition;
 
         if (particleFX.isPlaying)
         {
@@ -195,6 +196,12 @@ public class PlayerAbilitiesManager : MonoBehaviour
     public void InvokeOnActivationCompletion()
     {
         Logger.Log("Invoking OnActivationCompletion in PlayerAbilitiesManager.", this);
-        OnAbilityActivationCompletion?.Invoke(this, EventArgs.Empty);
+        OnAbilityActivationCompletion?.Invoke(this, EventArgs.Empty); 
+    }
+
+    public void InvokeHandleAbilityPlayAnimEvent()
+    {
+        Logger.Log("Invoking HandleAbilityPlayAnim in PlayerAbilitiesManager.", this);
+        HandleAbilityPlayAnim?.Invoke(this, EventArgs.Empty);
     }
 }

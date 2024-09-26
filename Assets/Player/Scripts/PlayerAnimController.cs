@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -9,7 +6,6 @@ public class PlayerAnimController : MonoBehaviour
 {
     private Animator animator;
     private PlayerAbilities activeAbility;
-    public PlayerAbilities ActiveAbility => activeAbility;
     public event EventHandler OnAnimFXPlay;
 
     private void Awake() 
@@ -19,12 +15,12 @@ public class PlayerAnimController : MonoBehaviour
 
     private void OnEnable() 
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DetermineAbilityName;
+        PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim += DetermineAbilityName;
     }
 
     private void OnDisable() 
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DetermineAbilityName;
+        PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
     }
 
     public void DetermineAbilityName(object sender, System.EventArgs e)
@@ -63,7 +59,7 @@ public class PlayerAnimController : MonoBehaviour
         }
     }
 
-    private void SetAnimTrigger(string triggerName)
+    private void SetAnimTrigger(string triggerName) 
     {
         Logger.Log($"Setting animation trigger for {triggerName}", this);
         animator.SetTrigger(triggerName);

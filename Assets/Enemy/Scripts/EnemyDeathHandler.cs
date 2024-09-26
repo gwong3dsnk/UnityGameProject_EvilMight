@@ -12,7 +12,7 @@ public class EnemyDeathHandler : MonoBehaviour
     private LevelManager levelManager;
     private Animator animator;
     private float deactivationDelay = 1.0f;
-    public event EventHandler OnEnemyDeactivation;
+    public event EventHandler OnEnemyDeactivation; 
 
     private void Start()
     {
@@ -55,7 +55,6 @@ public class EnemyDeathHandler : MonoBehaviour
     {
         Logger.Log("[EnemyDeathHandler] - Play enemy death anim, wait, then process enemy deactivation.", this);
         animator.SetTrigger("DeathTrigger");
-        OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
         enemyHealth.OnDeath -= DeathHandler_OnDeath;
         levelManager.AddXP(enemy.Experience);
                 
@@ -69,5 +68,6 @@ public class EnemyDeathHandler : MonoBehaviour
 
         GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
         gameObject.SetActive(false);
+        OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
     }
 }

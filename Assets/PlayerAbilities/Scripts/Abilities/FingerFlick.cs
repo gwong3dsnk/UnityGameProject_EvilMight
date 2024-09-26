@@ -11,6 +11,7 @@ public class FingerFlick : PlayerAbilities
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;
     private EnemyDeathHandler enemyDeathHandler;
+    private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
 
     protected override void Awake()
@@ -25,12 +26,6 @@ public class FingerFlick : PlayerAbilities
         {
             CheckIfEnemyInMeleeRange();
         }
-    }
-
-    private void OnDisable() 
-    {
-        Logger.Log("[FingerFlick] - Unsubscribing from enemyDeathHandler.OnEnemyDeactivation", this);
-        enemyDeathHandler.OnEnemyDeactivation -= StopAttacking;
     }
     
     private void CheckIfEnemyInMeleeRange()
@@ -54,10 +49,12 @@ public class FingerFlick : PlayerAbilities
                 else
                 {
                     // Enemy not in front of player, StopCoroutine if it's running.
+                    Logger.Log("[FingerFlick] - No enemy in front of player, stopping attack coroutine.", this);
                     isAttacking = false;
                     if (attackCoroutine != null)
                     {
                         StopCoroutine(attackCoroutine);
+                        attackCoroutine = null;
                     }
                 }
             }
@@ -68,6 +65,7 @@ public class FingerFlick : PlayerAbilities
     {
         Logger.Log("[FingerFlick] - Subscribing to enemyDeathHandler.OnEnemyDeactivation", this);
         enemyDeathHandler = collider.GetComponent<EnemyDeathHandler>();
+        enemyHealth = collider.GetComponent<EnemyHealth>();        
         enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
     }
 
@@ -97,7 +95,8 @@ public class FingerFlick : PlayerAbilities
         {
             // Logic to set trigger to play animation, making sure to play it only once.
             Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
-            PlayerAbilitiesManager.AbilityManagerInstance.InvokeOnActivationCompletion();
+            PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(); 
+            enemyHealth.HandleTakeCollisionDamage(this);
             yield return new WaitForSeconds(activationDelay);
         }
     }
@@ -110,6 +109,9 @@ public class FingerFlick : PlayerAbilities
             Logger.Log("[FingerFlick] - Stopping attack cycle for FingerFlick anim and coroutine", this);
             isAttacking = false;
             DeactivateAbility();
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+            enemyDeathHandler.OnEnemyDeactivation -= StopAttacking;
         }
     }
 

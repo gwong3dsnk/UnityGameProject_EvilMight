@@ -74,7 +74,7 @@ public abstract class PlayerAbilities : MonoBehaviour
 
     public virtual void DeactivateAbility()
     {
-        Logger.Log($"Deactivating {this.name}.", this);
+        Logger.Log($"Stopping {this.name}'s particle system.", this);
         if (abilityParticleSystem != null)
         {
             abilityParticleSystem.Stop();
