@@ -20,7 +20,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void AttackTarget()
     {
-        enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimType.Attack);
+        enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimCategory.Attack);
     }
 
     public void PlayAttackFX()

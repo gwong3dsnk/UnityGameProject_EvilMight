@@ -52,5 +52,14 @@ public class EnemyHealth : HealthManagement
     protected override void HandleStillAlive()
     {
         // Enemy still lives, play GetHit anim state.
+        EnemyAnimController enemyAnimController = GetComponentInChildren<EnemyAnimController>();
+        if (enemyAnimController != null)
+        {
+            enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimCategory.GetHit);
+        }
+        else
+        {
+            Logger.LogError($"Missing reference to EnemyAnimController in {this.name}", this);
+        }
     }
 }

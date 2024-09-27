@@ -35,7 +35,6 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>().transform;
-        enemyAnimController.Initialize(enemy);
 
         if (player == null)
         {
@@ -117,7 +116,7 @@ public class EnemyMovement : MonoBehaviour
         {
             navMeshAgent.SetDestination(player.position);
             // Check if enemy is ranged or melee.  Ranged will walk, melee will run.
-            enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimType.Movement);
+            enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimCategory.Movement);
         }
     }
 

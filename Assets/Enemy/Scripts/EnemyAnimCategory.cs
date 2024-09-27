@@ -1,4 +1,4 @@
-public enum EnemyAnimType
+public enum EnemyAnimCategory
 {
     Movement,
     Attack,
