@@ -5,20 +5,35 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     [SerializeField] ParticleSystem attackFX;
+    private EnemyAnimController enemyAnimController;
 
-    public void AttackTarget(Enemy enemy)
+    private void Awake() 
     {
-        if (enemy.EnemyClass == EnemyClass.Range && enemy.EnemyDifficulty == EnemyDifficulty.Easy)
+        enemyAnimController = GetComponentInChildren<EnemyAnimController>();
+
+        if (enemyAnimController == null)
         {
-            if (attackFX == null)
-            {
-                Logger.LogError("Missing enemy projectile FX reference.");
-            }
-            else
-            {
-                var projectileEmission = attackFX.emission;
-                projectileEmission.enabled = true;
-            }
+            Logger.LogError("EnemyAnimController script component is missing", this);
+            return;
         }
+    }
+
+    public void AttackTarget()
+    {
+        enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimType.Attack);
+    }
+
+    public void PlayAttackFX()
+    {
+        StopAttackFX();
+        attackFX.Play();
+    }
+
+    public void StopAttackFX()
+    {
+        if (attackFX.isPlaying)
+        {
+            attackFX.Stop();
+        }        
     }
 }

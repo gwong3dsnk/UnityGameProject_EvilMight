@@ -73,6 +73,7 @@ public class PlayerAnimController : MonoBehaviour
 
     private void InvokeOnAnimFXPlay()
     {
+        // Function call by FingerFlick anim event.
         Logger.Log("Invoking OnAnimFXPlay in PlayerAnimController to play FX.", this);
         OnAnimFXPlay?.Invoke(this, EventArgs.Empty);
     }

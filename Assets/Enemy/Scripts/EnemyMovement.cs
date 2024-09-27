@@ -14,8 +14,8 @@ public class EnemyMovement : MonoBehaviour
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private Enemy enemy;
+    private EnemyAnimController enemyAnimController;
     private float distanceToTarget = Mathf.Infinity;
-    private GridManager gridManager;
     private Vector3 lastPosition;
     private Coroutine updatePositionCoroutine;
 
@@ -23,29 +23,24 @@ public class EnemyMovement : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemy = GetComponent<Enemy>();
+        enemyAnimController = GetComponentInChildren<EnemyAnimController>();
 
-        if (navMeshAgent == null || enemy == null)
+        if (enemyAnimController == null || enemy == null)
         {
-            Logger.LogError("NavMeshAgent or Enemy script component is missing", this);
+            Logger.LogError("EnemyAnimController or Enemy script component is missing", this);
+            return;
         }
     }
 
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>().transform;
+        enemyAnimController.Initialize(enemy);
 
         if (player == null)
         {
             Logger.LogError("PlayerMovement script is not found in the scene.", this);
-        }
-
-        if (GridManager.GridManagerInstance != null)
-        {
-            gridManager = GridManager.GridManagerInstance;
-        }
-        else
-        {
-            Logger.LogError("GridManager Instance is not found in the scene.", this);
+            return;
         }
 
         lastPosition = transform.position;
@@ -61,9 +56,9 @@ public class EnemyMovement : MonoBehaviour
             yield return new WaitForSeconds(positionUpdateInterval);
 
             // Update the grid if the position has changed
-            if (gridManager != null && lastPosition != transform.position)
+            if (GridManager.GridManagerInstance != null && lastPosition != transform.position)
             {
-                gridManager.UpdatePosition(GetComponent<Collider>());
+                GridManager.GridManagerInstance.UpdatePosition(GetComponent<Collider>());
                 lastPosition = transform.position;
             }
         }
@@ -93,13 +88,13 @@ public class EnemyMovement : MonoBehaviour
             ChaseTarget();
         }
 
-        if (distanceToTarget <= navMeshAgent.stoppingDistance) // enemy player within range, will attack
+        if (distanceToTarget <= navMeshAgent.stoppingDistance) // player within range, enemy will attack
         {
             EnemyAttack enemyAttack = GetComponent<EnemyAttack>();
             
             if (enemyAttack != null)
             {
-                enemyAttack.AttackTarget(enemy);
+                enemyAttack.AttackTarget();
             }
             else
             {
@@ -121,6 +116,8 @@ public class EnemyMovement : MonoBehaviour
         if (navMeshAgent.isOnNavMesh && navMeshAgent.isActiveAndEnabled)
         {
             navMeshAgent.SetDestination(player.position);
+            // Check if enemy is ranged or melee.  Ranged will walk, melee will run.
+            enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimType.Movement);
         }
     }
 

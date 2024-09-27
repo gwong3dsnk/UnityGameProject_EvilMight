@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PolyArtMask_Hard
+  m_Name: M_Wizard_Range_Normal
   m_Shader: {fileID: 4800000, guid: b3b027031f09c4b4c83228ddb863368b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -48,7 +48,7 @@ Material:
     - _Smoothness: 0
     - __dirty: 0
     m_Colors:
-    - _Hair: {r: 0.9153212, g: 1, b: 0.09803921, a: 0}
-    - _InnerCloth: {r: 0.56251955, g: 0.15294115, b: 0.6431373, a: 0}
-    - _OuterChlothes: {r: 1, g: 0.21822906, b: 0.18431371, a: 0}
+    - _Hair: {r: 0, g: 0, b: 0, a: 0}
+    - _InnerCloth: {r: 0.19438955, g: 0.89433956, b: 0.11980776, a: 0}
+    - _OuterChlothes: {r: 0.97735846, g: 0.9687985, b: 0.16043426, a: 0}
   m_BuildTextureStacks: []

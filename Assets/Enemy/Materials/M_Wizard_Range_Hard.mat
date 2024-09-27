@@ -2,20 +2,24 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PolyArtMaskTint_Normal
+  m_Name: M_Wizard_Range_Hard
   m_Shader: {fileID: 4800000, guid: b3b027031f09c4b4c83228ddb863368b, type: 3}
-  m_ShaderKeywords: 
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -35,6 +39,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _Float1: 0
     - _Metal: 0
@@ -43,6 +48,7 @@ Material:
     - _Smoothness: 0
     - __dirty: 0
     m_Colors:
-    - _Hair: {r: 0.0990566, g: 0.4757334, b: 1, a: 0}
-    - _InnerCloth: {r: 0.6415094, g: 0.15432537, b: 0.5665582, a: 0}
-    - _OuterChlothes: {r: 0.6035535, g: 0.18396229, b: 1, a: 0}
+    - _Hair: {r: 0.9153212, g: 1, b: 0.09803921, a: 0}
+    - _InnerCloth: {r: 0.56251955, g: 0.15294115, b: 0.6431373, a: 0}
+    - _OuterChlothes: {r: 1, g: 0.21822906, b: 0.18431371, a: 0}
+  m_BuildTextureStacks: []

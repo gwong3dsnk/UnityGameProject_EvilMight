@@ -17,16 +17,16 @@ MonoBehaviour:
     difficulty: 0
     hp: 1
     atk: 1
-    atkRadius: 20
-    movementSpeed: 10
+    atkRadius: 10
+    movementSpeed: 5
     experience: 5
     prefab: {fileID: 7539209899930774730, guid: 241078df1e90f294c9d32cfb6477788f, type: 3}
   - enemyClass: 1
     difficulty: 1
     hp: 3
     atk: 1
-    atkRadius: 20
-    movementSpeed: 10
+    atkRadius: 15
+    movementSpeed: 5
     experience: 10
     prefab: {fileID: 7539209899930774730, guid: 75cad540ef066424298f7cdbc20e8b10, type: 3}
   - enemyClass: 1
@@ -34,6 +34,6 @@ MonoBehaviour:
     hp: 7
     atk: 1
     atkRadius: 20
-    movementSpeed: 10
+    movementSpeed: 5
     experience: 15
     prefab: {fileID: 7539209899930774730, guid: cbdd878178d8c0f4a93ae922e43cdfb0, type: 3}

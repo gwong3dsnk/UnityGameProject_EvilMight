@@ -69,7 +69,8 @@ PrefabInstance:
       value: Enemy_Base_Range
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3409334154483410009, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       insertIndex: -1
