@@ -39,7 +39,7 @@ public class FingerFlick : PlayerAbilities
                 enemyPosition = collider.transform.position;
                 Vector3 directionToEnemy = (enemyPosition - transform.position).normalized;
                 
-                if (Vector3.Dot(transform.forward, directionToEnemy) > 0.5f)
+                if (Vector3.Dot(transform.forward, directionToEnemy) > 0.7f)
                 {
                     Logger.Log("[FingerFlick] - Enemy in front of player, calling ActivateAbility.", this);
                     SubscribeToEnemyDeathHandlerEvent(collider);
@@ -51,6 +51,7 @@ public class FingerFlick : PlayerAbilities
                     // Enemy not in front of player, StopCoroutine if it's running.
                     Logger.Log("[FingerFlick] - No enemy in front of player, stopping attack coroutine.", this);
                     isAttacking = false;
+                    enemyPosition = Vector3.zero;
                     if (attackCoroutine != null)
                     {
                         StopCoroutine(attackCoroutine);

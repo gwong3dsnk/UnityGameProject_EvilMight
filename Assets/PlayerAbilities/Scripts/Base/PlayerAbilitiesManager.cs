@@ -72,8 +72,8 @@ public class PlayerAbilitiesManager : MonoBehaviour
     private void PlayAnimEventFX(object sender, System.EventArgs e)
     {
         Logger.Log("PlayerAbilitiesManager hears OnAnimFXPlay.", this);
-        // PlayerAbilities activePlayerAbilities = playerAnimController.ActiveAbility;
         ParticleSystem particleFX = activeAbilityForAnim.GetComponentInChildren<ParticleSystem>();
+        Logger.Log($"[PlayerAbilitiesManager] - Setting {particleFX.name} position to {activeAbilityForAnim.EnemyPosition}", this);
         particleFX.transform.position = activeAbilityForAnim.EnemyPosition;
 
         if (particleFX.isPlaying)
