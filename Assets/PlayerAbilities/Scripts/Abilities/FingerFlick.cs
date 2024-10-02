@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -13,6 +16,7 @@ public class FingerFlick : PlayerAbilities
     private EnemyDeathHandler enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
+    private Coroutine checkForEnemiesCoroutine;
 
     protected override void Awake()
     {
@@ -22,52 +26,93 @@ public class FingerFlick : PlayerAbilities
 
     private void Update()
     {
-        if (!isAttacking)
+        if (!isAttacking && checkForEnemiesCoroutine == null)
         {
-            CheckIfEnemyInMeleeRange();
+            Logger.Log("UPDATE IS RUNNING");
+            checkForEnemiesCoroutine = StartCoroutine(CheckIfEnemyInMeleeRangeCoroutine());
         }
     }
-    
-    private void CheckIfEnemyInMeleeRange()
+
+    private IEnumerator CheckIfEnemyInMeleeRangeCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (CheckIfEnemyInFront())
+        {
+            ActivateAbility(this);
+        }
+        else
+        {
+            StopAttacking(null, EventArgs.Empty);
+        }
+
+        checkForEnemiesCoroutine = null;
+    }
+
+    private bool CheckIfEnemyInFront()
+    {
+        Dictionary<Collider, float> enemiesInMeleeRange = new Dictionary<Collider, float>();
+        List<KeyValuePair<Collider, float>> sortedDictionary = new List<KeyValuePair<Collider, float>>();
+
+        enemiesInMeleeRange = PopulateNearbyEnemyDictionary(enemiesInMeleeRange);
+
+        if (enemiesInMeleeRange.Count == 0)
+        {
+            return false;
+        }
+        else
+        {
+            // Sort the dictionary so the closest enemy is the first element.
+            sortedDictionary = enemiesInMeleeRange.OrderBy(enemy => enemy.Value).ToList();
+
+            return ActIfEnemyInFront(sortedDictionary);
+        }
+    }
+
+    private Dictionary<Collider, float> PopulateNearbyEnemyDictionary(Dictionary<Collider, float> enemiesInMeleeRange)
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, meleeRange);
+
         foreach (Collider collider in hitColliders)
         {
+            // Isolate the Enemy objects and store them and their distance from this into the dictionary.
             if (collider.CompareTag("Enemy"))
             {
-                Logger.Log($"[FingerFlick] - Nearby Enemy collider detected - {collider.gameObject.name} witihn {meleeRange}m");
                 enemyPosition = collider.transform.position;
-                Vector3 directionToEnemy = (enemyPosition - transform.position).normalized;
-                
-                if (Vector3.Dot(transform.forward, directionToEnemy) > 0.7f)
-                {
-                    Logger.Log("[FingerFlick] - Enemy in front of player, calling ActivateAbility.", this);
-                    SubscribeToEnemyDeathHandlerEvent(collider);
-                    ActivateAbility(this);
-                    return;
-                } 
-                else
-                {
-                    // Enemy not in front of player, StopCoroutine if it's running.
-                    Logger.Log("[FingerFlick] - No enemy in front of player, stopping attack coroutine.", this);
-                    isAttacking = false;
-                    enemyPosition = Vector3.zero;
-                    if (attackCoroutine != null)
-                    {
-                        StopCoroutine(attackCoroutine);
-                        attackCoroutine = null;
-                    }
-                }
+                float enemyDistanceFromPlayer = Vector3.Distance(transform.position, enemyPosition);
+                enemiesInMeleeRange.Add(collider, enemyDistanceFromPlayer);
             }
         }
+
+        return enemiesInMeleeRange;
+    }    
+
+    private bool ActIfEnemyInFront(List<KeyValuePair<Collider, float>> sortedDictionary)
+    {
+        foreach (KeyValuePair<Collider, float> kvp in sortedDictionary)
+        {
+            Vector3 directionToEnemy = (kvp.Key.transform.position - transform.position).normalized;
+
+            if (Vector3.Dot(transform.forward, directionToEnemy) > 0.7f)
+            {
+                Logger.Log($"[FingerFlick] - {kvp.Key} is {kvp.Value}m in front of player.", this);
+                SubscribeToEnemyDeathHandlerEvent(kvp.Key);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
     {
-        Logger.Log("[FingerFlick] - Subscribing to enemyDeathHandler.OnEnemyDeactivation", this);
         enemyDeathHandler = collider.GetComponent<EnemyDeathHandler>();
-        enemyHealth = collider.GetComponent<EnemyHealth>();        
         enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
+        enemyHealth = collider.GetComponent<EnemyHealth>(); // Setup enemyHealth reference.
     }
 
     public override void ActivateAbility(PlayerAbilities ability)
@@ -94,11 +139,16 @@ public class FingerFlick : PlayerAbilities
     {
         while(isAttacking)
         {
-            // Logic to set trigger to play animation, making sure to play it only once.
             Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
             PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(); 
             enemyHealth.HandleTakeCollisionDamage(this);
             yield return new WaitForSeconds(activationDelay);
+            
+            if (!CheckIfEnemyInFront())
+            {
+                StopAttacking(null, EventArgs.Empty);
+                yield break;
+            }
         }
     }
 
