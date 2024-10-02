@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] PlayerHealth playerHealth;
-    [SerializeField] private float onLevelUpDelay = 0.25f;
+    [SerializeField] private float onLevelUpDelay = 1.0f;
     // Unserialize below later.
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;

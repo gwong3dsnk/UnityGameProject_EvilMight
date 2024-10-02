@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 0}
+  onLevelUpDelay: 1
   levelXPThreshold: 0
   currentLevel: 1
   currentXP: 0

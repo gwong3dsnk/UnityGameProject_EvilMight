@@ -1,22 +1,32 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
 {
     private Animator animator;
     private EnemyAnimState currentState;
+    private EnemyHealth enemyHealth;
 
     private void Awake() 
     {
         animator = GetComponent<Animator>();
+        enemyHealth = GetComponentInParent<EnemyHealth>();
 
-        if (animator == null)
+        if (animator == null || enemyHealth == null)
         {
-            Logger.LogError("Animator or Enemy script component is missing", this);
+            Logger.LogError("[EnemyAnimController] - Animator or EnemyHealth reference is missing", this);
             return;            
         }
+    }
+
+    private void OnEnable()
+    {
+        enemyHealth.OnDeath += ProcessEnemyDeath;        
+    }
+
+    private void OnDisable()
+    {
+        enemyHealth.OnDeath -= ProcessEnemyDeath;
     }
 
     public void DetermineEnemyClassAndAction(EnemyAnimCategory animType)
@@ -44,7 +54,7 @@ public class EnemyAnimController : MonoBehaviour
                     }
                     else
                     {
-                        SetGetHitTrigger();
+                        SetTriggerParam("GetHitTrigger");
                     }
                     break;
                 case EnemyClass.Melee:
@@ -60,7 +70,7 @@ public class EnemyAnimController : MonoBehaviour
                     }
                     else
                     {
-                        SetGetHitTrigger();
+                        SetTriggerParam("GetHitTrigger");
                     }            
                     break;
                 default:
@@ -93,9 +103,14 @@ public class EnemyAnimController : MonoBehaviour
         animator.SetBool("isMeleeAttacking", true);
     }
 
-    private void SetGetHitTrigger()
+    private void ProcessEnemyDeath(object sender, System.EventArgs e)
     {
-        animator.SetTrigger("GetHitTrigger");
+        SetTriggerParam("DeathTrigger");
+    }
+
+    private void SetTriggerParam(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
     }
 
     public void ReceiveAttackAnimEvent()

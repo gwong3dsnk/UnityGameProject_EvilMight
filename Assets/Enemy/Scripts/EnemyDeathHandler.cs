@@ -10,16 +10,34 @@ public class EnemyDeathHandler : MonoBehaviour
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
     private LevelManager levelManager;
-    private Animator animator;
-    private float deactivationDelay = 1.0f;
+    private float deactivationDelay = 1.5f;
     public event EventHandler OnEnemyDeactivation; 
+
+    private void Awake()
+    {
+        enemyHealth = GetComponent<EnemyHealth>();
+
+        if (enemyHealth == null)
+        {
+            Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth script component.", this);
+            return;
+        }
+    }
+
+    private void OnEnable()
+    {
+        enemyHealth.OnDeath += DeathHandler_OnDeath;
+    }
+
+    private void OnDisable()
+    {
+        enemyHealth.OnDeath -= DeathHandler_OnDeath;
+    }
 
     private void Start()
     {
         enemy = GetComponent<Enemy>();
-        enemyHealth = GetComponent<EnemyHealth>();
         enemyCollider = GetComponent<Collider>();
-        animator = GetComponentInChildren<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
         
         if (GridManager.GridManagerInstance == null)
@@ -28,34 +46,22 @@ public class EnemyDeathHandler : MonoBehaviour
             return;
         }
 
-        if (enemyHealth != null)
-        {
-            enemyHealth.OnDeath += DeathHandler_OnDeath;
-        }
-        else
-        {
-            Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth script component.", this);
-            return;
-        }    
-
         if (enemy == null || enemyCollider == null)
         {
             Logger.LogError("[EnemyDeathHandler] - Missing either Enemy or Collider components.", this);
             return;
         }
 
-        if (levelManager == null || animator == null)
+        if (levelManager == null)
         {
-            Logger.LogError("[EnemyDeathHandler] - Missing reference to either LevelManager or Animator components.", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing reference to LevelManager.", this);
             return;
         }
     }
 
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
-        Logger.Log("[EnemyDeathHandler] - Play enemy death anim, wait, then process enemy deactivation.", this);
-        animator.SetTrigger("DeathTrigger");
-        enemyHealth.OnDeath -= DeathHandler_OnDeath;
+        Logger.Log("[EnemyDeathHandler] - Pass enemy xp to level manager, then process enemy deactivation.", this);
         levelManager.AddXP(enemy.Experience);
                 
         StartCoroutine(DelayProcessingEnemyDeactivation());

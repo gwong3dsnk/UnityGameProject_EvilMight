@@ -28,7 +28,6 @@ public class FingerFlick : PlayerAbilities
     {
         if (!isAttacking && checkForEnemiesCoroutine == null)
         {
-            Logger.Log("UPDATE IS RUNNING");
             checkForEnemiesCoroutine = StartCoroutine(CheckIfEnemyInMeleeRangeCoroutine());
         }
     }
