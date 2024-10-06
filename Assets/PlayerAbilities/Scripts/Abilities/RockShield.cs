@@ -17,18 +17,12 @@ public class RockShield : PlayerAbilities
     public override void ActivateAbility(PlayerAbilities ability)
     {
         isEffectRepeating = false;
-        base.ActivateAbility(ability);
-    }
+    }  
 
-    protected override void SetParticleSystemLocationToSocket()
+    public override void HandlePlayAnimEventFX()
     {
-        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
-    }        
 
-    protected override void ExecuteSecondaryActivationBehavior()
-    {
-        Logger.Log("Executing ExecuteSecondaryActivationBehavior");
-    }    
+    }            
 
     public override void DeactivateAbility()
     {

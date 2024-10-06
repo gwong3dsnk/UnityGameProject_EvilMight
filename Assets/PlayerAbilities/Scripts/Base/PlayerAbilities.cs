@@ -10,8 +10,8 @@ using UpgradeTypesDatabase =
 
 public abstract class PlayerAbilities : MonoBehaviour
 {
+    #region Fields and Properties
     [SerializeField] protected AbilityLibraryData abilityData; 
-    protected ParticleSystem abilityParticleSystem;
     protected float activationDelay;
     protected bool isEffectRepeating = false;
     protected GameObject[] playerSockets;
@@ -29,42 +29,41 @@ public abstract class PlayerAbilities : MonoBehaviour
     [SerializeField] protected GameObject prefab;
     public GameObject Prefab => prefab;
     [SerializeField] protected PlayerAbilities playerAbilities;
+    #endregion
 
     protected virtual void Awake()
     {
         InitializeAbilityData();
-        playerSockets = AbilityUtilityMethods.GetPlayerSockets();
     }
 
-    public virtual void ActivateAbility(PlayerAbilities ability)
-    {
-        Logger.Log($"Activating {this.name}", this);
-        SetParticleSystemLocationToSocket();
+    public abstract void ActivateAbility(PlayerAbilities ability);
 
-        // Retrieve the runtime gameobject's particle system component.
-        abilityParticleSystem = ability.gameObject.GetComponentInChildren<ParticleSystem>();
-        if (abilityParticleSystem == null)
-        {
-            Logger.LogWarning("Failed to get ability gameobject's particle system component", this);
-        }
-    }
+    public abstract void HandlePlayAnimEventFX();
 
-    protected IEnumerator ReplayAbilityFX()
-    {
-        while(true)
-        {
-            Logger.Log($"Executing replay activation loop for {this.name}");
-            if (abilityParticleSystem != null)
-            {
-                abilityParticleSystem.Play();
-            }
+    // protected virtual void GetAbilityParticleSystem(PlayerAbilities ability)
+    // {
+    //     // Retrieve the runtime gameobject's particle system component.
+    //     particleSystems = ability.gameObject.GetComponentsInChildren<ParticleSystem>();
+    //     if (particleSystems.Length == 0)
+    //     {
+    //         Logger.LogWarning($"No particle system gameobject components found within [{ability.AbilityName}]", this);
+    //     }
+    // }
 
-            ExecuteSecondaryActivationBehavior();
+    // protected IEnumerator ReplayAbilityFX()
+    // {
+    //     while(true)
+    //     {
+    //         Logger.Log($"Executing replay activation loop for {this.name}");
+    //         if (abilityParticleSystem != null)
+    //         {
+    //             abilityParticleSystem.Play();
+    //         }
 
-            yield return new WaitForSeconds(activationDelay);
-            DeactivateAbility();
-        }
-    }
+    //         yield return new WaitForSeconds(activationDelay);
+    //         DeactivateAbility();
+    //     }
+    // }
 
     protected IEnumerator ReplayAnimation()
     {
@@ -75,10 +74,10 @@ public abstract class PlayerAbilities : MonoBehaviour
     public virtual void DeactivateAbility()
     {
         Logger.Log($"Stopping {this.name}'s particle system.", this);
-        if (abilityParticleSystem != null)
-        {
-            abilityParticleSystem.Stop();
-        }
+        // if (abilityParticleSystem != null)
+        // {
+        //     abilityParticleSystem.Stop();
+        // }
     }
 
     protected virtual void InitializeAbilityData()
@@ -116,8 +115,4 @@ public abstract class PlayerAbilities : MonoBehaviour
             emissionModule.rateOverTime = newValue;
         }   
     }
-
-    protected abstract void ExecuteSecondaryActivationBehavior();
-
-    protected abstract void SetParticleSystemLocationToSocket();
 }

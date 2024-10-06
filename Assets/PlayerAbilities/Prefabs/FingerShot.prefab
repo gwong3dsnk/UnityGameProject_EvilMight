@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2712497432267922221}
+  - {fileID: 2371064727681799481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &732283309839090374
@@ -52,6 +53,40 @@ MonoBehaviour:
   fireRate: 0
   prefab: {fileID: 0}
   playerAbilities: {fileID: 0}
+--- !u!1001 &643739009777427816
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7017957672160078959}
+    m_Modifications:
+    - target: {fileID: 2185798964007899379, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+      propertyPath: m_Name
+      value: FX_Player_FingerShot_R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+--- !u!4 &2371064727681799481 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
+  m_PrefabInstance: {fileID: 643739009777427816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &985173355039288188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62,7 +97,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2185798964007899379, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_Name
-      value: FX_Player_FingerShot
+      value: FX_Player_FingerShot_L
       objectReference: {fileID: 0}
     - target: {fileID: 2884753444654477393, guid: a5590b576c68dd54ba6f33ec6269d80a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

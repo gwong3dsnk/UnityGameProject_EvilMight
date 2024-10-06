@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     private Animator animator;
-    private PlayerAbilities activeAbility;
     public event EventHandler OnAnimFXPlay;
 
     private void Awake() 
@@ -15,6 +14,8 @@ public class PlayerAnimController : MonoBehaviour
 
     private void OnEnable() 
     {
+        // NOTE: THen HandleAbilityPlayAnim is invokved, it is observed by both SK_ChracterHands playerAnimController component, AND SK_SmallHands_Close
+        // playerAnimController.  THis causes the "Parameter 'fingerShotTrigger' does not exist." warning in the console.  
         PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim += DetermineAbilityName;
     }
 
@@ -23,58 +24,50 @@ public class PlayerAnimController : MonoBehaviour
         PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
     }
 
-    public void DetermineAbilityName(object sender, System.EventArgs e)
+    public void DetermineAbilityName(PlayerAbilities ability)
     {
-        Logger.Log("OnActivationCompletion heard in PlayerAnimController.DetermineAbilityName", this);
-        PlayerAbilitiesManager abilityManager = sender as PlayerAbilitiesManager;
-        if (abilityManager == null)
+        Logger.Log("[PlayerAnimController] - HandleAbilityPlayAnim heard in PlayerAnimController.DetermineAbilityName", this);
+
+        if (ability == null)
         {
-            Logger.LogError("No reference to PlayerAbilitiesManager as sender is null.", this);
+            Logger.LogError("[PlayerAnimController] - No PlayerAbilities found passed in.", this);
         }
         else
         {
-            if (abilityManager.ActiveAbilityForAnim == null)
+            Logger.Log($"[PlayerAnimController] - Incoming Ability Name for AnimPlay - {ability.AbilityName}", this);
+            switch (ability.AbilityName)
             {
-                Logger.LogError("No data found for ActiveAbilityForAnim property", this);
+                case AbilityNames.FingerFlick:
+                    SetAnimTrigger("fingerFlickTrigger");
+                    break;
+                case AbilityNames.FingerShot:
+                    SetAnimTrigger("fingerShotTrigger");
+                    break;
+                case AbilityNames.FistSlam:
+                    SetAnimTrigger("fistSlamTrigger");
+                    break;
             }
-            else
-            {
-                Logger.Log($"Incoming Ability Name for AnimPlay - {abilityManager.ActiveAbilityForAnim.AbilityName}", this);
-                activeAbility = abilityManager.ActiveAbilityForAnim;
-                switch (activeAbility.AbilityName)
-                {
-                    case AbilityNames.FingerFlick:
-                        SetAnimTrigger("fingerFlickTrigger");
-                        break;
-                    case AbilityNames.FingerShot:
-                        SetAnimBool("fingerShotBool");
-                        break;
-                    case AbilityNames.FistSlam:
-                        SetAnimTrigger("fistSlamTrigger");
-                        break;
-                }
 
-                Logger.Log($"Finished setting animation trigger/bool.", this);
-            }
+            Logger.Log($"[PlayerAnimController] - Finished setting animation trigger/bool.", this);
         }
     }
 
     private void SetAnimTrigger(string triggerName) 
     {
-        Logger.Log($"Setting animation trigger for {triggerName}", this);
+        Logger.Log($"[PlayerAnimController] - Setting animation trigger for {triggerName}", this);
         animator.SetTrigger(triggerName);
     }
 
     private void SetAnimBool(string boolName)
     {
-        Logger.Log($"Setting animation bool for {boolName}", this);
+        Logger.Log($"[PlayerAnimController] - Setting animation bool for {boolName}", this);
         animator.SetBool(boolName, true);
     }
 
     private void InvokeOnAnimFXPlay()
     {
-        // Function call by FingerFlick anim event.
-        Logger.Log("Invoking OnAnimFXPlay in PlayerAnimController to play FX.", this);
+        // Called by animation events.
+        Logger.Log("[PlayerAnimController] - AnimEvent Triggered.  Invoking OnAnimFXPlay.", this);
         OnAnimFXPlay?.Invoke(this, EventArgs.Empty);
     }
 }

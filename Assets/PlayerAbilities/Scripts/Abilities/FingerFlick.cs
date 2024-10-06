@@ -17,6 +17,7 @@ public class FingerFlick : PlayerAbilities
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
     private Coroutine checkForEnemiesCoroutine;
+    private ParticleSystem[] particleSystems;
 
     protected override void Awake()
     {
@@ -30,6 +31,25 @@ public class FingerFlick : PlayerAbilities
         {
             checkForEnemiesCoroutine = StartCoroutine(CheckIfEnemyInMeleeRangeCoroutine());
         }
+    }
+
+    public override void HandlePlayAnimEventFX()
+    {
+        Logger.Log($"[PlayerAbilitiesManager] - Setting {particleSystems[0].name} position to {enemyPosition}", this);
+        particleSystems[0].transform.position = enemyPosition;
+        PlayParticleSystem();
+    }
+
+    private void PlayParticleSystem()
+    {
+        if (particleSystems[0].isPlaying)
+        {
+            Logger.Log("Stopping particle system.", this);
+            particleSystems[0].Stop();
+        }
+        
+        Logger.Log("Starting particle system.", this);
+        particleSystems[0].Play();     
     }
 
     private IEnumerator CheckIfEnemyInMeleeRangeCoroutine()
@@ -123,7 +143,7 @@ public class FingerFlick : PlayerAbilities
             {
                 activationDelay = 3.0f;
                 isAttacking = true;
-                base.ActivateAbility(ability);
+                GetAbilityParticleSystem(ability);
                 Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
                 attackCoroutine = StartCoroutine(AttackCoroutine());
             }
@@ -134,12 +154,22 @@ public class FingerFlick : PlayerAbilities
         }
     }
 
+    private void GetAbilityParticleSystem(PlayerAbilities ability)
+    {
+        // Retrieve the runtime gameobject's particle system component.
+        particleSystems = ability.gameObject.GetComponentsInChildren<ParticleSystem>();
+        if (particleSystems.Length == 0)
+        {
+            Logger.LogWarning($"No particle system gameobject components found within [{abilityName}]", this);
+        }
+    }        
+
     private IEnumerator AttackCoroutine()
     {
         while(isAttacking)
         {
             Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
-            PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(); 
+            PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
             enemyHealth.HandleTakeCollisionDamage(this);
             yield return new WaitForSeconds(activationDelay);
             
@@ -165,11 +195,6 @@ public class FingerFlick : PlayerAbilities
         }
     }
 
-    protected override void SetParticleSystemLocationToSocket()
-    {
-        Logger.Log("FingerFlick not using SetParticleSystemLocationToSocket", this); 
-    }        
-
     public override void DeactivateAbility()
     {
         base.DeactivateAbility();
@@ -179,11 +204,6 @@ public class FingerFlick : PlayerAbilities
     {
         base.ActivateUpgrade(newUpgrade);
     }
-
-    protected override void ExecuteSecondaryActivationBehavior()
-    {
-        Logger.Log("Fingerflick not using ExecuteSecondaryActivationBehavior", this);
-    }    
 
     protected override void InitializeAbilityData()
     {

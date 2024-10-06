@@ -22,76 +22,74 @@ public class ScreenAOE : PlayerAbilities
         }
 
         base.Awake();
-    }
+    }    
 
     public override void ActivateAbility(PlayerAbilities ability)
     {
         activationDelay = 10.0f;
         isEffectRepeating = true;
-        base.ActivateAbility(ability); 
     }
 
-    protected override void SetParticleSystemLocationToSocket()
+    public override void HandlePlayAnimEventFX()
     {
-        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
-    }    
 
-    protected override void ExecuteSecondaryActivationBehavior()
-    {
-        KillVisibleEnemies();
-    }
+    }            
 
-    private void KillVisibleEnemies()
-    {
-        Logger.Log("Executing KillVisibleEnemies method for ScreenAOE ability.");
-        GameObject[] visibleEnemies = GetVisibleEnemies();
-        if (visibleEnemies != null)
-        {
-            foreach (GameObject enemy in visibleEnemies)
-            {
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+    // protected override void ExecuteSecondaryActivationBehavior()
+    // {
+    //     KillVisibleEnemies();
+    // }
 
-                if (enemyHealth == null)
-                {
-                    Logger.LogError("Missing reference to EnemyHealth", this);
-                }
+    // private void KillVisibleEnemies()
+    // {
+    //     Logger.Log("Executing KillVisibleEnemies method for ScreenAOE ability.");
+    //     GameObject[] visibleEnemies = GetVisibleEnemies();
+    //     if (visibleEnemies != null)
+    //     {
+    //         foreach (GameObject enemy in visibleEnemies)
+    //         {
+    //             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
 
-                enemyHealth.ApplyAOEDamage(damage);
-            }
-        }
+    //             if (enemyHealth == null)
+    //             {
+    //                 Logger.LogError("Missing reference to EnemyHealth", this);
+    //             }
 
-    }
+    //             enemyHealth.ApplyAOEDamage(damage);
+    //         }
+    //     }
+    // }
 
-    private GameObject[] GetVisibleEnemies()
-    {
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (allEnemies.Length > 0)
-        {
-            List<GameObject> visibleEnemies = new List<GameObject>();
+    // private GameObject[] GetVisibleEnemies()
+    // {
+    //     GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+    //     if (allEnemies.Length > 0)
+    //     {
+    //         List<GameObject> visibleEnemies = new List<GameObject>();
 
-            foreach (GameObject enemy in allEnemies)
-            {
-                if (IsVisible(enemy))
-                {
-                    visibleEnemies.Add(enemy);
-                }
-            }
+    //         foreach (GameObject enemy in allEnemies)
+    //         {
+    //             if (IsVisible(enemy))
+    //             {
+    //                 visibleEnemies.Add(enemy);
+    //             }
+    //         }
 
-            return visibleEnemies.ToArray();
-        }
-        else
-        {
-            return null;
-        }
-    }
+    //         return visibleEnemies.ToArray();
+    //     }
+    //     else
+    //     {
+    //         return null;
+    //     }
+    // }
 
-    private bool IsVisible(GameObject enemy)
-    {
-        Vector3 screenPosition = mainCamera.WorldToScreenPoint(enemy.transform.position);
+    // private bool IsVisible(GameObject enemy)
+    // {
+    //     Vector3 screenPosition = mainCamera.WorldToScreenPoint(enemy.transform.position);
 
-        // Check if the object is within the screen's x, y bounds using z as the distance out from the camera.
-        return screenPosition.z > 0 && screenPosition.x > 0 && screenPosition.x < Screen.width && screenPosition.y > 0 && screenPosition.y < Screen.height;
-    }
+    //     // Check if the object is within the screen's x, y bounds using z as the distance out from the camera.
+    //     return screenPosition.z > 0 && screenPosition.x > 0 && screenPosition.x < Screen.width && screenPosition.y > 0 && screenPosition.y < Screen.height;
+    // }
 
     public override void DeactivateAbility()
     {

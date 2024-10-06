@@ -12,23 +12,30 @@ public class PlayerAbilitiesManager : MonoBehaviour
 {
     [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
-    [SerializeField] PlayerAnimController playerAnimController;
     [SerializeField] ActivateButtonOnClick activateButtonOnClick;
     [SerializeField] GameObject playerDefaultAbility;
+    // [SerializeField] private GameObject[] playerMeshObjects; // Delete
+    // private AbilityHelper abilityHelper; // Delete
+    private PlayerAnimController baseHandsAnimController;
+    private PlayerAnimController smallHandsAnimController;
+    private PlayerAbilities abilityToAnimate;    
+    // public GameObject[] PlayerMeshObjects => playerMeshObjects;
     private List<PlayerAbilities> activeAbilities = new List<PlayerAbilities>();
     public List<PlayerAbilities> ActiveAbilities => activeAbilities;
     private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase ActiveUpgrades => activeUpgrades;
-    private PlayerAbilities activeAbilityForAnim;
-    public PlayerAbilities ActiveAbilityForAnim => activeAbilityForAnim;
     public static PlayerAbilitiesManager AbilityManagerInstance { get; private set; }
     public event EventHandler OnAbilityActivationCompletion;
     public event EventHandler OnUpgradeActivationCompletion;
-    public event EventHandler HandleAbilityPlayAnim;
+    public event Action<PlayerAbilities> HandleAbilityPlayAnim;
 
     private void Awake()
     {
-        Logger.Log($"Initializing PLAYER ABILITY MANAGER singleton instance OnAwake.", this);
+        Logger.Log($"[PlayerAbilitiesManager] - Initializing PLAYER ABILITY MANAGER singleton instance OnAwake.", this);
+        // abilityHelper = GetComponent<AbilityHelper>();
+        baseHandsAnimController = GetComponent<AbilityHelper>().AbilityHelperData[0].meshSockets[0].renderMesh.GetComponent<PlayerAnimController>();
+        smallHandsAnimController = GetComponent<AbilityHelper>().AbilityHelperData[1].meshSockets[0].renderMesh.GetComponent<PlayerAnimController>();
+
         if (AbilityManagerInstance == null)
         {
             AbilityManagerInstance = this;
@@ -40,12 +47,17 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
         if (abilityDatabaseManager == null || upgradeDatabaseManager == null)
         {
-            Logger.LogError("Missing references to either ability or upgrade database manager scripts.", this);
+            Logger.LogError("[PlayerAbilitiesManager] - Missing references to either ability or upgrade database manager scripts.", this);
         }
 
-        if (activateButtonOnClick == null || playerAnimController == null)
+        if (activateButtonOnClick == null)
         {
-            Logger.LogError("Missing references to either activateButtonOnClick or playerAnimController scripts.", this);
+            Logger.LogError("[PlayerAbilitiesManager] - Missing references to activateButtonOnClick or AbilityHelper.", this);
+        }
+
+        if (baseHandsAnimController == null || smallHandsAnimController == null)
+        {
+            Logger.LogError("[PlayerAbilitiesManager] - Missing either AbilityHelper script component or AbilityHelperData on PlayerAbilityContainer gameobject", this);
         }
     }
 
@@ -59,36 +71,37 @@ public class PlayerAbilitiesManager : MonoBehaviour
     {
         activateButtonOnClick.OnAbilityChosen += BeginUnlockingNewAbility;
         activateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;
-        playerAnimController.OnAnimFXPlay += PlayAnimEventFX;
+        baseHandsAnimController.OnAnimFXPlay += PlayAnimEventFX;
+        smallHandsAnimController.OnAnimFXPlay += PlayAnimEventFX;
+        // playerMeshObjects[0].GetComponent<PlayerAnimController>().OnAnimFXPlay += PlayAnimEventFX; // need to listen to sk small h ands close
     }
 
     private void OnDisable()
     {
         activateButtonOnClick.OnAbilityChosen -= BeginUnlockingNewAbility;
         activateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;
-        playerAnimController.OnAnimFXPlay -= PlayAnimEventFX;
+        baseHandsAnimController.OnAnimFXPlay -= PlayAnimEventFX;
+        smallHandsAnimController.OnAnimFXPlay -= PlayAnimEventFX;        
+        // playerMeshObjects[0].GetComponent<PlayerAnimController>().OnAnimFXPlay -= PlayAnimEventFX;
     }
 
     private void PlayAnimEventFX(object sender, System.EventArgs e)
     {
-        Logger.Log("PlayerAbilitiesManager hears OnAnimFXPlay.", this);
-        ParticleSystem particleFX = activeAbilityForAnim.GetComponentInChildren<ParticleSystem>();
-        Logger.Log($"[PlayerAbilitiesManager] - Setting {particleFX.name} position to {activeAbilityForAnim.EnemyPosition}", this);
-        particleFX.transform.position = activeAbilityForAnim.EnemyPosition;
+        Logger.Log("[PlayerAbilitiesManager] - Working on playing anim event FX particle system.", this);
+        abilityToAnimate.HandlePlayAnimEventFX();
 
-        if (particleFX.isPlaying)
-        {
-            Logger.Log("Stopping particle system.", this);
-            particleFX.Stop();
-        }
-        
-        Logger.Log("Starting particle system.", this);
-        particleFX.Play();
+        // foreach (var ability in activeAbilities)
+        // {
+        //     if (ability.AbilityName == AbilityNames.FingerFlick)
+        //     {
+        //         ability.HandlePlayAnimEventFX();
+        //     }
+        // }
     }    
 
     public void AddAbility(PlayerAbilities ability)
     {
-        Logger.Log($"Adding ability [{ability.AbilityName}] to activeAbilities.", this);
+        Logger.Log($"[PlayerAbilitiesManager] - Adding ability [{ability.AbilityName}] to activeAbilities.", this);
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
@@ -113,13 +126,13 @@ public class PlayerAbilitiesManager : MonoBehaviour
 
         if (activateAbilityButtonClicked != null)
         {
-            Logger.Log("Cast Succeeded. Instantiating from CardPanel choice.", this);
+            Logger.Log("[PlayerAbilitiesManager] - Cast Succeeded. Instantiating from CardPanel choice.", this);
             abilityToInstantiate = activateButtonOnClick.SelectedAbilityPrefab;
             isPlayerDefaultAbility = false;
         }
         else
         {
-            Logger.Log("Cast Failed, one-time onAwake instantiation of playerDefaultAbility", this);
+            Logger.Log("[PlayerAbilitiesManager] - Cast Failed, one-time onAwake instantiation of playerDefaultAbility", this);
             abilityToInstantiate = playerDefaultAbility;
             isPlayerDefaultAbility = true;
         }
@@ -127,12 +140,11 @@ public class PlayerAbilitiesManager : MonoBehaviour
         // Start with instantiating the ability prefab.
         GameObject abilityGameObject = Instantiate(abilityToInstantiate, transform.position, Quaternion.identity, transform);
 
-        // Process AddAbility.  activeAbilityForAnim also used by PlayerAnimController.DetermineAbilityName.
-        activeAbilityForAnim = abilityGameObject.GetComponent<PlayerAbilities>();
-        AddAbility(activeAbilityForAnim);
+        // Process AddAbility.
+        AddAbility(abilityGameObject.GetComponent<PlayerAbilities>());
 
         // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
-        abilityDatabaseManager.RemoveAbilityFromDatabase(activeAbilityForAnim);
+        abilityDatabaseManager.RemoveAbilityFromDatabase(abilityGameObject.GetComponent<PlayerAbilities>());
 
         if (!isPlayerDefaultAbility)
         {
@@ -199,9 +211,10 @@ public class PlayerAbilitiesManager : MonoBehaviour
         OnAbilityActivationCompletion?.Invoke(this, EventArgs.Empty); 
     }
 
-    public void InvokeHandleAbilityPlayAnimEvent()
+    public void InvokeHandleAbilityPlayAnimEvent(PlayerAbilities ability)
     {
+        abilityToAnimate = ability;
         Logger.Log("Invoking HandleAbilityPlayAnim in PlayerAbilitiesManager.", this);
-        HandleAbilityPlayAnim?.Invoke(this, EventArgs.Empty);
+        HandleAbilityPlayAnim?.Invoke(ability);
     }
 }

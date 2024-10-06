@@ -14,19 +14,13 @@ public class FistSlam : PlayerAbilities
     {
         activationDelay = 8.0f;
         Logger.Log($"Starting coroutine for {this.name}");
-        StartCoroutine(ReplayAbilityFX());
-        base.ActivateAbility(ability);
+        // StartCoroutine(ReplayAbilityFX());
     }
 
-    protected override void SetParticleSystemLocationToSocket()
+    public override void HandlePlayAnimEventFX()
     {
-        Logger.Log("Logic of SetParticleSystemLocationToSocket", this);
+
     }        
-
-    protected override void ExecuteSecondaryActivationBehavior()
-    {
-        Logger.Log($"{this.name} has no SecondaryActivationBehavior logic to run.", this);
-    }
 
     public override void DeactivateAbility()
     {
