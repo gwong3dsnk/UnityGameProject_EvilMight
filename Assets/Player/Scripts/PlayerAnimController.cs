@@ -16,15 +16,15 @@ public class PlayerAnimController : MonoBehaviour
     {
         // NOTE: THen HandleAbilityPlayAnim is invokved, it is observed by both SK_ChracterHands playerAnimController component, AND SK_SmallHands_Close
         // playerAnimController.  THis causes the "Parameter 'fingerShotTrigger' does not exist." warning in the console.  
-        PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim += DetermineAbilityName;
+        AbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim += DetermineAbilityName;
     }
 
     private void OnDisable() 
     {
-        PlayerAbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
+        AbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
     }
 
-    public void DetermineAbilityName(PlayerAbilities ability)
+    public void DetermineAbilityName(AbilityBase ability)
     {
         Logger.Log("[PlayerAnimController] - HandleAbilityPlayAnim heard in PlayerAnimController.DetermineAbilityName", this);
 

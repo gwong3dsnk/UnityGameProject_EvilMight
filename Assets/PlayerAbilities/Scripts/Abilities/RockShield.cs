@@ -1,20 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class RockShield : PlayerAbilities
+public class RockShield : AbilityBase
 {
     protected override void Awake()
     {
         base.Awake();
     }
 
-    public override void ActivateAbility(PlayerAbilities ability)
+    public override void ActivateAbility(AbilityBase ability)
     {
         isEffectRepeating = false;
     }  

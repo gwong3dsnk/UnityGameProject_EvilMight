@@ -6,7 +6,7 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class FingerShot : PlayerAbilities
+public class FingerShot : AbilityBase
 {
     private AbilityHelperData[] abilityHelperData;
     private GameObject renderMesh; 
@@ -18,7 +18,7 @@ public class FingerShot : PlayerAbilities
         base.Awake();
     }
 
-    public override void ActivateAbility(PlayerAbilities ability)
+    public override void ActivateAbility(AbilityBase ability)
     {
         abilityHelperData = GetComponentInParent<AbilityHelper>().AbilityHelperData;
 
@@ -31,7 +31,7 @@ public class FingerShot : PlayerAbilities
         playerSockets = abilityHelperData[1].meshSockets[0].meshSockets;
         HandleAbilityParticleSystem(ability);
         Logger.Log("[FingerShot] - Invoking event to play animation.", this);
-        PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
+        AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
     }
 
     /// <summary>
@@ -46,13 +46,13 @@ public class FingerShot : PlayerAbilities
         renderMesh.transform.rotation = renderMesh.transform.rotation;
     }
 
-    private void HandleAbilityParticleSystem(PlayerAbilities ability)
+    private void HandleAbilityParticleSystem(AbilityBase ability)
     {
         GetAbilityParticleSystem(ability);
         SetParticleSystemTransforms();
     }
 
-    private void GetAbilityParticleSystem(PlayerAbilities ability)
+    private void GetAbilityParticleSystem(AbilityBase ability)
     {
         // Retrieve the runtime gameobject's particle system component.
         particleSystems = ability.gameObject.GetComponentsInChildren<ParticleSystem>();

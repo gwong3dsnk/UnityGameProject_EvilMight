@@ -25,7 +25,7 @@ public class UpgradeDatabaseManager : MonoBehaviour
     private void InitializeUpgradeDatabase()
     {
         Logger.Log("Initializing UPGRADE DATABASE MANAGER OnAwake", this);
-        foreach (var ability in PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities)
+        foreach (var ability in AbilitiesManager.AbilityManagerInstance.ActiveAbilities)
         {
             Logger.Log($"Processing upgrade database addition for active ability [{ability.AbilityName}]", this);
             bool isAbilityInDatabase = upgradeDatabase.TryGetValue(ability.AbilityName, out var value);

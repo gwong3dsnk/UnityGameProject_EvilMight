@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class ScreenAOE : PlayerAbilities
+public class ScreenAOE : AbilityBase
 {
     private Camera mainCamera;
 
@@ -24,7 +20,7 @@ public class ScreenAOE : PlayerAbilities
         base.Awake();
     }    
 
-    public override void ActivateAbility(PlayerAbilities ability)
+    public override void ActivateAbility(AbilityBase ability)
     {
         activationDelay = 10.0f;
         isEffectRepeating = true;

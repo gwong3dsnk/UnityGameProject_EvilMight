@@ -8,7 +8,7 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class FingerFlick : PlayerAbilities
+public class FingerFlick : AbilityBase
 {
     private float meleeRange = 5.0f;
     private bool isAttacking = false;
@@ -134,7 +134,7 @@ public class FingerFlick : PlayerAbilities
         enemyHealth = collider.GetComponent<EnemyHealth>(); // Setup enemyHealth reference.
     }
 
-    public override void ActivateAbility(PlayerAbilities ability)
+    public override void ActivateAbility(AbilityBase ability)
     {
         // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
         if (isAvoidingAwakeActivation)
@@ -154,7 +154,7 @@ public class FingerFlick : PlayerAbilities
         }
     }
 
-    private void GetAbilityParticleSystem(PlayerAbilities ability)
+    private void GetAbilityParticleSystem(AbilityBase ability)
     {
         // Retrieve the runtime gameobject's particle system component.
         particleSystems = ability.gameObject.GetComponentsInChildren<ParticleSystem>();
@@ -169,7 +169,7 @@ public class FingerFlick : PlayerAbilities
         while(isAttacking)
         {
             Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
-            PlayerAbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
+            AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
             enemyHealth.HandleTakeCollisionDamage(this);
             yield return new WaitForSeconds(activationDelay);
             

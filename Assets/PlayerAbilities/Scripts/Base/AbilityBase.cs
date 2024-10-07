@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +7,14 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public abstract class PlayerAbilities : MonoBehaviour
+public abstract class AbilityBase : MonoBehaviour
 {
     #region Fields and Properties
     [SerializeField] protected AbilityLibraryData abilityData; 
     protected float activationDelay;
     protected bool isEffectRepeating = false;
     protected GameObject[] playerSockets;
-    protected Vector3 enemyPosition = new Vector3();
-    public Vector3 EnemyPosition => enemyPosition;    
+    protected Vector3 enemyPosition = new Vector3();  
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
     [SerializeField] protected AbilityNames abilityName;
     public AbilityNames AbilityName => abilityName;
@@ -28,7 +26,7 @@ public abstract class PlayerAbilities : MonoBehaviour
     public int FireRate => fireRate;
     [SerializeField] protected GameObject prefab;
     public GameObject Prefab => prefab;
-    [SerializeField] protected PlayerAbilities playerAbilities;
+    [SerializeField] protected AbilityBase playerAbilities;
     #endregion
 
     protected virtual void Awake()
@@ -36,7 +34,7 @@ public abstract class PlayerAbilities : MonoBehaviour
         InitializeAbilityData();
     }
 
-    public abstract void ActivateAbility(PlayerAbilities ability);
+    public abstract void ActivateAbility(AbilityBase ability);
 
     public abstract void HandlePlayAnimEventFX();
 

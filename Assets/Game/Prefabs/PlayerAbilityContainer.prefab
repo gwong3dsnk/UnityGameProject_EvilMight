@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3439396212596872942}
   - component: {fileID: 6378233534303530109}
   - component: {fileID: 1403223083362152845}
+  - component: {fileID: 886166555227453327}
   m_Layer: 0
   m_Name: PlayerAbilityContainer
   m_TagString: Untagged
@@ -60,10 +61,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityDatabaseManager: {fileID: 0}
-  upgradeDatabaseManager: {fileID: 0}
   activateButtonOnClick: {fileID: 0}
   playerDefaultAbility: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
-  playerMeshObjects: []
 --- !u!114 &1403223083362152845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,3 +86,17 @@ MonoBehaviour:
       meshSockets:
       - {fileID: 0}
       - {fileID: 0}
+--- !u!114 &886166555227453327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099512778735645523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62bcaca141046f42aa92550fffceeb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upgradeDatabaseManager: {fileID: 0}
+  activateButtonOnClick: {fileID: 0}

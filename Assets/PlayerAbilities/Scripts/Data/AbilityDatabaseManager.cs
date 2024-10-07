@@ -21,13 +21,13 @@ public class AbilityDatabaseManager : MonoBehaviour
     private void InitializeAbilityDatabase()
     {
         Logger.Log("Initializing ABILITY DATABASE MANAGER OnAwake", this);
-        List<PlayerAbilities> activePlayerAbilities = PlayerAbilitiesManager.AbilityManagerInstance.ActiveAbilities;
+        List<AbilityBase> activePlayerAbilities = AbilitiesManager.AbilityManagerInstance.ActiveAbilities;
 
         for (int i = 0; i < abilityLibraryData.abilityStatsArray.Length; i++)
         {
             bool isFound = false;
 
-            foreach (PlayerAbilities ability in activePlayerAbilities)
+            foreach (AbilityBase ability in activePlayerAbilities)
             {
                 if (ability.name.Contains(abilityLibraryData.abilityStatsArray[i].playerAbilities.name))
                 {
@@ -54,7 +54,7 @@ public class AbilityDatabaseManager : MonoBehaviour
         Logger.Log("End Logging", this);
     }
 
-    public void RemoveAbilityFromDatabase(PlayerAbilities unlockedAbility)
+    public void RemoveAbilityFromDatabase(AbilityBase unlockedAbility)
     {
         Logger.Log($"Starting RemoveAbilityFromDatabase to possibly remove {unlockedAbility.AbilityName} from ability database.", this);
 

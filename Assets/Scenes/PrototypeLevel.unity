@@ -1102,6 +1102,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 886166555227453327, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
+      propertyPath: activateButtonOnClick
+      value: 
+      objectReference: {fileID: 55634838}
+    - target: {fileID: 886166555227453327, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
+      propertyPath: upgradeDatabaseManager
+      value: 
+      objectReference: {fileID: 1718078264}
     - target: {fileID: 1403223083362152845, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
       propertyPath: abilityHelperData.Array.data[0].meshSockets.Array.data[0].renderMesh
       value: 

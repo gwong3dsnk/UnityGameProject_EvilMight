@@ -20,15 +20,15 @@ public class AbilityCardChooserUI : MonoBehaviour
     private void OnEnable() 
     {
         levelManager.OnLevelUp += EnableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DisableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnUpgradeActivationCompletion += DisableAbilityChoiceCanvas;
+        AbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DisableAbilityChoiceCanvas;
+        UpgradeManager.UpgradeManagerInstance.OnUpgradeActivationCompletion += DisableAbilityChoiceCanvas;
     }
 
     private void OnDisable() 
     {
         levelManager.OnLevelUp -= EnableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DisableAbilityChoiceCanvas;
-        PlayerAbilitiesManager.AbilityManagerInstance.OnUpgradeActivationCompletion -= DisableAbilityChoiceCanvas;
+        AbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DisableAbilityChoiceCanvas;
+        UpgradeManager.UpgradeManagerInstance.OnUpgradeActivationCompletion -= DisableAbilityChoiceCanvas;
     }
 
     public void EnableAbilityChoiceCanvas(object sender, System.EventArgs e)

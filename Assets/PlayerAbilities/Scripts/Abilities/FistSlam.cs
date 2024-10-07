@@ -3,14 +3,14 @@ using UpgradeTypesDatabase =
     System.Collections.Generic.Dictionary<UpgradeTypes, 
     System.Collections.Generic.Queue<UpgradeLevelData>>>;
 
-public class FistSlam : PlayerAbilities
+public class FistSlam : AbilityBase
 {
     protected override void Awake()
     {
         base.Awake();
     }
 
-    public override void ActivateAbility(PlayerAbilities ability)
+    public override void ActivateAbility(AbilityBase ability)
     {
         activationDelay = 8.0f;
         Logger.Log($"Starting coroutine for {this.name}");

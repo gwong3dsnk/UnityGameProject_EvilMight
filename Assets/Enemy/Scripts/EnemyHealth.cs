@@ -21,12 +21,12 @@ public class EnemyHealth : HealthManagement
     private void OnParticleCollision(GameObject other)
     {
         Logger.LogWarning("[EnemyHealth] - Registering OnParticleCollision on Enemy unit", this);
-        PlayerAbilities ability = other.GetComponentInParent<PlayerAbilities>();
+        AbilityBase ability = other.GetComponentInParent<AbilityBase>();
 
         HandleTakeCollisionDamage(ability);
     }
 
-    public void HandleTakeCollisionDamage(PlayerAbilities ability)
+    public void HandleTakeCollisionDamage(AbilityBase ability)
     {
         if (ability != null)
         {
