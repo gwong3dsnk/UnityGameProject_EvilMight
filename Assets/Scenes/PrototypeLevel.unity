@@ -934,7 +934,7 @@ PrefabInstance:
       objectReference: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
     - target: {fileID: 2853289758988068880, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: playerHealth
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3564878389235060321, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_IsTrigger

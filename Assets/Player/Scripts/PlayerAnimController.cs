@@ -24,7 +24,17 @@ public class PlayerAnimController : MonoBehaviour
         AbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
     }
 
-    public void DetermineAbilityName(AbilityBase ability)
+    public void ProcessGetHitAnim()
+    {
+        SetAnimTrigger("getHitTrigger");
+    }
+
+    public void ProcessDeathAnim()
+    {
+        SetAnimTrigger("deathTrigger");
+    }
+
+    private void DetermineAbilityName(AbilityBase ability)
     {
         Logger.Log("[PlayerAnimController] - HandleAbilityPlayAnim heard in PlayerAnimController.DetermineAbilityName", this);
 

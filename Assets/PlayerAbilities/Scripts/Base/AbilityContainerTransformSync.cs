@@ -10,7 +10,10 @@ public class AbilityContainerTransformSync : MonoBehaviour
 
     private void Update() 
     {
-        transform.position = player.position;
-        transform.rotation = player.rotation;
+        if (player != null)
+        {
+            transform.position = player.position;
+            transform.rotation = player.rotation;
+        }
     }
 }

@@ -44,7 +44,7 @@ public class EnemyHealth : HealthManagement
         TakeDamage(damage);
     }
 
-    protected override void HandleDeath()
+    protected override void BeginPlayerDeathSequence()
     {
         TriggerDeathEvent();
     }

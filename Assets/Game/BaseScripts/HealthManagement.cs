@@ -21,7 +21,7 @@ public abstract class HealthManagement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            HandleDeath();
+            BeginPlayerDeathSequence();
         }
         else
         {
@@ -34,7 +34,7 @@ public abstract class HealthManagement : MonoBehaviour
         OnDeath?.Invoke(this, EventArgs.Empty);
     }
 
-    protected abstract void HandleDeath();
+    protected abstract void BeginPlayerDeathSequence();
 
     protected abstract void HandleStillAlive();
 }
