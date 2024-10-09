@@ -72,7 +72,7 @@ public class FingerShot : AbilityBase
         particleSystems[1].transform.rotation = renderMesh.transform.rotation;
     }
 
-    public override void HandlePlayAnimEventFX()
+    public override void HandlePlayAnimEventFX() 
     {
         Logger.Log("[FingerShot] - Attempting to play right and left particle systems.", this);
         if (isSwitchingFX)

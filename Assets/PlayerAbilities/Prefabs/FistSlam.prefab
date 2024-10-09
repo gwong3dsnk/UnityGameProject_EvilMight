@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Player_FistSlam
       objectReference: {fileID: 0}
+    - target: {fileID: 7151526369559866961, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90

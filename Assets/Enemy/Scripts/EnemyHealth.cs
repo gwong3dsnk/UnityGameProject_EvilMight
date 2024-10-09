@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
@@ -20,9 +19,7 @@ public class EnemyHealth : HealthManagement
 
     private void OnParticleCollision(GameObject other)
     {
-        Logger.LogWarning("[EnemyHealth] - Registering OnParticleCollision on Enemy unit", this);
         AbilityBase ability = other.GetComponentInParent<AbilityBase>();
-
         HandleTakeCollisionDamage(ability);
     }
 
@@ -30,7 +27,6 @@ public class EnemyHealth : HealthManagement
     {
         if (ability != null)
         {
-            Logger.Log($"[EnemyHealth] - {this.name} takes [{ability.Damage}] damage.", this);
             TakeDamage(ability.Damage);            
         }
         else

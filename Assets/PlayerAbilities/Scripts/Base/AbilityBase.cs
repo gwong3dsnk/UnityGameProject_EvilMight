@@ -63,11 +63,11 @@ public abstract class AbilityBase : MonoBehaviour
     //     }
     // }
 
-    protected IEnumerator ReplayAnimation()
-    {
-        Logger.Log("ReplayAnimation area");
-        yield return new WaitForSeconds(activationDelay);
-    }
+    // protected IEnumerator ReplayAnimation()
+    // {
+    //     Logger.Log("ReplayAnimation area");
+    //     yield return new WaitForSeconds(activationDelay);
+    // }
 
     public virtual void DeactivateAbility()
     {

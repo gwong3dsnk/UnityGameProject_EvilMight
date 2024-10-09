@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: AbilityData
   m_EditorClassIdentifier: 
   abilityStatsArray:
-  - abilityName: 2
-    abilityDescription: FIre off a single shot projectile
-    damage: 1
-    fireRate: 1
-    prefab: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
-    playerAbilities: {fileID: 732283309839090374, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
   - abilityName: 1
     abilityDescription: Flick away those annoying pests!
     damage: 1
     fireRate: 1
     prefab: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
     playerAbilities: {fileID: 864473063569061556, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
+  - abilityName: 0
+    abilityDescription: Crush all enemies near you into oblivion!
+    damage: 1
+    fireRate: 1
+    prefab: {fileID: 6043325753769299960, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
+    playerAbilities: {fileID: 8806668786151840947, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
