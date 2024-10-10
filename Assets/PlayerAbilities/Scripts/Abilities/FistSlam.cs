@@ -11,15 +11,16 @@ public class FistSlam : AbilityBase
     private ParticleSystem fxSystem;
     private Coroutine attackCoroutine;
     private bool isAttacking;
+    private float activationDelay = 10.0f;
 
     protected override void Awake()
     {
         base.Awake();
     }
 
-    public override void ActivateAbility(AbilityBase ability)
+    public override void ActivateAbility()
     {
-        activationDelay = 3.0f;
+        base.ActivateAbility();
         StartUpFistSlamAttackCoroutine();
     }
 
@@ -67,6 +68,11 @@ public class FistSlam : AbilityBase
         
         fxSystem.Play();
     }
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+        activationDelay = upgradeValue;
+    }    
 
     public override void DeactivateAbility()
     {

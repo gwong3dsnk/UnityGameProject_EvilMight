@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyStatsArray:
   - enemyClass: 1
     difficulty: 0
-    hp: 1
+    hp: 2
     atk: 1
     atkRadius: 10
     movementSpeed: 5

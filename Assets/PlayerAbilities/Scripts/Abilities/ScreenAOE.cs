@@ -7,6 +7,7 @@ using UpgradeTypesDatabase =
 public class ScreenAOE : AbilityBase
 {
     private Camera mainCamera;
+    // private float activationDelay = 10.0f;
 
     protected override void Awake()
     {
@@ -20,13 +21,17 @@ public class ScreenAOE : AbilityBase
         base.Awake();
     }    
 
-    public override void ActivateAbility(AbilityBase ability)
+    public override void ActivateAbility()
     {
-        activationDelay = 10.0f;
         isEffectRepeating = true;
     }
 
     public override void HandlePlayAnimEventFX()
+    {
+
+    }            
+
+    public override void UpgradeActivationDelay(float upgradeValue)
     {
 
     }            

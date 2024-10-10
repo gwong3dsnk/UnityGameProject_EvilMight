@@ -74,7 +74,7 @@ public class AbilitiesManager : MonoBehaviour
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
-            ability.ActivateAbility(ability);
+            ability.ActivateAbility();
         }
     }
 

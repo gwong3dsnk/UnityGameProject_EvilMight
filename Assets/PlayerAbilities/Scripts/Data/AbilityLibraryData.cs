@@ -8,8 +8,8 @@ public class AbilityLibraryData : ScriptableObject
     {
         public AbilityNames abilityName;
         public string abilityDescription;
-        public int damage;
-        public int fireRate;
+        public float damage;
+        public float fireRate;
         public GameObject prefab;
         public AbilityBase playerAbilities;
     }

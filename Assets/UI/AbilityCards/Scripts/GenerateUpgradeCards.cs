@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -9,20 +10,25 @@ using UpgradeTypesDatabase =
 public class GenerateUpgradeCards : MonoBehaviour
 {
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
+    // private List<UpgradeTypesDatabase> newUpgrades;
+    private List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
+    private AbilityNames randomAbilityName;
+    private UpgradeTypes randomUpgradeType;    
 
     public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards()
     {
         Logger.Log("Starting to generate upgrade cards.", this);
-        List<UpgradeTypesDatabase> newUpgrades = CreateUpgradesList();
+        chosenUpgradeList.Clear();
+        chosenUpgradeList = CreateUpgradesList();
 
         Logger.Log("Upgrade generation done. Start logging newUpgrades content:", this);
-        foreach (var item in newUpgrades) // log
+        foreach (var item in chosenUpgradeList) // log
         {
             Logger.Log($"newUpgrades Content - [{item.First().Key}, {item.First().Value.First().Key}]", this);
         }
         Logger.Log("Done logging newUpgrades content");
 
-        return newUpgrades;
+        return chosenUpgradeList;
     }
 
     /// <summary>
@@ -31,7 +37,7 @@ public class GenerateUpgradeCards : MonoBehaviour
     /// <returns></returns>
     private List<UpgradeTypesDatabase> CreateUpgradesList()
     {
-        List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
+        // List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
         int x = CalculateNumExistingUpgrades();
 
         if (x == 1 || x == 2)
@@ -66,21 +72,68 @@ public class GenerateUpgradeCards : MonoBehaviour
             {
                 Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> chosenTypes = new Dictionary<UpgradeTypes, Queue<UpgradeLevelData>>();
                 UpgradeTypesDatabase chosenUpgrade = new UpgradeTypesDatabase();
+                bool isAbilityUpgradeDup = true;
 
-                AbilityNames randomAbilityName = ChooseRandomAbilityName();
-                upgradeDatabaseManager.UpgradeDatabase.TryGetValue(randomAbilityName, out var typeDictionary);
+                while (isAbilityUpgradeDup)
+                {
+                    Logger.Log("Generating random ability and upgrade.", this);
+                    Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> typeDictionary = PickRandomAbilityAndUpgrade();
 
-                UpgradeTypes randomUpgradeType = ChooseRandomUpgradeType(typeDictionary);
-                typeDictionary.TryGetValue(randomUpgradeType, out var levelQueue);
+                    if (!DoesExistsInList())
+                    {
+                        typeDictionary.TryGetValue(randomUpgradeType, out var levelQueue);
+                        chosenTypes.Add(randomUpgradeType, levelQueue);
+                        chosenUpgrade.Add(randomAbilityName, chosenTypes);
+                        isAbilityUpgradeDup = false;
+                    }
+                }
 
-                chosenTypes.Add(randomUpgradeType, levelQueue);
-                chosenUpgrade.Add(randomAbilityName, chosenTypes);
                 chosenUpgradeList.Add(chosenUpgrade);
 
                 x++;
             }
 
             return chosenUpgradeList;
+        }
+    }
+
+    private Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> PickRandomAbilityAndUpgrade()
+    {
+        randomAbilityName = ChooseRandomAbilityName();
+        upgradeDatabaseManager.UpgradeDatabase.TryGetValue(randomAbilityName, out var typeDictionary);
+        randomUpgradeType = ChooseRandomUpgradeType(typeDictionary);
+        return typeDictionary;
+    }
+
+    private bool DoesExistsInList()
+    {
+        Logger.Log("Checking if exists in list.", this);
+
+        if (chosenUpgradeList.Count == 0)
+        {
+            Logger.Log("chosenUpgradeList is empty, returning false.", this);
+            return false;
+        }
+        else
+        {
+            Logger.Log("chosenUpgradeList is not empty, looping.", this);
+            foreach (var database in chosenUpgradeList)
+            {
+                if (database.TryGetValue(randomAbilityName, out var upgrades))
+                {
+                    foreach (var upgrade in upgrades)
+                    {
+                        if (randomUpgradeType == upgrade.Key)
+                        {
+                            Logger.Log("Matching Upgrade found, returning true.", this);
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            Logger.Log("No matching Upgrade found, returning false.", this);
+            return false;
         }
     }
 

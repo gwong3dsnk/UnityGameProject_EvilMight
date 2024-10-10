@@ -10,7 +10,7 @@ public class RockShield : AbilityBase
         base.Awake();
     }
 
-    public override void ActivateAbility(AbilityBase ability)
+    public override void ActivateAbility()
     {
         isEffectRepeating = false;
     }  
@@ -18,7 +18,12 @@ public class RockShield : AbilityBase
     public override void HandlePlayAnimEventFX()
     {
 
-    }            
+    }        
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+
+    }        
 
     public override void DeactivateAbility()
     {

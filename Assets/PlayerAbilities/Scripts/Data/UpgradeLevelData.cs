@@ -2,6 +2,6 @@
 public class UpgradeLevelData
 {
     public int level;
-    public int newValue;
+    public float newValue;
     public string description;
 }

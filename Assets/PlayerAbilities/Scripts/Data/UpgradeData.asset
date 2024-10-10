@@ -13,93 +13,63 @@ MonoBehaviour:
   m_Name: UpgradeData
   m_EditorClassIdentifier: 
   upgradeStatsData:
-  - parentAbility: 2
-    upgradeType:
-    - upgradeType: 0
-      levelData:
-      - level: 1
-        newValue: 2
-        description: Boost your single shot firerate!
-      - level: 2
-        newValue: 3
-        description: Boost your single shot firerate!
-      - level: 3
-        newValue: 4
-        description: Boost your single shot firerate!
-      - level: 4
-        newValue: 5
-        description: Boost your single shot firerate!
-    - upgradeType: 1
-      levelData:
-      - level: 1
-        newValue: 2
-        description: Boost your single shot damage!
-      - level: 2
-        newValue: 3
-        description: Boost your single shot damage!
-      - level: 3
-        newValue: 4
-        description: Boost your single shot damage!
-      - level: 4
-        newValue: 5
-        description: Boost your single shot damage!
-  - parentAbility: 0
-    upgradeType:
-    - upgradeType: 0
-      levelData:
-      - level: 1
-        newValue: 2
-        description: Boost your single shot firerate!
-      - level: 2
-        newValue: 3
-        description: Boost your single shot firerate!
-      - level: 3
-        newValue: 4
-        description: Boost your single shot firerate!
-      - level: 4
-        newValue: 5
-        description: Boost your single shot firerate!
-    - upgradeType: 1
-      levelData:
-      - level: 1
-        newValue: 2
-        description: Boost your single shot damage!
-      - level: 2
-        newValue: 3
-        description: Boost your single shot damage!
-      - level: 3
-        newValue: 4
-        description: Boost your single shot damage!
-      - level: 4
-        newValue: 5
-        description: Boost your single shot damage!
   - parentAbility: 1
     upgradeType:
-    - upgradeType: 0
+    - upgradeType: 2
       levelData:
       - level: 1
-        newValue: 2
-        description: Boost your single shot firerate!
+        newValue: 2.5
+        description: Increase FingerFlick attack speed!
       - level: 2
-        newValue: 3
-        description: Boost your single shot firerate!
+        newValue: 2
+        description: Increase FingerFlick attack speed!
       - level: 3
-        newValue: 4
-        description: Boost your single shot firerate!
+        newValue: 1.5
+        description: Increase FingerFlick attack speed!
       - level: 4
-        newValue: 5
-        description: Boost your single shot firerate!
+        newValue: 1
+        description: Increase FingerFlick attack speed!
     - upgradeType: 1
       levelData:
       - level: 1
         newValue: 2
-        description: Boost your single shot damage!
+        description: Boost FingerFlick damage!
       - level: 2
         newValue: 3
-        description: Boost your single shot damage!
+        description: Boost FingerFlick damage!
       - level: 3
         newValue: 4
-        description: Boost your single shot damage!
+        description: Boost FingerFlick damage!
       - level: 4
         newValue: 5
-        description: Boost your single shot damage!
+        description: Boost FingerFlick damage!
+  - parentAbility: 0
+    upgradeType:
+    - upgradeType: 2
+      levelData:
+      - level: 1
+        newValue: 2.5
+        description: Increase FistSlam attack speed!
+      - level: 2
+        newValue: 2
+        description: Increase FistSlam attack speed!
+      - level: 3
+        newValue: 1.5
+        description: Increase FistSlam attack speed!
+      - level: 4
+        newValue: 1
+        description: Increase FistSlam attack speed!
+    - upgradeType: 1
+      levelData:
+      - level: 1
+        newValue: 2
+        description: Increase FistSlam damage!
+      - level: 2
+        newValue: 3
+        description: Increase FistSlam damage!
+      - level: 3
+        newValue: 4
+        description: Increase FistSlam damage!
+      - level: 4
+        newValue: 5
+        description: Increase FistSlam damage!

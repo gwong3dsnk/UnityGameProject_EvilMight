@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class HealthManagement : MonoBehaviour
 {
     [SerializeField] protected int maxHealth = 1;
-    protected int currentHealth;
-    public int CurrentHealth => currentHealth;
+    protected float currentHealth;
+    public float CurrentHealth => currentHealth;
     public event EventHandler OnDeath;
 
     protected virtual void Start()
@@ -15,7 +13,7 @@ public abstract class HealthManagement : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    protected void TakeDamage(int amount)
+    protected void TakeDamage(float amount)
     {
         currentHealth -= amount;
 

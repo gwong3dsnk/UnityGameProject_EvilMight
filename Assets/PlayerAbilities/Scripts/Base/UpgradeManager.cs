@@ -10,8 +10,10 @@ using UpgradeTypesDatabase =
 public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
-    [SerializeField] ActivateButtonOnClick activateButtonOnClick;         
-    private UpgradeTypesDatabase activeUpgrades = new UpgradeTypesDatabase();
+    public UpgradeDatabaseManager UpgradeDatabaseManager => upgradeDatabaseManager;
+    [SerializeField] ActivateButtonOnClick activateButtonOnClick;
+    AbilityNames nameOfAbilityToUpgrade;
+    UpgradeTypesDatabase upgradeToActivate;
     public static UpgradeManager UpgradeManagerInstance { get; private set; }    
     public event EventHandler OnUpgradeActivationCompletion;
 
@@ -34,65 +36,65 @@ public class UpgradeManager : MonoBehaviour
 
     private void OnEnable()
     {
-        activateButtonOnClick.OnUpgradeChosen += AddAbilityUpgrade;        
+        activateButtonOnClick.OnUpgradeChosen += BeginUpgradeActivation;        
     }
 
     private void OnDisable()
     {
-        activateButtonOnClick.OnUpgradeChosen -= AddAbilityUpgrade;        
-    }
-
-    public void AddAbilityUpgrade(UpgradeTypesDatabase newUpgrade)
-    {
-        Logger.Log("Starting AddAbilityUpgrade", this);
-        Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
-        AbilityNames newAbilityName = newUpgrade.First().Key;
-        UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
-        Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
-
-        if (activeUpgrades.ContainsKey(newAbilityName))
-        {
-            if (!activeUpgrades[newAbilityName].ContainsKey(newUpgradeType))
-            {
-                Logger.Log("Ability exists in ActiveUpgrades, upgrade type doesn't.  Adding only upgrade entry.", this); 
-                activeUpgrades[newAbilityName].Add(newUpgradeType, newQueue);
-            }
-            else
-            {
-                Logger.Log("Ability exists in ActiveUpgrades, upgrade type exists.  Don't need to do anything.", this);
-            }
-        }
-        else
-        {
-            Logger.Log("Ability DOES NOT exist in ActiveUpgrades.  Adding ability & upgrade entry.", this); 
-            activeUpgrades.Add(newAbilityName, newUpgrade.First().Value);
-        }
-
-        Logger.Log($"Upgrade Added: [{newUpgrade.First().Key}] + [{newUpgrade.First().Value.First().Key}]");
-
-        BeginUpgradeActivation(newUpgrade);
-
-        // Remove the upgrade LevelData from the UpgradeDatabase so it won't be displayed again on future level-ups.
-        upgradeToDequeue.Add(newAbilityName, newUpgradeType);
-        upgradeDatabaseManager.ProcessDequeue(upgradeToDequeue);
-
-        OnUpgradeActivationCompletion?.Invoke(this, EventArgs.Empty);
+        activateButtonOnClick.OnUpgradeChosen -= BeginUpgradeActivation;
     }
 
     public void BeginUpgradeActivation(UpgradeTypesDatabase newUpgrade)
     {
         Logger.Log("------------------------------------------------", this);
         Logger.Log("Starting BeginUpgradeActivation", this);
+
+        nameOfAbilityToUpgrade = newUpgrade.First().Key;
+        upgradeToActivate = newUpgrade;
+
+        CheckIfAbilityIsActive(upgradeToActivate);
+        SendDataToDequeue(upgradeToActivate);
+        InvokeUpgradeActivationCompletionEvent();
+    }
+
+    private void CheckIfAbilityIsActive(UpgradeTypesDatabase upgradeToActivate)
+    {
         AbilitiesManager abilityManager = GetComponent<AbilitiesManager>();
-        AbilityNames newAbilityName = newUpgrade.First().Key;
+        bool isAbilityFound = true;
 
         foreach (AbilityBase ability in abilityManager.ActiveAbilities)
         {
-            if (ability.AbilityName == newAbilityName)
+            if (ability.AbilityName == nameOfAbilityToUpgrade)
             {
                 Logger.Log("Ability match found in activeAbilities. Calling ActivateUpgrade", this);
-                ability.ActivateUpgrade(newUpgrade);
+                ability.ActivateUpgrade(upgradeToActivate);
+                break;
+            }
+            else
+            {
+                isAbilityFound = false;
             }
         }
-    }    
+
+        if (!isAbilityFound)
+        {
+            Logger.LogError("No matching ability has been found in ActiveAbilities.", this);
+        }
+    }
+
+    private void SendDataToDequeue(UpgradeTypesDatabase upgradeToActivate)
+    {
+        Logger.Log("Sending level data to be dequeued.", this);
+        Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue = new Dictionary<AbilityNames, UpgradeTypes>();
+        UpgradeTypes upgradeType = upgradeToActivate.First().Value.First().Key;
+
+        // Remove the upgrade LevelData from the UpgradeDatabase so it won't be displayed again on future level-ups.
+        upgradeToDequeue.Add(nameOfAbilityToUpgrade, upgradeType);
+        upgradeDatabaseManager.ProcessDequeue(upgradeToDequeue);
+    }
+
+    private void InvokeUpgradeActivationCompletionEvent()
+    {
+        OnUpgradeActivationCompletion?.Invoke(this, EventArgs.Empty);
+    }
 }

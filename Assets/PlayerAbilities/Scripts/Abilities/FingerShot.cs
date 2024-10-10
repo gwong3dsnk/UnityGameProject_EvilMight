@@ -18,7 +18,7 @@ public class FingerShot : AbilityBase
         base.Awake();
     }
 
-    public override void ActivateAbility(AbilityBase ability)
+    public override void ActivateAbility()
     {
         abilityHelperData = GetComponentInParent<AbilityHelper>().AbilityHelperData;
 
@@ -28,8 +28,9 @@ public class FingerShot : AbilityBase
         }
 
         EnableVariantHandMeshes();
+        base.ActivateAbility();
         playerSockets = abilityHelperData[1].meshSockets[0].meshSockets;
-        HandleAbilityParticleSystem(ability);
+        HandleAbilityParticleSystem();
         Logger.Log("[FingerShot] - Invoking event to play animation.", this);
         AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
     }
@@ -46,16 +47,16 @@ public class FingerShot : AbilityBase
         renderMesh.transform.rotation = renderMesh.transform.rotation;
     }
 
-    private void HandleAbilityParticleSystem(AbilityBase ability)
+    private void HandleAbilityParticleSystem()
     {
-        GetAbilityParticleSystem(ability);
+        GetAbilityParticleSystem();
         SetParticleSystemTransforms();
     }
 
-    private void GetAbilityParticleSystem(AbilityBase ability)
+    private void GetAbilityParticleSystem()
     {
         // Retrieve the runtime gameobject's particle system component.
-        particleSystems = ability.gameObject.GetComponentsInChildren<ParticleSystem>();
+        particleSystems = GetComponentsInChildren<ParticleSystem>();
         if (particleSystems.Length == 0)
         {
             Logger.LogWarning("[FingerShot] - No particle system gameobject components found.", this);
@@ -108,6 +109,11 @@ public class FingerShot : AbilityBase
         particleSystems[1].Play();   
         isSwitchingFX = false;
     }
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+        Logger.Log($"No need to update activationDelay for {this.name}");
+    }    
 
     public override void DeactivateAbility()
     {

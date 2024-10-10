@@ -11,22 +11,17 @@ public abstract class AbilityBase : MonoBehaviour
 {
     #region Fields and Properties
     [SerializeField] protected AbilityLibraryData abilityData; 
-    protected float activationDelay;
     protected bool isEffectRepeating = false;
     protected GameObject[] playerSockets;
     protected Vector3 enemyPosition = new Vector3();  
     // Below SerializeFields are just for reference during runtime, not to be set in Inspector.
     [SerializeField] protected AbilityNames abilityName;
     public AbilityNames AbilityName => abilityName;
-    [SerializeField] protected string abilityDescription;
-    public string AbilityDescription => abilityDescription;
-    [SerializeField] protected int damage;
-    public int Damage { get => damage; set => damage = value; }
-    [SerializeField] protected int fireRate;
-    public int FireRate => fireRate;
-    [SerializeField] protected GameObject prefab;
-    public GameObject Prefab => prefab;
-    [SerializeField] protected AbilityBase playerAbilities;
+    [SerializeField] protected float damage;
+    public float Damage { get => damage; set => damage = value; }
+    [SerializeField] protected float fireRate;
+    public float FireRate => fireRate;
+    [SerializeField] protected float attackSpeed;
     #endregion
 
     protected virtual void Awake()
@@ -34,9 +29,14 @@ public abstract class AbilityBase : MonoBehaviour
         InitializeAbilityData();
     }
 
-    public abstract void ActivateAbility(AbilityBase ability);
+    public virtual void ActivateAbility()
+    {
+        UpgradeManager.UpgradeManagerInstance.UpgradeDatabaseManager.UpdateUpgradeDatabase();
+    }
 
     public abstract void HandlePlayAnimEventFX();
+
+    public abstract void UpgradeActivationDelay(float upgradeValue);
 
     // protected virtual void GetAbilityParticleSystem(PlayerAbilities ability)
     // {
@@ -86,31 +86,46 @@ public abstract class AbilityBase : MonoBehaviour
             if (transform.name.Contains(stats.abilityName.ToString()))
             {
                 abilityName = stats.abilityName;
-                abilityDescription = stats.abilityDescription;
                 damage = stats.damage;
                 fireRate = stats.fireRate;
-                prefab = stats.prefab;
-                playerAbilities = stats.playerAbilities;
             }
         }        
     }    
 
-    public virtual void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
+    public virtual void ActivateUpgrade(UpgradeTypesDatabase upgradeToActivate)
     {
         Logger.Log($"Activating Upgrade for {this.name}.", this);
-        UpgradeTypes newUpgradeType = newUpgrade.First().Value.First().Key;
-        Queue<UpgradeLevelData> newQueue = newUpgrade.First().Value.First().Value;
-        int newValue = newQueue.Peek().newValue;
         ParticleSystem abilityFX = GetComponentInChildren<ParticleSystem>();
+        UpgradeTypes upgradeType = upgradeToActivate.First().Value.First().Key;
+        Queue<UpgradeLevelData> levelQueueData = upgradeToActivate.First().Value.First().Value;
+        float upgradeValue = levelQueueData.Peek().newValue;
         
-        if (newUpgradeType == UpgradeTypes.DamageUp)
+        switch (upgradeType)
         {
-            damage = newValue;
+            case UpgradeTypes.DamageUp:
+                damage = upgradeValue;
+                break;
+            case UpgradeTypes.FireRateUp:
+                ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
+                emissionModule.rateOverTime = fireRate = upgradeValue;
+                break;
+            case UpgradeTypes.AttackSpeed:
+                UpgradeActivationDelay(upgradeValue);
+                break;
         }
-        else if (newUpgradeType == UpgradeTypes.FireRateUp)
-        {
-            ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
-            emissionModule.rateOverTime = newValue;
-        }   
+
+        // if (upgradeType == UpgradeTypes.DamageUp)
+        // {
+        //     damage = upgradeValue;
+        // }
+        // else if (upgradeType == UpgradeTypes.FireRateUp)
+        // {
+        //     ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
+        //     emissionModule.rateOverTime = fireRate = upgradeValue;
+        // }   
+        // else if (upgradeType == UpgradeTypes.AttackSpeed)
+        // {
+        //     UpgradeActivationDelay(upgradeValue);
+        // }
     }
 }
