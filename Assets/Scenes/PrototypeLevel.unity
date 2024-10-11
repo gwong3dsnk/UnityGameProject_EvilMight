@@ -721,6 +721,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6510556057288534182, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1420380769 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 603532028455081025, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+  m_PrefabInstance: {fileID: 109696816220360735}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1557583892 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9135381712578825787, guid: 92e927e7ce499004dace66c30462d289, type: 3}
@@ -751,6 +756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4886130924095903059, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: smallHandsAnimator
+      value: 
+      objectReference: {fileID: 1420380769}
     - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerHealth
       value: 
@@ -982,6 +991,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 886166555227453327, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
+      propertyPath: smallHandsAnimator
+      value: 
+      objectReference: {fileID: 1420380769}
     - target: {fileID: 886166555227453327, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
       propertyPath: activateButtonOnClick
       value: 

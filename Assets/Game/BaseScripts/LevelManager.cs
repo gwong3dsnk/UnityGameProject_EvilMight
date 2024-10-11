@@ -1,18 +1,32 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] PlayerHealth playerHealth;
-    [SerializeField] private float onLevelUpDelay = 1.0f;
-    // Unserialize below later.
+    #region Fields and Properties
+    // SerializedFields
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField]
+    [Tooltip("Delay in seconds to wait before enabling ability choice canvas UI.")] 
+    private float onLevelUpDelay = 1.0f;
+
+    // Serialized for testing purposes only
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXP = 0;
     [SerializeField] private int excessXP;
+
+    // Event
     public event EventHandler OnLevelUp;
+
+    // Debug
+    #if UNITY_EDITOR
+    [Header("DEBUG")]
+    [SerializeField] private int expOverride = 0;
+    #endif
+    #endregion
+
 
     private void Awake()
     {
@@ -34,12 +48,29 @@ public class LevelManager : MonoBehaviour
         currentXP += amount;
         Logger.Log($"New Current Exp (AddXP) - {currentXP}", this);
 
+        #if UNITY_EDITOR
+        if (expOverride > 0)
+        {
+            levelXPThreshold = expOverride;
+        }
+        #endif
+
         if (currentXP >= levelXPThreshold)
         {
             CalculateExcessXP();
             LevelUp();
         }
     }
+
+    private void CalculateXPThreshold()
+    {
+        levelXPThreshold = (currentLevel * 10) - 5;
+    }    
+
+    private void CalculateExcessXP()
+    {
+        excessXP = currentXP - levelXPThreshold;
+    }    
 
     private void LevelUp()
     {
@@ -56,16 +87,6 @@ public class LevelManager : MonoBehaviour
         Logger.Log("Processing player level-up complete.  Freezing time.", this);
         Logger.Log("------------------------------------------------", this);
         StartCoroutine(DelayInvokingOnLevelUpEvent());
-    }
-
-    private void CalculateXPThreshold()
-    {
-        levelXPThreshold = (currentLevel * 10) - 5;
-    }
-
-    private void CalculateExcessXP()
-    {
-        excessXP = currentXP - levelXPThreshold;
     }
 
     private IEnumerator DelayInvokingOnLevelUpEvent()

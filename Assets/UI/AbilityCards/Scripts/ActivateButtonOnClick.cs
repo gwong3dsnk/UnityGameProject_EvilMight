@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,18 +9,25 @@ using UpgradeTypesDatabase =
 
 public class ActivateButtonOnClick : MonoBehaviour
 {
-    #region Debug
-    [SerializeField] GameObject prefabOverride;
-    [SerializeField] bool enableDebugMode;
-    #endregion
+    #region Fields and Properties
+    // Public Properties / Events
+    public GameObject SelectedAbilityPrefab => selectedAbilityPrefab;
+    public event EventHandler OnAbilityChosen;
+    public event Action<UpgradeTypesDatabase> OnUpgradeChosen;
 
+    // Private Fields
     private Button activationButton;
     private UpgradeTypesDatabase selectedUpgrade = new UpgradeTypesDatabase();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
     private GameObject selectedAbilityPrefab;
-    public GameObject SelectedAbilityPrefab => selectedAbilityPrefab;
-    public event EventHandler OnAbilityChosen;
-    public event Action<UpgradeTypesDatabase> OnUpgradeChosen;
+
+    // Debug
+    #if UNITY_EDITOR
+    [Header("DEBUG")]
+    [SerializeField] GameObject prefabOverride;
+    [SerializeField] bool enableDebugMode;
+    #endif    
+    #endregion
 
     private void Start()
     {
@@ -60,7 +66,15 @@ public class ActivateButtonOnClick : MonoBehaviour
         if (selectedAbility != null)
         {
             Logger.Log($"Ability Chosen - {selectedAbility.abilityName}");
-            selectedAbilityPrefab = DebugAbilityOverride(selectedAbility);
+            selectedAbilityPrefab = selectedAbility.prefab;
+
+            #if UNITY_EDITOR            
+            if (prefabOverride != null)
+            {
+                selectedAbilityPrefab = prefabOverride;
+            }
+            #endif
+
             OnAbilityChosen?.Invoke(this, EventArgs.Empty);
         }
         else if (selectedUpgrade.Count > 0)
@@ -69,22 +83,4 @@ public class ActivateButtonOnClick : MonoBehaviour
             OnUpgradeChosen?.Invoke(selectedUpgrade);
         }
     }
-
-    #region Debug
-    private GameObject DebugAbilityOverride(AbilityLibraryData.AbilityStats selectedAbility)
-    {
-        GameObject abilityPrefab = null;
-
-        if (enableDebugMode)
-        {
-            abilityPrefab = prefabOverride;
-        }
-        else
-        {
-            abilityPrefab = selectedAbility.prefab;
-        }    
-
-        return abilityPrefab;    
-    }    
-    #endregion
 }

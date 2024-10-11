@@ -9,11 +9,16 @@ using UpgradeTypesDatabase =
 public class UpgradeDatabaseManager : MonoBehaviour
 {
     [SerializeField] UpgradeLibraryData upgradeLibraryData;
-    private UpgradeTypesDatabase upgradeDatabase = new UpgradeTypesDatabase();
     public UpgradeTypesDatabase UpgradeDatabase => upgradeDatabase;
+    private UpgradeTypesDatabase upgradeDatabase = new UpgradeTypesDatabase();
 
     private void Start()
     {
+        if (upgradeLibraryData == null)
+        {
+            Logger.LogError("[UpgradeDatabaseManager] - Missing reference to UpgradeLibraryData", this);
+        }
+
         UpdateUpgradeDatabase();
     }    
 

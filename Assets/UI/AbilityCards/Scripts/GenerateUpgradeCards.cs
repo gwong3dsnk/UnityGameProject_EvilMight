@@ -79,7 +79,7 @@ public class GenerateUpgradeCards : MonoBehaviour
                     Logger.Log("Generating random ability and upgrade.", this);
                     Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> typeDictionary = PickRandomAbilityAndUpgrade();
 
-                    if (!DoesExistsInList())
+                    if (!DoesDataAlreadyExistInList())
                     {
                         typeDictionary.TryGetValue(randomUpgradeType, out var levelQueue);
                         chosenTypes.Add(randomUpgradeType, levelQueue);
@@ -105,7 +105,7 @@ public class GenerateUpgradeCards : MonoBehaviour
         return typeDictionary;
     }
 
-    private bool DoesExistsInList()
+    private bool DoesDataAlreadyExistInList()
     {
         Logger.Log("Checking if exists in list.", this);
 

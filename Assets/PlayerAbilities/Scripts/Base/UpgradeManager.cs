@@ -9,13 +9,22 @@ using UpgradeTypesDatabase =
 
 public class UpgradeManager : MonoBehaviour
 {
-    [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
-    public UpgradeDatabaseManager UpgradeDatabaseManager => upgradeDatabaseManager;
-    [SerializeField] ActivateButtonOnClick activateButtonOnClick;
-    AbilityNames nameOfAbilityToUpgrade;
-    UpgradeTypesDatabase upgradeToActivate;
+    #region Fields and Properties
+    // Serialized Fields
+    [SerializeField] private UpgradeDatabaseManager upgradeDatabaseManager;
+    [SerializeField] private Animator smallHandsAnimator;
+    [SerializeField] private ActivateButtonOnClick activateButtonOnClick;
+
+    // Public Fields / Properties / Events
     public static UpgradeManager UpgradeManagerInstance { get; private set; }    
+    public UpgradeDatabaseManager UpgradeDatabaseManager => upgradeDatabaseManager;
+    public Animator SmallHandsAnimator => smallHandsAnimator;
     public event EventHandler OnUpgradeActivationCompletion;
+
+    // Private Fields / Properties / Events
+    private AbilityNames nameOfAbilityToUpgrade;
+    private UpgradeTypesDatabase upgradeToActivate;
+    #endregion
 
     private void Awake()
     {
@@ -28,10 +37,15 @@ public class UpgradeManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (upgradeDatabaseManager == null)
+        if (upgradeDatabaseManager == null || activateButtonOnClick == null)
         {
-            Logger.LogError("[UpgradeManager] - Missing reference to upgrade database manager scripts.", this);
-        }        
+            Logger.LogError("[UpgradeManager] - Missing reference to either ActivateButtonOnClick or UpgradeDatabaseManager scripts.", this);
+        }
+
+        if (smallHandsAnimator == null)
+        {
+            Logger.LogError("[UpgradeManager] - Missing reference to small hands Animator script.", this);
+        }
     }
 
     private void OnEnable()
@@ -68,6 +82,7 @@ public class UpgradeManager : MonoBehaviour
             {
                 Logger.Log("Ability match found in activeAbilities. Calling ActivateUpgrade", this);
                 ability.ActivateUpgrade(upgradeToActivate);
+                isAbilityFound = true;
                 break;
             }
             else
