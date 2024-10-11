@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemyHealth : HealthManagement
 {
     private Enemy enemy;
+    private bool isEnemyDeathProcessed = false;
 
     protected override void Start()
     {
@@ -27,7 +28,7 @@ public class EnemyHealth : HealthManagement
     {
         if (ability != null)
         {
-            TakeDamage(ability.Damage);            
+            TakeDamage(ability.Damage);
         }
         else
         {
@@ -35,14 +36,13 @@ public class EnemyHealth : HealthManagement
         }
     }
 
-    public void ApplyAOEDamage(int damage)
-    {
-        TakeDamage(damage);
-    }
-
     protected override void BeginPlayerDeathSequence()
     {
-        TriggerDeathEvent();
+        if (!isEnemyDeathProcessed)
+        {
+            InvokeOnDeathEvent();
+            isEnemyDeathProcessed = true;
+        }
     }
 
     protected override void HandleStillAlive()

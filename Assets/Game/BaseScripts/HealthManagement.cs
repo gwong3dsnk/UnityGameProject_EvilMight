@@ -27,7 +27,7 @@ public abstract class HealthManagement : MonoBehaviour
         }
     }
 
-    protected void TriggerDeathEvent()
+    protected void InvokeOnDeathEvent()
     {
         OnDeath?.Invoke(this, EventArgs.Empty);
     }

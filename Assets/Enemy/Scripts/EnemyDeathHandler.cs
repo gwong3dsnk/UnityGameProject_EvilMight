@@ -6,12 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyDeathHandler : MonoBehaviour
 {
+    public event EventHandler OnEnemyDeactivation; 
     private Enemy enemy;
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
     private LevelManager levelManager;
     private float deactivationDelay = 1.5f;
-    public event EventHandler OnEnemyDeactivation; 
 
     private void Awake()
     {
