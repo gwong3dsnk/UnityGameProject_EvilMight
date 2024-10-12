@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Prevent player from strange rotation behavior
+            // Prevent player from strange continuous rotation behavior
             rb.angularVelocity = Vector3.zero;
         }
     }

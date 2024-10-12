@@ -34,7 +34,7 @@ public abstract class AbilityBase : MonoBehaviour
 
     public virtual void ActivateAbility()
     {
-        UpgradeManager.UpgradeManagerInstance.UpgradeDatabaseManager.UpdateUpgradeDatabase();
+        UpgradeManager.UpgradeManagerInstance.UpgradeDatabaseManager.CheckIfUpgradesInDatabase();
     }
 
     public abstract void HandlePlayAnimEventFX();

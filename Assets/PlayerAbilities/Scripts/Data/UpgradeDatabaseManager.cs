@@ -19,12 +19,11 @@ public class UpgradeDatabaseManager : MonoBehaviour
             Logger.LogError("[UpgradeDatabaseManager] - Missing reference to UpgradeLibraryData", this);
         }
 
-        UpdateUpgradeDatabase();
+        CheckIfUpgradesInDatabase();
     }    
 
-    public void UpdateUpgradeDatabase()
+    public void CheckIfUpgradesInDatabase()
     {
-        Logger.Log("[UpgradeDatabaseManager] - Starting to update UpgradeDatabase.", this);
         foreach (var ability in AbilitiesManager.AbilityManagerInstance.ActiveAbilities)
         {
             Logger.Log($"[UpgradeDatabaseManager] - Processing upgrade database addition for active ability [{ability.AbilityName}]", this);
@@ -34,22 +33,9 @@ public class UpgradeDatabaseManager : MonoBehaviour
             {
                 AddAbilityUpgradesToDatabase(ability);
             }
-            else
-            {
-                CleanEmptyLevelQueueData(ability, value);
-            }
         }
 
-        Logger.Log("[UpgradeDatabaseManager] - Finished updating UpgradeDatabase", this);
-        Logger.Log("[UpgradeDatabaseManager] - UpgradeDatabase Contents:", this);
-        foreach (var item in upgradeDatabase)
-        {
-            foreach(var kvp in item.Value)
-            {
-                Logger.Log($"[UpgradeDatabaseManager] - Ability - {item.Key}, Upgrade - {kvp.Key}", this);
-            }
-        }
-        Logger.Log("[UpgradeDatabaseManager] - End Logging", this);         
+        Logger.Log("[UpgradeDatabaseManager] - Finished updating UpgradeDatabase", this);       
     }
 
     private void AddAbilityUpgradesToDatabase(AbilityBase ability)
@@ -81,30 +67,44 @@ public class UpgradeDatabaseManager : MonoBehaviour
         }
     }
 
-    private void CleanEmptyLevelQueueData(AbilityBase ability, Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> value)
+    private void CleanEmptyLevelQueueData(Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> value)
     {
-        Logger.Log($"[UpgradeDatabaseManager] - Active ability [{ability.AbilityName}] is in database.", this);
         foreach (var kvp in value)
         {
-            Logger.Log($"[UpgradeDatabaseManager] - Checking [{ability.AbilityName}], [{kvp.Key}] for empty Queue count.", this);
             if (kvp.Value.Count == 0)
             {
                 Logger.Log("[UpgradeDatabaseManager] - Empty queue count found.  Removing ability's upgradeType entry.", this);
-                value.Remove(kvp.Key);
+                value.Remove(kvp.Key); // Need to remove from the upgradeDatabase.
             }
         }
     }    
 
-    public void ProcessDequeue(Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue)
+    public void  ProcessDequeue(Dictionary<AbilityNames, UpgradeTypes> upgradeToDequeue)
     {
         if (upgradeToDequeue.Count != 0)
         {
             Logger.Log($"[UpgradeDatabaseManager] - Starting UpgradeDatabaseManager.ProcessDequeue", this);
-            upgradeDatabase.TryGetValue(upgradeToDequeue.First().Key, out var typeDictionary);
-            typeDictionary.TryGetValue(upgradeToDequeue.First().Value, out var levelData);
-            Logger.Log($"[UpgradeDatabaseManager] - First Queue item BEFORE removal - {levelData.Peek()}");
-            levelData.Dequeue();
-            Logger.Log($"[UpgradeDatabaseManager] - First Queue item AFTER removal - {levelData.Peek()}");
+            AbilityNames abilityName = upgradeToDequeue.First().Key;
+            UpgradeTypes upgradeType = upgradeToDequeue.First().Value;
+
+            if (upgradeDatabase.TryGetValue(abilityName, out var typeDictionary))
+            {
+                if (typeDictionary.TryGetValue(upgradeType, out var levelData))
+                {
+                    levelData.Dequeue();
+
+                    // Clean up UpgradeDatabase if upgrade is fully unlocked.
+                    if (levelData.Count == 0)
+                    {
+                        typeDictionary.Remove(upgradeType);
+
+                        if (typeDictionary.Count == 0)
+                        {
+                            upgradeDatabase.Remove(abilityName);
+                        }
+                    }
+                }
+            }
         }
     }    
 }

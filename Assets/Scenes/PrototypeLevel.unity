@@ -761,6 +761,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1420380769}
     - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: expOverride
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1696630776}
@@ -913,6 +917,10 @@ PrefabInstance:
     - target: {fileID: 2853289758988068880, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: playerHealth
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3491606287055040149, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: m_Constraints
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 3564878389235060321, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_IsTrigger
@@ -1173,6 +1181,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 989551062267389654, guid: b2211741f75ad234fa3bf2875ac13bf3, type: 3}
+      propertyPath: m_NavMeshData
+      value: 
+      objectReference: {fileID: 23800000, guid: d66e4b050881af642b22f120e5fc6187, type: 2}
     - target: {fileID: 4336891066869193079, guid: b2211741f75ad234fa3bf2875ac13bf3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -512

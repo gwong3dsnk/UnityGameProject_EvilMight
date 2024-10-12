@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -10,23 +9,22 @@ using UpgradeTypesDatabase =
 public class GenerateUpgradeCards : MonoBehaviour
 {
     [SerializeField] UpgradeDatabaseManager upgradeDatabaseManager;
-    // private List<UpgradeTypesDatabase> newUpgrades;
     private List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
     private AbilityNames randomAbilityName;
-    private UpgradeTypes randomUpgradeType;    
+    private UpgradeTypes randomUpgradeType;
 
     public List<UpgradeTypesDatabase> StartGeneratingUpgradeCards()
     {
-        Logger.Log("Starting to generate upgrade cards.", this);
+        Logger.Log($"[{this.name}] - Starting to generate upgrade cards.", this);
         chosenUpgradeList.Clear();
         chosenUpgradeList = CreateUpgradesList();
 
-        Logger.Log("Upgrade generation done. Start logging newUpgrades content:", this);
-        foreach (var item in chosenUpgradeList) // log
-        {
-            Logger.Log($"newUpgrades Content - [{item.First().Key}, {item.First().Value.First().Key}]", this);
-        }
-        Logger.Log("Done logging newUpgrades content");
+        // Logger.Log($"[{this.name}] - Upgrade generation done. Start logging chosenUpgradeList content:", this);
+        // foreach (var item in chosenUpgradeList) // log
+        // {
+        //     Logger.Log($"[{this.name}] - chosenUpgradeList Content - [{item.First().Key}, {item.First().Value.First().Key}]", this);
+        // }
+        // Logger.Log($"[{this.name}] - Done logging newUpgrades content");
 
         return chosenUpgradeList;
     }
@@ -37,12 +35,11 @@ public class GenerateUpgradeCards : MonoBehaviour
     /// <returns></returns>
     private List<UpgradeTypesDatabase> CreateUpgradesList()
     {
-        // List<UpgradeTypesDatabase> chosenUpgradeList = new List<UpgradeTypesDatabase>();
         int x = CalculateNumExistingUpgrades();
 
         if (x == 1 || x == 2)
         {
-            Logger.Log("Only 1 or 2 valid upgrades found.  Storing data into a list and returning.", this);
+            // Logger.Log($"[{this.name}] - Only 1 or 2 valid upgrades found.  Storing data into a list and returning.", this);
             // Less than 3 upgrades exist, store into list and return
             foreach (var kvp in upgradeDatabaseManager.UpgradeDatabase)
             {
@@ -61,12 +58,12 @@ public class GenerateUpgradeCards : MonoBehaviour
         }
         else if (x == 3)
         {
-            Logger.LogError("Upgrade database is empty.");
+            Logger.LogError($"[{this.name}] - Upgrade database is empty.");
             return null;
         }
         else
         {
-            Logger.Log("More than 3 upgrades available.  Starting process to choose 3 random upgrades", this);
+            Logger.Log($"[{this.name}] - More than 3 upgrades available.  Starting process to choose 3 random upgrades", this);
 
             while (x < 3)
             {
@@ -76,7 +73,7 @@ public class GenerateUpgradeCards : MonoBehaviour
 
                 while (isAbilityUpgradeDup)
                 {
-                    Logger.Log("Generating random ability and upgrade.", this);
+                    Logger.Log($"[{this.name}] - Generating random ability and upgrade.", this);
                     Dictionary<UpgradeTypes, Queue<UpgradeLevelData>> typeDictionary = PickRandomAbilityAndUpgrade();
 
                     if (!DoesDataAlreadyExistInList())
@@ -107,16 +104,16 @@ public class GenerateUpgradeCards : MonoBehaviour
 
     private bool DoesDataAlreadyExistInList()
     {
-        Logger.Log("Checking if exists in list.", this);
+        Logger.Log($"[{this.name}] - Checking if exists in list.", this);
 
         if (chosenUpgradeList.Count == 0)
         {
-            Logger.Log("chosenUpgradeList is empty, returning false.", this);
+            Logger.Log($"[{this.name}] - chosenUpgradeList is empty, returning false.", this);
             return false;
         }
         else
         {
-            Logger.Log("chosenUpgradeList is not empty, looping.", this);
+            Logger.Log($"[{this.name}] - chosenUpgradeList is not empty, looping.", this);
             foreach (var database in chosenUpgradeList)
             {
                 if (database.TryGetValue(randomAbilityName, out var upgrades))
@@ -125,14 +122,14 @@ public class GenerateUpgradeCards : MonoBehaviour
                     {
                         if (randomUpgradeType == upgrade.Key)
                         {
-                            Logger.Log("Matching Upgrade found, returning true.", this);
+                            Logger.Log($"[{this.name}] - Matching Upgrade found, returning true.", this);
                             return true;
                         }
                     }
                 }
             }
 
-            Logger.Log("No matching Upgrade found, returning false.", this);
+            Logger.Log($"[{this.name}] - No matching Upgrade found, returning false.", this);
             return false;
         }
     }
