@@ -43,3 +43,33 @@ MonoBehaviour:
       - level: 4
         newValue: 3
         description: Increase FingerFlick attack speed!
+  - parentAbility: 2
+    upgradeType:
+    - upgradeType: 3
+      levelData:
+      - level: 1
+        newValue: 1.25
+        description: Increase FingerFlick attack speed!
+      - level: 2
+        newValue: 1.5
+        description: Increase FingerFlick attack speed!
+      - level: 3
+        newValue: 1.75
+        description: Increase FingerFlick attack speed!
+      - level: 4
+        newValue: 2
+        description: Increase FingerFlick attack speed!
+    - upgradeType: 1
+      levelData:
+      - level: 1
+        newValue: 1.5
+        description: Increase FingerFlick attack speed!
+      - level: 2
+        newValue: 2
+        description: Increase FingerFlick attack speed!
+      - level: 3
+        newValue: 2.5
+        description: Increase FingerFlick attack speed!
+      - level: 4
+        newValue: 3
+        description: Increase FingerFlick attack speed!

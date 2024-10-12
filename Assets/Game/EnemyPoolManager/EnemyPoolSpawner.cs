@@ -18,7 +18,7 @@ public class EnemyPoolSpawner : MonoBehaviour
 
         if (enemyPool == null)
         {
-            Logger.LogError("Missing EnemyPool script component.", this);
+            Logger.LogError($"{this.name} - Missing EnemyPool script component.", this);
         }
 
         if (GridManager.GridManagerInstance != null)
@@ -27,7 +27,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Missing reference to GridManager singleton instance", this);
+            Logger.LogError($"{this.name} - Missing reference to GridManager singleton instance", this);
         }
         
         StartCoroutine(SpawnWaves());
@@ -69,46 +69,15 @@ public class EnemyPoolSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Generate random world position where the enemy prefab will be placed before being set to active.
+    /// </summary>
     private void GenerateRandomSpawnLocation()
     {
-        float verticalSpawnOffset = 30f;
-        float horizontalSpawnOffset = 60f;
-        int spawningEdge = UnityEngine.Random.Range(0, 4);
-
-        // Min returns (-0.31, 34.67, -10.09).  Max returns (0.31, 34.76, -9.76)
-        Vector3 cameraBoundsMin = mainCamera.ViewportToWorldPoint(new Vector3(0f, 0f, mainCamera.nearClipPlane));
-        Vector3 cameraBoundsMax = mainCamera.ViewportToWorldPoint(new Vector3(1f, 1f, mainCamera.nearClipPlane));
-
-        switch(spawningEdge)
-        {
-            case 0: // spawn along the top edge
-                spawnLocation = new Vector3(
-                    UnityEngine.Random.Range(cameraBoundsMin.x - verticalSpawnOffset, cameraBoundsMax.x + verticalSpawnOffset), 
-                    0f, 
-                    cameraBoundsMin.y
-                );
-                break;
-            case 1: // spawn along the bottom edge
-                spawnLocation = new Vector3(
-                    UnityEngine.Random.Range(cameraBoundsMin.x - verticalSpawnOffset, cameraBoundsMax.x + verticalSpawnOffset), 
-                    0f, 
-                    -cameraBoundsMin.y
-                );
-                break;
-            case 2: // spawn along the right edge 
-                spawnLocation = new Vector3(
-                    cameraBoundsMax.x + horizontalSpawnOffset,
-                    0f, 
-                    UnityEngine.Random.Range(cameraBoundsMin.y - horizontalSpawnOffset, cameraBoundsMax.y)
-                );
-                break;
-            case 3: // spawn along the left edge
-                spawnLocation = new Vector3(
-                    cameraBoundsMax.x - horizontalSpawnOffset,
-                    0f, 
-                    UnityEngine.Random.Range(cameraBoundsMin.y - horizontalSpawnOffset, cameraBoundsMax.y)
-                );
-                break;                                
-        }
+        Transform playerTransform = mainCamera.transform.parent.GetComponentInChildren<PlayerHealth>().transform;
+        Vector2 random2DDirection = Random.insideUnitCircle.normalized;
+        Vector3 direction3D = new Vector3(random2DDirection.x, 0, random2DDirection.y);
+        float randomDistance = Random.Range(10.0f, 30.0f);
+        spawnLocation = playerTransform.position + direction3D * randomDistance;
     }        
 }

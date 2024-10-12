@@ -1,21 +1,33 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyWaveController))]
 public class EnemyPool : MonoBehaviour
 {
+    #region Fields and Properties
+    // SerializedFields
     [SerializeField] private EnemyData enemyData;
-    private Dictionary<string, EnemyWaveData[]> waveDataSets = new Dictionary<string, EnemyWaveData[]>();
+
+    // Public Fields/Properties/Events
     public Dictionary<string, EnemyWaveData[]> WaveDataSets => waveDataSets;
-    private Dictionary<string, List<GameObject>> waveEnemies = new Dictionary<string, List<GameObject>>();
     public Dictionary<string, List<GameObject>> WaveEnemies => waveEnemies;
+
+    // Private Fields/Properties
+    private Dictionary<string, EnemyWaveData[]> waveDataSets = new Dictionary<string, EnemyWaveData[]>();
+    private Dictionary<string, List<GameObject>> waveEnemies = new Dictionary<string, List<GameObject>>();
     private GameObject enemyToInstantiate;
     private GameObject waveChildContainer;
+    private EnemyData.EnemyStats[] enemyStats;
+    #endregion
 
     private void Awake()
     {
+        if (enemyData == null)
+        {
+            Logger.LogError($"{this.name} - Missing reference to EnemyData.", this);
+            return;
+        }
+
         CreateWaveDataRelationship();
         PopulateEnemyPool();
     }
@@ -37,49 +49,40 @@ public class EnemyPool : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Reference to Enemy Wave Controller script not found.", this);
+            Logger.LogError($"{this.name} - Reference to Enemy Wave Controller script not found.", this);
         }
     }
 
     private void PopulateEnemyPool()
     {
-        if (enemyData != null)
+        enemyStats = enemyData.enemyStatsArray;
+        
+        foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
         {
-            EnemyData.EnemyStats[] enemyStats = enemyData.enemyStatsArray;
+            List<GameObject> enemies = new List<GameObject>();
+            waveChildContainer = new GameObject(wave.Key);
+            waveChildContainer.transform.parent = transform;
 
-            // WIP - replacing enemy prefab assignments with enmy data's prefab property.
-            
-            foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
+            foreach (EnemyWaveData data in wave.Value)
             {
-                List<GameObject> enemies = new List<GameObject>();
-                waveChildContainer = new GameObject(wave.Key);
-                waveChildContainer.transform.parent = transform;
+                // Start by finding the right enemy prefab that's to be instantiated, then instantiate it.
+                GetPrefabToInstantiate(data);
 
-                foreach (EnemyWaveData data in wave.Value)
+                if (enemyToInstantiate == null)
                 {
-                    // Start by finding the right enemy prefab that's to be instantiated, then instantiate it.
-                    GetPrefabToInstantiate(enemyStats, data);
-
-                    if (enemyToInstantiate == null)
-                    {
-                        Logger.LogError($"No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
-                        continue;
-                    }
-                                        
-                    InstantiateEnemyPrefab(wave, data, enemies);
+                    Logger.LogError($"{this.name} - No prefab found for enemy class {data.enemyClass} and difficulty {data.enemyDifficulty}.", this);
+                    continue;
                 }
-
-                // Add to list to later use to enable enemies during gameplay.
-                waveEnemies.Add(wave.Key, enemies);
+                                    
+                enemies = InstantiateEnemyPrefab(data);
             }
-        }
-        else
-        {
-            Logger.LogError("Reference to Enemy Data script component is not found.", this);
+
+            // Add to list to later use to enable enemies during gameplay.
+            waveEnemies.Add(wave.Key, enemies);
         }
     }
 
-    private void GetPrefabToInstantiate(EnemyData.EnemyStats[] enemyStats, EnemyWaveData data)
+    private void GetPrefabToInstantiate(EnemyWaveData data)
     {
         for (int i = 0; i < enemyStats.Length; i++)
         {
@@ -91,8 +94,10 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    private void InstantiateEnemyPrefab(KeyValuePair<string, EnemyWaveData[]> wave, EnemyWaveData data, List<GameObject> enemies)
+    private List<GameObject> InstantiateEnemyPrefab(EnemyWaveData data)
     {   
+        List<GameObject> enemies = new List<GameObject>();
+
         for (int i = 0; i < data.enemyCount; i++)
         {
             GameObject enemyUnit = Instantiate(enemyToInstantiate, transform.position, Quaternion.identity, waveChildContainer.transform);
@@ -109,5 +114,7 @@ public class EnemyPool : MonoBehaviour
 
             enemies.Add(enemyUnit);
         }        
+
+        return enemies;
     }
 }
