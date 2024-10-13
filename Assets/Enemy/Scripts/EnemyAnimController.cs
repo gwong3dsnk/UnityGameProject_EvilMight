@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
@@ -6,6 +5,12 @@ public class EnemyAnimController : MonoBehaviour
     private Animator animator;
     private EnemyAnimState currentState;
     private EnemyHealth enemyHealth;
+    private const string getHitTrigger = "GetHitTrigger";
+    private const string rangeAttacking = "isRangeAttacking";
+    private const string deathTrigger = "DeathTrigger";
+    private const string walkingForward = "isWalkingForward";
+    private const string meleeAttacking = "isMeleeAttacking";
+    private const string runningForward = "isRunningForward";
 
     private void Awake() 
     {
@@ -34,7 +39,7 @@ public class EnemyAnimController : MonoBehaviour
         Enemy enemy = GetComponentInParent<Enemy>();
         if (enemy == null)
         {
-            Logger.LogError("Enemy script component is missing", this);
+            Logger.LogError($"[{this.name}] - Enemy script component is missing", this);
             return;            
         }
         else
@@ -54,7 +59,7 @@ public class EnemyAnimController : MonoBehaviour
                     }
                     else
                     {
-                        SetTriggerParam("GetHitTrigger");
+                        SetTriggerParam(getHitTrigger);
                     }
                     break;
                 case EnemyClass.Melee:
@@ -70,7 +75,7 @@ public class EnemyAnimController : MonoBehaviour
                     }
                     else
                     {
-                        SetTriggerParam("GetHitTrigger");
+                        SetTriggerParam(getHitTrigger);
                     }            
                     break;
                 default:
@@ -81,31 +86,31 @@ public class EnemyAnimController : MonoBehaviour
 
     private void SetRangeMoveBool()
     {
-        animator.SetBool("isRangeAttacking", false);
-        animator.SetBool("isWalkingForward", true);
+        animator.SetBool(rangeAttacking, false);
+        animator.SetBool(walkingForward, true);
     }
 
     private void SetRangeAttackBool()
     {
-        animator.SetBool("isWalkingForward", false);
-        animator.SetBool("isRangeAttacking", true);
+        animator.SetBool(walkingForward, false);
+        animator.SetBool(rangeAttacking, true);
     }
 
     private void SetMeleeMoveBool()
     {
-        animator.SetBool("isMeleeAttacking", false);
-        animator.SetBool("isRunningForward", true);
+        animator.SetBool(meleeAttacking, false);
+        animator.SetBool(runningForward, true);
     }
 
     private void SetMeleeAttackBool()
     {
-        animator.SetBool("isRunningForward", false);
-        animator.SetBool("isMeleeAttacking", true);
+        animator.SetBool(runningForward, false);
+        animator.SetBool(meleeAttacking, true);
     }
 
     private void ProcessEnemyDeath(object sender, System.EventArgs e)
     {
-        SetTriggerParam("DeathTrigger");
+        SetTriggerParam(deathTrigger);
     }
 
     private void SetTriggerParam(string triggerName)
@@ -115,7 +120,6 @@ public class EnemyAnimController : MonoBehaviour
 
     public void ReceiveAttackAnimEvent()
     {
-        Logger.Log("ReceiveAttackAnimEvent triggered by enemy Attack01 anim event.", this);
         EnemyAttack enemyAttack = GetComponentInParent<EnemyAttack>();
         if (enemyAttack != null)
         {
@@ -123,14 +127,13 @@ public class EnemyAnimController : MonoBehaviour
         }
         else
         {
-            Logger.LogError("Missing reference to EnemyAttack.", this);
+            Logger.LogError($"[{this.name}] - Missing reference to EnemyAttack.", this);
             return;
         }
     }
 
     public void OnGetHitCompletion()
     {
-        Logger.Log("Processing logic in OnGetHitCompletion", this);
         switch (currentState)
         {
             case EnemyAnimState.RangeMovement:

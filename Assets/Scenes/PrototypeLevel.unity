@@ -761,10 +761,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1420380769}
     - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
-      propertyPath: expOverride
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1696630776}
@@ -920,7 +916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3491606287055040149, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_Constraints
-      value: 80
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 3564878389235060321, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_IsTrigger
@@ -933,6 +929,10 @@ PrefabInstance:
     - target: {fileID: 4843163735837109802, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_TagString
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357768245212467350, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5440341908091784465, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_IsActive

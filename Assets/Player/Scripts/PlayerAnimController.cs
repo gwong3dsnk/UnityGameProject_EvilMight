@@ -4,8 +4,13 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimController : MonoBehaviour
 {
-    private Animator animator;
     public event Action<string> OnAnimFXPlay;
+    private Animator animator;
+    private const string getHitTrigger = "getHitTrigger";
+    private const string deathTrigger = "deathTrigger";
+    private const string fingerFlickTrigger = "fingerFlickTrigger";
+    private const string fingerShotTrigger = "fingerShotTrigger";
+    private const string fistSlamTrigger = "fistSlamTrigger";            
 
     private void Awake() 
     {
@@ -24,55 +29,59 @@ public class PlayerAnimController : MonoBehaviour
         AbilitiesManager.AbilityManagerInstance.HandleAbilityPlayAnim -= DetermineAbilityName;
     }
 
+    #region Public Methods
     public void ProcessGetHitAnim()
     {
-        SetAnimTrigger("getHitTrigger");
+        SetAnimTrigger(getHitTrigger);
     }
 
     public void ProcessDeathAnim()
     {
-        SetAnimTrigger("deathTrigger");
+        SetAnimTrigger(deathTrigger);
     }
+    #endregion
 
+    #region Private Methods
     private void DetermineAbilityName(AbilityBase ability)
     {
-        Logger.Log("[PlayerAnimController] - HandleAbilityPlayAnim heard in PlayerAnimController.DetermineAbilityName", this);
-
         if (ability == null)
         {
             Logger.LogError("[PlayerAnimController] - No PlayerAbilities found passed in.", this);
         }
         else
         {
-            Logger.Log($"[PlayerAnimController] - Incoming Ability Name for AnimPlay - {ability.AbilityName}", this);
             switch (ability.AbilityName)
             {
                 case AbilityNames.FingerFlick:
-                    SetAnimTrigger("fingerFlickTrigger");
+                    SetAnimTrigger(fingerFlickTrigger);
                     break;
                 case AbilityNames.FingerShot:
-                    SetAnimTrigger("fingerShotTrigger");
+                    SetAnimTrigger(fingerShotTrigger);
                     break;
                 case AbilityNames.FistSlam:
-                    SetAnimTrigger("fistSlamTrigger");
+                    SetAnimTrigger(fistSlamTrigger);
                     break;
             }
-
-            Logger.Log($"[PlayerAnimController] - Finished setting animation trigger/bool.", this);
         }
     }
 
     private void SetAnimTrigger(string triggerName) 
     {
-        Logger.Log($"[PlayerAnimController] - Setting animation trigger for {triggerName}", this);
-        animator.SetTrigger(triggerName);
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == triggerName)
+            {
+                animator.SetTrigger(triggerName);
+                return;
+            }
+        }
     }
 
     private void InvokeOnAnimFXPlay()
     {
         // Called by animation events.
-        Logger.Log("[PlayerAnimController] - AnimEvent Triggered.  Invoking OnAnimFXPlay.", this);
         string animationName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         OnAnimFXPlay?.Invoke(animationName);
     }
+    #endregion
 }
