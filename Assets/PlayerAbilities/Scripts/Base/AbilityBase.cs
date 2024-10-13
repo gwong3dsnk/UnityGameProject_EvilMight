@@ -32,33 +32,22 @@ public abstract class AbilityBase : MonoBehaviour
         InitializeAbilityData();
     }
 
+    #region Public Abstract Methods
+    public abstract void HandleAnimEventFX();
+
+    public abstract void UpgradeActivationDelay(float upgradeValue);
+    #endregion
+
+    #region Public Virtual Methods
     public virtual void ActivateAbility()
     {
         UpgradeManager.UpgradeManagerInstance.UpgradeDatabaseManager.CheckIfUpgradesInDatabase();
     }
 
-    public abstract void HandlePlayAnimEventFX();
-
-    public abstract void UpgradeActivationDelay(float upgradeValue);
-
     public virtual void DeactivateAbility()
     {
         Logger.Log($"[{this.name}] - Stopping particle system.", this);
     }
-
-    protected virtual void InitializeAbilityData()
-    {
-        Logger.Log($"[{this.name}] - Initializing ability data OnAwake.", this);
-        foreach (var stats in abilityData.abilityStatsArray)
-        {
-            if (transform.name.Contains(stats.abilityName.ToString()))
-            {
-                abilityName = stats.abilityName;
-                damage = stats.damage;
-                fireRate = stats.fireRate;
-            }
-        }        
-    }    
 
     public virtual void ActivateUpgrade(UpgradeTypesDatabase upgradeToActivate)
     {
@@ -105,4 +94,21 @@ public abstract class AbilityBase : MonoBehaviour
         //     UpgradeActivationDelay(upgradeValue);
         // }
     }
+    #endregion
+
+    #region Protected Virtual Methods
+    protected virtual void InitializeAbilityData()
+    {
+        Logger.Log($"[{this.name}] - Initializing ability data OnAwake.", this);
+        foreach (var stats in abilityData.abilityStatsArray)
+        {
+            if (transform.name.Contains(stats.abilityName.ToString()))
+            {
+                abilityName = stats.abilityName;
+                damage = stats.damage;
+                fireRate = stats.fireRate;
+            }
+        }        
+    }    
+    #endregion
 }

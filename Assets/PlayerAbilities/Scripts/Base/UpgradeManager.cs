@@ -80,7 +80,6 @@ public class UpgradeManager : MonoBehaviour
         {
             if (ability.AbilityName == nameOfAbilityToUpgrade)
             {
-                Logger.Log("Ability match found in activeAbilities. Calling ActivateUpgrade", this);
                 ability.ActivateUpgrade(upgradeToActivate);
                 isAbilityFound = true;
                 break;
@@ -93,7 +92,7 @@ public class UpgradeManager : MonoBehaviour
 
         if (!isAbilityFound)
         {
-            Logger.LogError("No matching ability has been found in ActiveAbilities.", this);
+            Logger.LogError($"{this.name} - No matching ability has been found in ActiveAbilities.", this);
         }
     }
 

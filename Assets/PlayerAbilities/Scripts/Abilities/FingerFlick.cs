@@ -10,11 +10,11 @@ using UpgradeTypesDatabase =
 
 public class FingerFlick : AbilityBase
 {
-    #region Fields
+    #region Fields and Properties
     private float meleeRange = 5.0f;
+    private float activationDelay = 3.0f;
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;
-    private float activationDelay = 3.0f;
     private EnemyDeathHandler enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
@@ -36,7 +36,57 @@ public class FingerFlick : AbilityBase
         }
     }
 
-    #region IsEnemyInFront && IsEnemyInMeleeRange
+    #region Public Methods
+    public override void ActivateAbility()
+    {
+        // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
+        if (isAvoidingAwakeActivation)
+        {
+            if (!isAttacking)
+            {
+                isAttacking = true;
+                GetAbilityParticleSystem();
+                Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
+                attackCoroutine = StartCoroutine(AttackCoroutine());
+            }
+        }
+        else
+        {
+            isAvoidingAwakeActivation = true; // After Awake stage, set to true for remainder of game.
+        }
+    }    
+
+    public override void DeactivateAbility()
+    {
+        base.DeactivateAbility();
+    }    
+
+    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
+    {
+        base.ActivateUpgrade(newUpgrade);
+    }        
+
+    public override void HandleAnimEventFX()
+    {
+        Logger.Log($"[{this.name}] - 2. Set PARTICLE POSITION to ENEMY POSITION for [{this.name}] animation.", this);
+        particleSystems[0].transform.position = enemyPosition;
+        PlayParticleSystem(); 
+    }    
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+        activationDelay = upgradeValue;
+    }
+    #endregion
+
+    #region Protected Methods
+    protected override void InitializeAbilityData()
+    {
+        base.InitializeAbilityData();
+    }
+    #endregion
+
+    #region Private Methods
     private IEnumerator CheckIfEnemyInMeleeRangeCoroutine()
     {
         yield return new WaitForSeconds(0.1f);
@@ -111,16 +161,11 @@ public class FingerFlick : AbilityBase
 
         return false;
     }
-    #endregion
 
     private void GetAbilityParticleSystem()
     {
-        // Retrieve the runtime gameobject's particle system component.
         particleSystems = GetComponentsInChildren<ParticleSystem>();
-        if (particleSystems.Length == 0)
-        {
-            Logger.LogWarning("[FingerFlick] - No particle system gameobject components found.", this);
-        }
+        if (particleSystems.Length == 0) Logger.LogWarning("[FingerFlick] - No particle system gameobject components found.", this);
     }        
     
     private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
@@ -129,26 +174,6 @@ public class FingerFlick : AbilityBase
         enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
         enemyHealth = collider.GetComponent<EnemyHealth>(); // Setup enemyHealth reference.
     }
-
-    #region Handle ability attack coroutine
-    public override void ActivateAbility()
-    {
-        // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
-        if (isAvoidingAwakeActivation)
-        {
-            if (!isAttacking)
-            {
-                isAttacking = true;
-                GetAbilityParticleSystem();
-                Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
-                attackCoroutine = StartCoroutine(AttackCoroutine());
-            }
-        }
-        else
-        {
-            isAvoidingAwakeActivation = true; // After Awake stage, set to true for remainder of game.
-        }
-    }    
 
     private IEnumerator AttackCoroutine()
     {
@@ -179,45 +204,18 @@ public class FingerFlick : AbilityBase
             attackCoroutine = null;
             enemyDeathHandler.OnEnemyDeactivation -= StopAttacking;
         }
-    }    
-    #endregion
-
-    public override void HandlePlayAnimEventFX()
-    {
-        Logger.Log($"[PlayerAbilitiesManager] - Setting {particleSystems[0].name} position to {enemyPosition}", this);
-        particleSystems[0].transform.position = enemyPosition;
-        PlayParticleSystem();
-    }
+    }   
 
     private void PlayParticleSystem()
     {
         if (particleSystems[0].isPlaying)
         {
-            Logger.Log("Stopping particle system.", this);
+            Logger.Log($"[{this.name}] - 3. STOPPING particle system for [{this.name}].", this);
             particleSystems[0].Stop();
         }
         
-        Logger.Log("Starting particle system.", this);
+        Logger.Log($"[{this.name}] - 3. STARTING particle system for [{this.name}].", this);
         particleSystems[0].Play();     
     }    
-
-    public override void UpgradeActivationDelay(float upgradeValue)
-    {
-        activationDelay = upgradeValue;
-    }
-
-    public override void DeactivateAbility()
-    {
-        base.DeactivateAbility();
-    }
-
-    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
-    {
-        base.ActivateUpgrade(newUpgrade);
-    }
-
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
-    }
+    #endregion
 }

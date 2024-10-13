@@ -8,7 +8,6 @@ public class EnemyPoolSpawner : MonoBehaviour
     [SerializeField] [Range(0f, 5f)] float timeBetweenEnemies = 1f;
     [SerializeField] [Range(0f, 5f)] float timeBetweenWaves = 3f;    
     [SerializeField] Camera mainCamera;
-    [SerializeField] GridManager gridManager;
     private Vector3 spawnLocation;
     private EnemyPool enemyPool;
 
@@ -19,16 +18,14 @@ public class EnemyPoolSpawner : MonoBehaviour
         if (enemyPool == null)
         {
             Logger.LogError($"{this.name} - Missing EnemyPool script component.", this);
+            return;
         }
 
-        if (GridManager.GridManagerInstance != null)
+        if (GridManager.GridManagerInstance == null)
         {
-            gridManager = GridManager.GridManagerInstance;
-        }
-        else
-        {
-            Logger.LogError($"{this.name} - Missing reference to GridManager singleton instance", this);
-        }
+            Logger.LogError($"{this.name} - Unable to find GridManagerInstance", this);
+            return;
+        }        
         
         StartCoroutine(SpawnWaves());
     }
@@ -61,7 +58,7 @@ public class EnemyPoolSpawner : MonoBehaviour
                 enemy.transform.position = spawnLocation;
 
                 // Add enemy to grid manager before activating it.
-                gridManager.AddEnemy(enemy.GetComponent<Collider>());
+                GridManager.GridManagerInstance.AddEnemy(enemy.GetComponent<Collider>());
 
                 enemy.SetActive(true);
                 yield return new WaitForSeconds(timeBetweenEnemies);

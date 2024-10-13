@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] int cellSize = 10;
-    Dictionary<Vector2Int, List<Collider>> grid = new Dictionary<Vector2Int, List<Collider>>();
+    [SerializeField] private int cellSize = 10;
     public static GridManager GridManagerInstance { get; private set; }
+    private Dictionary<Vector2Int, List<Collider>> grid = new Dictionary<Vector2Int, List<Collider>>();
 
     private void Awake()
     {
@@ -16,12 +15,11 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private Vector2Int WorldToCell(Vector3 position)
+    public void UpdatePosition(Collider collider)
     {
-        int x = Mathf.RoundToInt(position.x/cellSize);
-        int y = Mathf.RoundToInt(position.z/cellSize);
-        return new Vector2Int(x, y);
-    }
+        RemoveEnemy(collider);
+        AddEnemy(collider);
+    }    
 
     public void AddEnemy(Collider collider)
     {
@@ -47,12 +45,6 @@ public class GridManager : MonoBehaviour
                 grid.Remove(cell);
             }
         }   
-    }
-
-    public void UpdatePosition(Collider collider)
-    {
-        RemoveEnemy(collider);
-        AddEnemy(collider);
     }
 
     public Collider GetNearestEnemy(Vector3 playerPosition, float searchRadius)
@@ -94,4 +86,11 @@ public class GridManager : MonoBehaviour
 
         return nearestEnemy;
     }
+
+    private Vector2Int WorldToCell(Vector3 position)
+    {
+        int x = Mathf.RoundToInt(position.x/cellSize);
+        int y = Mathf.RoundToInt(position.z/cellSize);
+        return new Vector2Int(x, y);
+    }    
 }

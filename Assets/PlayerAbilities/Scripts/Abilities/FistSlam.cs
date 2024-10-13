@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UpgradeTypesDatabase = 
@@ -8,22 +7,54 @@ using UpgradeTypesDatabase =
 
 public class FistSlam : AbilityBase
 {
+    private float activationDelay = 10.0f;
     private ParticleSystem fxSystem;
     private Coroutine attackCoroutine;
     private bool isAttacking;
-    private float activationDelay = 10.0f;
 
     protected override void Awake()
     {
         base.Awake();
     }
 
+    #region Public Methods
     public override void ActivateAbility()
     {
         base.ActivateAbility();
         StartUpFistSlamAttackCoroutine();
     }
 
+    public override void DeactivateAbility()
+    {
+        StopFistSlamAttackCoroutine();
+        base.DeactivateAbility();
+    }    
+
+    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
+    {
+        base.ActivateUpgrade(newUpgrade);
+    }    
+
+    public override void HandleAnimEventFX()
+    {
+        fxSystem = GetComponentInChildren<ParticleSystem>();
+        PlayParticleSystem();
+    }
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+        activationDelay = upgradeValue;
+    }    
+    #endregion
+
+    #region Protected Methods
+    protected override void InitializeAbilityData()
+    {
+        base.InitializeAbilityData();
+    }    
+    #endregion
+
+    #region Private Methods
     private void StartUpFistSlamAttackCoroutine()
     {
         Logger.Log($"Starting FistSlamAttackCoroutine for {this.name}");
@@ -53,12 +84,6 @@ public class FistSlam : AbilityBase
         }
     }
 
-    public override void HandlePlayAnimEventFX()
-    {
-        fxSystem = GetComponentInChildren<ParticleSystem>();
-        PlayParticleSystem();
-    }
-
     private void PlayParticleSystem()
     {
         if (fxSystem.isPlaying)
@@ -68,25 +93,5 @@ public class FistSlam : AbilityBase
         
         fxSystem.Play();
     }
-
-    public override void UpgradeActivationDelay(float upgradeValue)
-    {
-        activationDelay = upgradeValue;
-    }    
-
-    public override void DeactivateAbility()
-    {
-        StopFistSlamAttackCoroutine();
-        base.DeactivateAbility();
-    }
-
-    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
-    {
-        base.ActivateUpgrade(newUpgrade);
-    }
-
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
-    }
+    #endregion    
 }

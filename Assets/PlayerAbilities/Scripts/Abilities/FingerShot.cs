@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using UpgradeTypesDatabase = 
@@ -8,7 +7,7 @@ using UpgradeTypesDatabase =
 
 public class FingerShot : AbilityBase
 {
-    private AbilityHelperData[] abilityHelperData;
+    private AbilityHelperData helperData;
     private GameObject renderMesh; 
     private ParticleSystem[] particleSystems; 
     private bool isSwitchingFX = true;
@@ -18,30 +17,91 @@ public class FingerShot : AbilityBase
         base.Awake();
     }
 
+    #region Public Methods
     public override void ActivateAbility()
     {
-        abilityHelperData = GetComponentInParent<AbilityHelper>().AbilityHelperData;
+        helperData = GetComponentInParent<AbilityHelper>().AbilityHelperData.FirstOrDefault(data => data.abilityNames == AbilityNames.FingerShot);
 
-        if (abilityHelperData == null)
+        if (helperData == null)
         {
-            Logger.LogError("[FingerShot] - Missing reference to AbilityHelper component.", this);
+            Logger.LogError($"[{this.name}] - Missing reference to AbilityHelper component.", this);
         }
 
         EnableVariantHandMeshes();
         base.ActivateAbility();
-        playerSockets = abilityHelperData[1].meshSockets[0].meshSockets;
+        playerSockets = helperData.meshSockets[0].meshSockets;
         HandleAbilityParticleSystem();
-        Logger.Log("[FingerShot] - Invoking event to play animation.", this);
         AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
     }
 
+    public override void DeactivateAbility()
+    {
+        base.DeactivateAbility();
+    }
+
+    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
+    {
+        base.ActivateUpgrade(newUpgrade);
+    }    
+
+    public override void UpgradeActivationDelay(float upgradeValue)
+    {
+        Logger.Log($"[{this.name}] - No need to update activationDelay.", this);
+    }    
+
+    public void PlayLeftParticleSystem()
+    {
+        Logger.Log($"[{this.name}] - 3. Playing LEFT PARTICLE for [{this.name}] animation.", this);
+        if (particleSystems[0].isPlaying)
+        {
+            particleSystems[0].Stop();
+        }
+
+        particleSystems[0].Play(); 
+        isSwitchingFX = true;
+    }
+
+    public void PlayRightParticleSystem()
+    {
+        Logger.Log($"[{this.name}] - 3. Playing RIGHT PARTICLE for [{this.name}] animation.", this);
+        if (particleSystems[1].isPlaying)
+        {
+            particleSystems[1].Stop();
+        }
+
+        particleSystems[1].Play();   
+        isSwitchingFX = false;
+    }      
+
+    public override void HandleAnimEventFX() 
+    {
+        Logger.Log($"[{this.name}] - 2. STARTING play right and left PARTICLE for [{this.name}] animation.", this);
+        if (isSwitchingFX)
+        {
+            PlayRightParticleSystem();
+        }
+        else
+        {
+            PlayLeftParticleSystem();
+        }
+    }           
+    #endregion
+
+    #region Protected Methods
+    protected override void InitializeAbilityData()
+    {
+        base.InitializeAbilityData();
+    }
+    #endregion
+
+    #region Private Methods
     /// <summary>
     /// SetActive the FingerShot hands and ensure it adopts the same position/rotation as the default large hands.
     /// [0] is the default large hands, [1] is the FingerShot small hands that are close together.
     /// </summary>
     private void EnableVariantHandMeshes()
     {
-        renderMesh = abilityHelperData[1].meshSockets[0].renderMesh;
+        renderMesh = helperData.meshSockets[0].renderMesh;
         renderMesh.SetActive(true);
         renderMesh.transform.position = renderMesh.transform.position;
         renderMesh.transform.rotation = renderMesh.transform.rotation;
@@ -59,7 +119,7 @@ public class FingerShot : AbilityBase
         particleSystems = GetComponentsInChildren<ParticleSystem>();
         if (particleSystems.Length == 0)
         {
-            Logger.LogWarning("[FingerShot] - No particle system gameobject components found.", this);
+            Logger.LogWarning($"[{this.name}] - No particle system gameobject components found.", this);
         }
     }            
 
@@ -72,61 +132,5 @@ public class FingerShot : AbilityBase
         particleSystems[1].transform.position = playerSockets[1].transform.position;
         particleSystems[1].transform.rotation = renderMesh.transform.rotation;
     }
-
-    public override void HandlePlayAnimEventFX() 
-    {
-        Logger.Log("[FingerShot] - Attempting to play right and left particle systems.", this);
-        if (isSwitchingFX)
-        {
-            PlayRightParticleSystem();
-        }
-        else
-        {
-            PlayLeftParticleSystem();
-        }
-    }    
-
-    public void PlayLeftParticleSystem()
-    {
-        // Called by FingerShot animation event
-        if (particleSystems[0].isPlaying)
-        {
-            particleSystems[0].Stop();
-        }
-
-        particleSystems[0].Play(); 
-        isSwitchingFX = true;
-    }
-
-    public void PlayRightParticleSystem()
-    {
-        // Called by FingerShot animation event
-        if (particleSystems[1].isPlaying)
-        {
-            particleSystems[1].Stop();
-        }
-
-        particleSystems[1].Play();   
-        isSwitchingFX = false;
-    }
-
-    public override void UpgradeActivationDelay(float upgradeValue)
-    {
-        Logger.Log($"No need to update activationDelay for {this.name}");
-    }    
-
-    public override void DeactivateAbility()
-    {
-        base.DeactivateAbility();
-    }
-
-    public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
-    {
-        base.ActivateUpgrade(newUpgrade);
-    }
-
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
-    }
+    #endregion
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAnimController : MonoBehaviour
 {
     private Animator animator;
-    public event EventHandler OnAnimFXPlay;
+    public event Action<string> OnAnimFXPlay;
 
     private void Awake() 
     {
@@ -68,16 +68,11 @@ public class PlayerAnimController : MonoBehaviour
         animator.SetTrigger(triggerName);
     }
 
-    private void SetAnimBool(string boolName)
-    {
-        Logger.Log($"[PlayerAnimController] - Setting animation bool for {boolName}", this);
-        animator.SetBool(boolName, true);
-    }
-
     private void InvokeOnAnimFXPlay()
     {
         // Called by animation events.
         Logger.Log("[PlayerAnimController] - AnimEvent Triggered.  Invoking OnAnimFXPlay.", this);
-        OnAnimFXPlay?.Invoke(this, EventArgs.Empty);
+        string animationName = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        OnAnimFXPlay?.Invoke(animationName);
     }
 }
