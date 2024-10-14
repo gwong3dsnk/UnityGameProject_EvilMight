@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Animations;
 
 [RequireComponent(typeof(EnemyWaveController))]
 public class EnemyPool : MonoBehaviour
@@ -13,10 +15,9 @@ public class EnemyPool : MonoBehaviour
     public Dictionary<string, List<GameObject>> WaveEnemies => waveEnemies;
 
     // Private Fields/Properties
-    private Dictionary<string, EnemyWaveData[]> waveDataSets = new Dictionary<string, EnemyWaveData[]>();
-    private Dictionary<string, List<GameObject>> waveEnemies = new Dictionary<string, List<GameObject>>();
-    private GameObject enemyToInstantiate;
-    private GameObject waveChildContainer;
+    private Dictionary<string, EnemyWaveData[]> waveDataSets = new();
+    private Dictionary<string, List<GameObject>> waveEnemies = new();
+    private GameObject waveContainer;
     private EnemyData.EnemyStats[] enemyStats;
     #endregion
 
@@ -60,13 +61,12 @@ public class EnemyPool : MonoBehaviour
         foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
         {
             List<GameObject> enemies = new List<GameObject>();
-            waveChildContainer = new GameObject(wave.Key);
-            waveChildContainer.transform.parent = transform;
+            waveContainer = new GameObject(wave.Key) { transform = { parent = transform } };
 
             foreach (EnemyWaveData data in wave.Value)
             {
                 // Start by finding the right enemy prefab that's to be instantiated, then instantiate it.
-                GetPrefabToInstantiate(data);
+                GameObject enemyToInstantiate = GetPrefabToInstantiate(data);
 
                 if (enemyToInstantiate == null)
                 {
@@ -74,7 +74,7 @@ public class EnemyPool : MonoBehaviour
                     continue;
                 }
                                     
-                enemies = InstantiateEnemyPrefab(data);
+                enemies = InstantiateEnemyPrefab(data, enemyToInstantiate);
             }
 
             // Add to list to later use to enable enemies during gameplay.
@@ -82,25 +82,24 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    private void GetPrefabToInstantiate(EnemyWaveData data)
+    private GameObject GetPrefabToInstantiate(EnemyWaveData data)
     {
-        for (int i = 0; i < enemyStats.Length; i++)
-        {
-            if (data.enemyClass == enemyStats[i].enemyClass && data.enemyDifficulty == enemyStats[i].difficulty)
-            {
-                enemyToInstantiate = enemyStats[i].prefab;
-                break;
-            }
-        }
+        EnemyData.EnemyStats stats = enemyStats.FirstOrDefault
+        (
+            prefabObject => data.enemyClass == prefabObject.enemyClass 
+            && data.enemyDifficulty == prefabObject.difficulty
+        );
+
+        return stats?.prefab;
     }
 
-    private List<GameObject> InstantiateEnemyPrefab(EnemyWaveData data)
+    private List<GameObject> InstantiateEnemyPrefab(EnemyWaveData data, GameObject enemyToInstantiate)
     {   
         List<GameObject> enemies = new List<GameObject>();
 
         for (int i = 0; i < data.enemyCount; i++)
         {
-            GameObject enemyUnit = Instantiate(enemyToInstantiate, transform.position, Quaternion.identity, waveChildContainer.transform);
+            GameObject enemyUnit = Instantiate(enemyToInstantiate, transform.position, Quaternion.identity, waveContainer.transform);
             enemyUnit.name = $"Enemy{i}";
             Enemy enemyScript = enemyUnit.GetComponent<Enemy>();
 

@@ -8,16 +8,24 @@ public class EnemyPoolSpawner : MonoBehaviour
     [SerializeField] [Range(0f, 5f)] float timeBetweenEnemies = 1f;
     [SerializeField] [Range(0f, 5f)] float timeBetweenWaves = 3f;    
     [SerializeField] Camera mainCamera;
-    private Vector3 spawnLocation;
     private EnemyPool enemyPool;
+    private Transform playerTransform;
 
     private void Start()
     {
         enemyPool = GetComponent<EnemyPool>();
 
-        if (enemyPool == null)
+        if (enemyPool == null || mainCamera == null)
         {
-            Logger.LogError($"{this.name} - Missing EnemyPool script component.", this);
+            Logger.LogError($"{this.name} - Missing EnemyPool component or reference to MainCamera.", this);
+            return;
+        }
+
+        playerTransform = mainCamera.transform.parent.GetComponentInChildren<PlayerHealth>().transform;
+
+        if (playerTransform == null)
+        {
+            Logger.LogError($"{this.name} - Unable to find PlayerHealth component on Player character.", this);
             return;
         }
 
@@ -54,8 +62,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         {
             if (!enemy.activeInHierarchy)
             {
-                GenerateRandomSpawnLocation();
-                enemy.transform.position = spawnLocation;
+                enemy.transform.position = BaseUtilityMethods.GenerateRandomSpawnLocation(playerTransform.position);
 
                 // Add enemy to grid manager before activating it.
                 GridManager.GridManagerInstance.AddEnemy(enemy.GetComponent<Collider>());
@@ -65,16 +72,4 @@ public class EnemyPoolSpawner : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Generate random world position where the enemy prefab will be placed before being set to active.
-    /// </summary>
-    private void GenerateRandomSpawnLocation()
-    {
-        Transform playerTransform = mainCamera.transform.parent.GetComponentInChildren<PlayerHealth>().transform;
-        Vector2 random2DDirection = Random.insideUnitCircle.normalized;
-        Vector3 direction3D = new Vector3(random2DDirection.x, 0, random2DDirection.y);
-        float randomDistance = Random.Range(10.0f, 30.0f);
-        spawnLocation = playerTransform.position + direction3D * randomDistance;
-    }        
 }
