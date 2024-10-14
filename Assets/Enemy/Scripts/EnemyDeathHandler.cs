@@ -69,6 +69,7 @@ public class EnemyDeathHandler : MonoBehaviour
         {
             Logger.Log("[EnemyDeathHandler] - Pass enemy xp to level manager, then process enemy deactivation.", this);
             levelManager.AddXP(enemy.Experience);
+            enemyCollider.enabled = false;
 
             StartCoroutine(DelayProcessingEnemyDeactivation());
             Logger.Log("[EnemyDeathHandler] - Finished processing enemy deactivation.", this);
