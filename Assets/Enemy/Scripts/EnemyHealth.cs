@@ -36,7 +36,7 @@ public class EnemyHealth : HealthManagement
         }
     }
 
-    protected override void BeginPlayerDeathSequence()
+    protected override void BeginDeathSequence()
     {
         if (!isEnemyDeathProcessed)
         {

@@ -1,50 +1,104 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Enemy))]
-[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(EnemyAttack))]
+[RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyMovement : MonoBehaviour
 {
+    #region Fields and Properties
+    // SerializedFields
     [SerializeField] float turnSpeed = 1f;
     [SerializeField] float positionUpdateInterval = 0.5f;
+
+    // Private Fields
     private Transform player;
     private NavMeshAgent navMeshAgent;
     private Enemy enemy;
+    private EnemyHealth enemyHealth;
+    private EnemyAttack enemyAttack;
     private EnemyAnimController enemyAnimController;
     private float distanceToTarget = Mathf.Infinity;
     private Vector3 lastPosition;
     private Coroutine updatePositionCoroutine;
+    #endregion
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         enemy = GetComponent<Enemy>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        enemyAttack = GetComponent<EnemyAttack>();
         enemyAnimController = GetComponentInChildren<EnemyAnimController>();
 
         if (enemyAnimController == null || enemy == null)
         {
-            Logger.LogError("EnemyAnimController or Enemy script component is missing", this);
+            Logger.LogError($"[{this.name}] - EnemyAnimController or Enemy component is missing.", this);
             return;
         }
+
+        if (navMeshAgent == null || enemyHealth == null)
+        {
+            Logger.LogError($"[{this.name}] - NavMeshAgent or EnemyHealth component is missing", this);
+            return;
+        }        
+        
+        if (enemyAttack == null)
+        {
+            Logger.LogError($"[{this.name}] - Missing EnemyAttack script component.", this);
+            return;
+        }        
     }
 
-    void Start()
+    private void Start()
     {
         player = FindObjectOfType<PlayerMovement>().transform;
 
         if (player == null)
         {
-            Logger.LogError("PlayerMovement script is not found in the scene.", this);
+            Logger.LogError($"[{this.name}] - PlayerMovement script is not found in the scene.", this);
             return;
         }
 
         lastPosition = transform.position;
-
         updatePositionCoroutine = StartCoroutine(UpdatePositionPeriodically());
+    }
+
+    private void OnEnable()
+    {
+        enemyHealth.OnDeath += StopMovement;
+    }
+
+    private void Update()
+    {
+        if (player != null)
+        {
+            distanceToTarget = Vector3.Distance(player.position, transform.position);
+            MoveToPlayer();
+        }
+    }
+
+    private void OnDisable() 
+    {
+        enemyHealth.OnDeath -= StopMovement;
+
+        if (updatePositionCoroutine != null)
+        {
+            StopCoroutine(updatePositionCoroutine);
+        }
+    }  
+
+    private void StopMovement(object sender, System.EventArgs e)
+    {
+        EnemyHealth enemyHealthSender = sender as EnemyHealth;
+
+        if (enemyHealthSender != null)
+        {
+            navMeshAgent.isStopped = true;
+            navMeshAgent.velocity = Vector3.zero;
+        }
     }
 
     private IEnumerator UpdatePositionPeriodically()
@@ -63,19 +117,8 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (player != null)
-        {
-            distanceToTarget = Vector3.Distance(player.position, transform.position);
-            MoveToPlayer();
-        }
-    }
-
     private void MoveToPlayer()
     {
-        if (navMeshAgent == null) return;
-
         FacePlayer();
 
         // Set the enemy traversal speed and stopping distance
@@ -89,16 +132,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (distanceToTarget <= navMeshAgent.stoppingDistance) // player within range, enemy will attack
         {
-            EnemyAttack enemyAttack = GetComponent<EnemyAttack>();
-            
-            if (enemyAttack != null)
-            {
-                enemyAttack.AttackTarget();
-            }
-            else
-            {
-                Logger.LogError("Missing EnemyAttack script component.", this);
-            }
+            enemyAttack.AttackTarget();
         }        
     }
 
@@ -120,15 +154,6 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void OnDisable() 
-    {
-        // On enemy death and subsequent deactivation, stop the coroutine from executing.
-        if (updatePositionCoroutine != null)
-        {
-            StopCoroutine(updatePositionCoroutine);
-        }
-    }
-
     private void OnDrawGizmosSelected() 
     {
         Gizmos.color = Color.red;
@@ -136,10 +161,6 @@ public class EnemyMovement : MonoBehaviour
         if (enemy != null)
         {
             Gizmos.DrawWireSphere(transform.position, enemy.AttackRadius);
-        }
-        else
-        {
-            Logger.LogWarning("Gizmo is not drawn for Enemy Prefab because enemy script component is not assigned.");
         }
     }
 }

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -11,7 +13,7 @@ using UpgradeTypesDatabase =
 public class FingerFlick : AbilityBase
 {
     #region Fields and Properties
-    private float meleeRange = 5.0f;
+    [SerializeField] private float meleeRange = 2.5f;
     private float activationDelay = 3.0f;
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;

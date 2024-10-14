@@ -28,7 +28,7 @@ public class PlayerHealth : HealthManagement
         }
     }
 
-    protected override void BeginPlayerDeathSequence()
+    protected override void BeginDeathSequence()
     {
         isPlayerDead = true;
         StartCoroutine(PlayerDeathCoroutine());

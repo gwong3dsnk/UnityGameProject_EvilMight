@@ -978,6 +978,10 @@ PrefabInstance:
       propertyPath: playerMesh
       value: 
       objectReference: {fileID: 1186384626}
+    - target: {fileID: 8231331810520174319, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
+      propertyPath: m_IgnoreFromBuild
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8375900831703486986, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_AngularDrag
       value: 0

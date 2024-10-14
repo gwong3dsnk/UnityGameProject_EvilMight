@@ -4,9 +4,9 @@ using UnityEngine;
 public abstract class HealthManagement : MonoBehaviour
 {
     [SerializeField] protected int maxHealth = 1;
-    protected float currentHealth;
     public float CurrentHealth => currentHealth;
     public event EventHandler OnDeath;
+    protected float currentHealth;
 
     protected virtual void Start()
     {
@@ -19,7 +19,7 @@ public abstract class HealthManagement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            BeginPlayerDeathSequence();
+            BeginDeathSequence(); 
         }
         else
         {
@@ -32,7 +32,7 @@ public abstract class HealthManagement : MonoBehaviour
         OnDeath?.Invoke(this, EventArgs.Empty);
     }
 
-    protected abstract void BeginPlayerDeathSequence();
+    protected abstract void BeginDeathSequence();
 
     protected abstract void HandleStillAlive();
 }

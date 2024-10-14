@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyDeathHandler : MonoBehaviour
 {
     public event EventHandler OnEnemyDeactivation; 
+    private float deactivationDelay = 1.5f;
     private Enemy enemy;
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
     private LevelManager levelManager;
-    private float deactivationDelay = 1.5f;
 
     private void Awake()
     {
@@ -27,11 +28,6 @@ public class EnemyDeathHandler : MonoBehaviour
     private void OnEnable()
     {
         enemyHealth.OnDeath += DeathHandler_OnDeath;
-    }
-
-    private void OnDisable()
-    {
-        enemyHealth.OnDeath -= DeathHandler_OnDeath;
     }
 
     private void Start()
@@ -59,13 +55,24 @@ public class EnemyDeathHandler : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        enemyHealth.OnDeath -= DeathHandler_OnDeath;
+    }
+
+
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
-        Logger.Log("[EnemyDeathHandler] - Pass enemy xp to level manager, then process enemy deactivation.", this);
-        levelManager.AddXP(enemy.Experience);
-                
-        StartCoroutine(DelayProcessingEnemyDeactivation());
-        Logger.Log("[EnemyDeathHandler] - Finished processing enemy deactivation.", this);
+        EnemyHealth enemyHealthSender = sender as EnemyHealth;
+
+        if (enemyHealthSender != null)
+        {
+            Logger.Log("[EnemyDeathHandler] - Pass enemy xp to level manager, then process enemy deactivation.", this);
+            levelManager.AddXP(enemy.Experience);
+
+            StartCoroutine(DelayProcessingEnemyDeactivation());
+            Logger.Log("[EnemyDeathHandler] - Finished processing enemy deactivation.", this);
+        }        
     }
 
     private IEnumerator DelayProcessingEnemyDeactivation()
