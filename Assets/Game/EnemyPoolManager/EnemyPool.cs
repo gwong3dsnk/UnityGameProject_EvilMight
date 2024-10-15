@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyWaveController))]
@@ -11,11 +10,11 @@ public class EnemyPool : MonoBehaviour
 
     // Public Fields/Properties/Events
     public Dictionary<string, EnemyWaveData[]> WaveDataSets => waveDataSets;
-    public Dictionary<string, List<GameObject>> WaveEnemies => waveEnemies;
+    public Dictionary<string, Queue<GameObject>> WaveEnemies => waveEnemies;
 
     // Private Fields/Properties
     private Dictionary<string, EnemyWaveData[]> waveDataSets = new();
-    private Dictionary<string, List<GameObject>> waveEnemies = new();
+    private Dictionary<string, Queue<GameObject>> waveEnemies = new();
     private GameObject waveContainer;
     private EnemyData.EnemyStats[] enemyStats;
     #endregion
@@ -59,7 +58,7 @@ public class EnemyPool : MonoBehaviour
         
         foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
         {
-            List<GameObject> enemies = new List<GameObject>();
+            Queue<GameObject> enemies = new Queue<GameObject>();
             waveContainer = new GameObject(wave.Key) { transform = { parent = transform } };
 
             foreach (EnemyWaveData data in wave.Value)
@@ -68,7 +67,7 @@ public class EnemyPool : MonoBehaviour
             }
 
             // Add to list to later use to enable enemies during gameplay.
-            waveEnemies.Add(wave.Key, enemies);
+            waveEnemies[wave.Key] = enemies;
         }
     }
 }

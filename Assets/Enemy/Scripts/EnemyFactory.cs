@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
 {
-    public static List<GameObject> CreateRangedEnemy(EnemyWaveData enemyWaveData, EnemyData.EnemyStats[] enemyStats, GameObject waveContainer)
+    public static Queue<GameObject> CreateRangedEnemy(EnemyWaveData enemyWaveData, EnemyData.EnemyStats[] enemyStats, GameObject waveContainer)
     {
         GameObject enemyPrefab;
 
@@ -35,9 +35,9 @@ public class EnemyFactory : MonoBehaviour
         return stats?.prefab;
     }    
 
-    private static List<GameObject> InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab, GameObject waveContainer)
+    private static Queue<GameObject> InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab, GameObject waveContainer)
     {   
-        List<GameObject> enemies = new List<GameObject>();
+        Queue<GameObject> enemies = new Queue<GameObject>();
 
         for (int i = 0; i < data.enemyCount; i++)
         {
@@ -57,8 +57,7 @@ public class EnemyFactory : MonoBehaviour
             }
 
             enemyUnit.SetActive(false);
-
-            enemies.Add(enemyUnit);
+            enemies.Enqueue(enemyUnit);
         }        
 
         return enemies;

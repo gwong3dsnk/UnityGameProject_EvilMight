@@ -15,7 +15,6 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] [ReadOnly] protected float attackRadius;
     [SerializeField] [ReadOnly] protected float movementSpeed;
     [SerializeField] [ReadOnly] protected int experience;  
-    protected GameObject prefab;  
 
     // Public Properties
     public EnemyClass EnemyClass => enemyClass;
@@ -26,13 +25,50 @@ public abstract class Enemy : MonoBehaviour
     public float MovementSpeed => movementSpeed;
     public int Experience => experience;
     public GameObject Prefab => prefab;
+
+    // Protected Fields
+    protected GameObject prefab;  
+    protected EnemyDeath enemyDeath;
+    protected EnemyPool enemyPool;
     #endregion
+
+    protected void Awake()
+    {
+        enemyDeath = GetComponent<EnemyDeath>();
+        enemyPool = FindObjectOfType<EnemyPool>();
+
+        if (enemyDeath == null || enemyPool == null)
+        {
+            Logger.LogError($"{this.name} Enemy script is missing references to either EnemyDeath or EnemyPool.");
+        }
+
+        if (enemyData == null)
+        {
+            Logger.LogError($"{this.name} Enemy script is missing reference to EnemyData.");
+        }
+    }
+
+    protected void OnEnable()
+    {
+        enemyDeath.OnEnemyDeactivation += EnqueueKilledEnemy;
+    }
+
+    protected void OnDisable()
+    {
+        enemyDeath.OnEnemyDeactivation -= EnqueueKilledEnemy;
+    }
 
     public virtual void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {
         this.enemyClass = enemyClass;
         this.enemyDifficulty = enemyDifficulty;
         InitializeAttributes();
+    }
+
+    protected virtual void EnqueueKilledEnemy(object sender, System.EventArgs e)
+    {
+        string parentName = transform.parent.gameObject.name;
+        enemyPool.WaveEnemies[parentName].Enqueue(gameObject);
     }
 
     protected virtual void InitializeAttributes()

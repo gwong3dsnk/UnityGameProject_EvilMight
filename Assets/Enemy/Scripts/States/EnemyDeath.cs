@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-// [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyDeath : MonoBehaviour
 {
@@ -66,20 +65,16 @@ public class EnemyDeath : MonoBehaviour
 
         if (enemyHealthSender != null)
         {
-            Logger.Log("[EnemyDeathHandler] - Pass enemy xp to level manager, then process enemy deactivation.", this);
             levelManager.AddXP(enemy.Experience);
-
             StartCoroutine(DelayProcessingEnemyDeactivation());
-            Logger.Log("[EnemyDeathHandler] - Finished processing enemy deactivation.", this);
         }        
     }
 
     private IEnumerator DelayProcessingEnemyDeactivation()
     {
         yield return new WaitForSeconds(deactivationDelay);
-
         GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
-        gameObject.SetActive(false);
         OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
+        gameObject.SetActive(false);
     }
 }

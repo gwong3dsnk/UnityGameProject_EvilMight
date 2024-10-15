@@ -56,10 +56,11 @@ public class EnemyPoolSpawner : MonoBehaviour
         string waveKey = $"Wave{currentWave + 1}";
         if (!enemyPool.WaveEnemies.ContainsKey(waveKey)) yield break;
 
-        List<GameObject> enemiesToActivate = enemyPool.WaveEnemies[waveKey];
+        Queue<GameObject> enemiesToActivate = enemyPool.WaveEnemies[waveKey];
 
-        foreach (GameObject enemy in enemiesToActivate)
+        while (enemiesToActivate.Count > 0)
         {
+            GameObject enemy = enemyPool.WaveEnemies[waveKey].Dequeue();
             if (!enemy.activeInHierarchy)
             {
                 enemy.transform.position = BaseUtilityMethods.GenerateRandomSpawnLocation(playerTransform.position);
