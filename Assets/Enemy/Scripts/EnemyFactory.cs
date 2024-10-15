@@ -4,13 +4,32 @@ using UnityEngine;
 public class EnemyFactory : MonoBehaviour
 {
     private EnemyPrefabCache enemyPrefabCache;
+    private Queue<GameObject> enemyQueue;
+    private Transform instantiatePosition;
 
     public void Initialize(EnemyData.EnemyStats[] enemyStats)
     {
         enemyPrefabCache = new EnemyPrefabCache(enemyStats);
     }
 
-    public Queue<GameObject> CreateRangedEnemy(EnemyWaveData enemyWaveData, EnemyData.EnemyStats[] enemyStats, GameObject waveContainer)
+    public Queue<GameObject> CreateEnemy(EnemyWaveData enemyWaveData, GameObject waveContainer)
+    {
+        enemyQueue = new Queue<GameObject>();
+        instantiatePosition = waveContainer.transform;
+
+        if (enemyWaveData.enemyClass == EnemyClass.Melee)
+        {
+            CreateMeleeEnemy(enemyWaveData);
+        }
+        else
+        {
+            CreateRangedEnemy(enemyWaveData);
+        }
+
+        return enemyQueue;
+    }
+
+    public void CreateRangedEnemy(EnemyWaveData enemyWaveData)
     {
         GameObject enemyPrefab;
 
@@ -18,25 +37,49 @@ public class EnemyFactory : MonoBehaviour
         {
             case EnemyDifficulty.Easy:
                 enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Easy);
-                return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
             case EnemyDifficulty.Normal:
                 enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Normal);
-                return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
             case EnemyDifficulty.Hard:
                 enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Hard);
-                return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
             default:
-                return null;
+                break;
         }
     }
 
-    private Queue<GameObject> InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab, GameObject waveContainer)
-    {   
-        Queue<GameObject> enemies = new Queue<GameObject>();
+    public void CreateMeleeEnemy(EnemyWaveData enemyWaveData)
+    {
+        GameObject enemyPrefab;
 
+        switch (enemyWaveData.enemyDifficulty)
+        {
+            case EnemyDifficulty.Easy:
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Melee, EnemyDifficulty.Easy);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
+            case EnemyDifficulty.Normal:
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Melee, EnemyDifficulty.Normal);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
+            case EnemyDifficulty.Hard:
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Melee, EnemyDifficulty.Hard);
+                InstantiateEnemy(enemyWaveData, enemyPrefab);
+                break;
+            default:
+                break;
+        }
+    }    
+
+    private void InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab)
+    {   
         for (int i = 0; i < data.enemyCount; i++)
         {
-            GameObject enemyUnit = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity, waveContainer.transform);
+            GameObject enemyUnit = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity, instantiatePosition);
 
             // Configure the instantiated enemy object
             enemyUnit.name = $"Enemy{i}";
@@ -52,9 +95,7 @@ public class EnemyFactory : MonoBehaviour
             }
 
             enemyUnit.SetActive(false);
-            enemies.Enqueue(enemyUnit);
-        }        
-
-        return enemies;
+            enemyQueue.Enqueue(enemyUnit);
+        }
     }    
 }

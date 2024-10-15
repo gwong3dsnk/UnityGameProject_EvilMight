@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class RangedEnemyEasy : RangedEnemy
 {
-    void Start()
-    {
-        SetClassAndDifficulty(EnemyClass.Range, EnemyDifficulty.Easy);
-    }
+
 }

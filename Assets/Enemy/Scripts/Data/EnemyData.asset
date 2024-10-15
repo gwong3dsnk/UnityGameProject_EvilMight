@@ -23,17 +23,41 @@ MonoBehaviour:
     prefab: {fileID: 7539209899930774730, guid: 241078df1e90f294c9d32cfb6477788f, type: 3}
   - enemyClass: 1
     difficulty: 1
-    hp: 3
-    atk: 1
-    atkRadius: 15
+    hp: 5
+    atk: 3
+    atkRadius: 10
     movementSpeed: 5
     experience: 10
     prefab: {fileID: 7539209899930774730, guid: 75cad540ef066424298f7cdbc20e8b10, type: 3}
   - enemyClass: 1
     difficulty: 2
-    hp: 5
-    atk: 1
-    atkRadius: 20
+    hp: 10
+    atk: 5
+    atkRadius: 10
     movementSpeed: 5
     experience: 15
     prefab: {fileID: 7539209899930774730, guid: cbdd878178d8c0f4a93ae922e43cdfb0, type: 3}
+  - enemyClass: 0
+    difficulty: 0
+    hp: 1
+    atk: 1
+    atkRadius: 3
+    movementSpeed: 7
+    experience: 5
+    prefab: {fileID: 1431588102574954244, guid: 62e97c9cb9132a14cb1d80ca4ea8f6b7, type: 3}
+  - enemyClass: 0
+    difficulty: 1
+    hp: 5
+    atk: 3
+    atkRadius: 3
+    movementSpeed: 7
+    experience: 10
+    prefab: {fileID: 1431588102574954244, guid: 8582fa890247ba74fa57ce93cb4b7762, type: 3}
+  - enemyClass: 0
+    difficulty: 2
+    hp: 10
+    atk: 5
+    atkRadius: 3
+    movementSpeed: 7
+    experience: 15
+    prefab: {fileID: 1431588102574954244, guid: 32ea230909cb58346abcdb4402dd9d72, type: 3}

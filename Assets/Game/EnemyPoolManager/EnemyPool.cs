@@ -67,7 +67,7 @@ public class EnemyPool : MonoBehaviour
 
             foreach (EnemyWaveData data in wave.Value)
             {
-                enemies = enemyFactory.CreateRangedEnemy(data, enemyStats, waveContainer);  
+                enemies = enemyFactory.CreateEnemy(data, waveContainer);  
             }
 
             // Add to list to later use to enable enemies during gameplay.
