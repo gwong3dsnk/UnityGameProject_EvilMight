@@ -5,7 +5,7 @@ public class EnemyFactory : MonoBehaviour
 {
     private EnemyPrefabCache enemyPrefabCache;
 
-    public EnemyFactory(EnemyData.EnemyStats[] enemyStats)
+    public void Initialize(EnemyData.EnemyStats[] enemyStats)
     {
         enemyPrefabCache = new EnemyPrefabCache(enemyStats);
     }

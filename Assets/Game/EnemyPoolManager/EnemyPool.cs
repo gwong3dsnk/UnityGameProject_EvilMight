@@ -22,9 +22,11 @@ public class EnemyPool : MonoBehaviour
 
     private void Awake()
     {
-        if (enemyData == null)
+        enemyFactory = GetComponent<EnemyFactory>();
+
+        if (enemyData == null || enemyFactory == null)
         {
-            Logger.LogError($"{this.name} - Missing reference to EnemyData.", this);
+            Logger.LogError($"{this.name} - Missing reference to either EnemyData or EnemyFactory.", this);
             return;
         }
 
@@ -56,7 +58,7 @@ public class EnemyPool : MonoBehaviour
     private void PopulateEnemyPool()
     {
         enemyStats = enemyData.enemyStatsArray;
-        enemyFactory = new EnemyFactory(enemyStats);
+        enemyFactory.Initialize(enemyStats);
         
         foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
         {

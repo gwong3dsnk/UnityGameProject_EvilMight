@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPrefabCache : MonoBehaviour
+public class EnemyPrefabCache
 {
     private Dictionary<(EnemyClass, EnemyDifficulty), GameObject> prefabDictionary;
 

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2453278234839077555}
   - component: {fileID: 4576787393230112049}
   - component: {fileID: 153703462208915683}
+  - component: {fileID: 7877065817974206547}
   m_Layer: 0
   m_Name: EnemyPool
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bed239e817269e443b5b6e9e52f26663, type: 2}
+  enemyFactory: {fileID: 0}
 --- !u!114 &4576787393230112049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,7 +64,6 @@ MonoBehaviour:
   timeBetweenEnemies: 1
   timeBetweenWaves: 3
   mainCamera: {fileID: 0}
-  gridManager: {fileID: 0}
 --- !u!114 &153703462208915683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,3 +77,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyWaveContainer: []
+--- !u!114 &7877065817974206547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944780644130037402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15dbcf94c3bf6a044958360df2d6e1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
