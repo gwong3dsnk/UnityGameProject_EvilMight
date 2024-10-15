@@ -1,32 +1,41 @@
+using NaughtyAttributes;
+using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] EnemyData enemyData;
-    [SerializeField] EnemyClass enemyClass;
-    public EnemyClass EnemyClass { get { return enemyClass; } }
-    [SerializeField] EnemyDifficulty enemyDifficulty;
-    public EnemyDifficulty EnemyDifficulty { get { return enemyDifficulty; } }
-    // For testing and visibility
-    [SerializeField] int t_hitPoints;
-    public int HitPoints => t_hitPoints;
-    [SerializeField] int t_attack;
-    public int Attack { get { return t_attack; } }
-    [SerializeField] float t_attackRadius;
-    public float AttackRadius { get { return t_attackRadius; } }
-    [SerializeField] float t_movementSpeed;
-    public float MovementSpeed { get { return t_movementSpeed; } }
-    [SerializeField] int t_experience;
-    public int Experience => t_experience;
+    #region Fields and Properties
+    [SerializeField] protected EnemyData enemyData;
 
-    public void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
+    // ReadOnly SerializedFields
+    [SerializeField] [ReadOnly] protected EnemyClass enemyClass;
+    [SerializeField] [ReadOnly] protected EnemyDifficulty enemyDifficulty;
+    [SerializeField] [ReadOnly] protected int hitPoints;
+    [SerializeField] [ReadOnly] protected int attack;
+    [SerializeField] [ReadOnly] protected float attackRadius;
+    [SerializeField] [ReadOnly] protected float movementSpeed;
+    [SerializeField] [ReadOnly] protected int experience;  
+    protected GameObject prefab;  
+
+    // Public Properties
+    public EnemyClass EnemyClass => enemyClass;
+    public EnemyDifficulty EnemyDifficulty => enemyDifficulty;
+    public int HitPoints => hitPoints;
+    public int Attack => attack;
+    public float AttackRadius => attackRadius;
+    public float MovementSpeed => movementSpeed;
+    public int Experience => experience;
+    public GameObject Prefab => prefab;
+    #endregion
+
+    public virtual void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
     {
         this.enemyClass = enemyClass;
         this.enemyDifficulty = enemyDifficulty;
         InitializeAttributes();
     }
 
-    private void InitializeAttributes()
+    protected virtual void InitializeAttributes()
     {
         if (enemyData == null)
         {
@@ -34,17 +43,23 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            foreach (var stats in enemyData.enemyStatsArray)
+            EnemyData.EnemyStats enemyStats = enemyData.enemyStatsArray.FirstOrDefault
+            (
+                stats => stats.enemyClass == this.enemyClass && stats.difficulty == this.enemyDifficulty
+            );
+
+            if (enemyStats != null)
             {
-                if (stats.enemyClass == this.enemyClass && stats.difficulty == this.enemyDifficulty)
-                {
-                    this.t_hitPoints = stats.hp;
-                    this.t_attack = stats.atk;
-                    this.t_attackRadius = stats.atkRadius;
-                    this.t_movementSpeed = stats.movementSpeed;
-                    this.t_experience = stats.experience;
-                    break;
-                }
+                this.hitPoints = enemyStats.hp;
+                this.attack = enemyStats.atk;
+                this.attackRadius = enemyStats.atkRadius;
+                this.movementSpeed = enemyStats.movementSpeed;
+                this.experience = enemyStats.experience;
+                this.prefab = enemyStats.prefab;
+            }
+            else
+            {
+                Logger.LogError($"No matching enemy data found in EnemyData based on {this.enemyClass} and {this.enemyDifficulty}.", this);
             }
         }
     }

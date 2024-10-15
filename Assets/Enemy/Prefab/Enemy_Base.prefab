@@ -93,13 +93,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4581574817136444414}
   - component: {fileID: 5271304201226330712}
+  - component: {fileID: 7306592411221824347}
   - component: {fileID: 9046090498621859014}
   - component: {fileID: 793417373166348369}
-  - component: {fileID: 4582252279215852374}
   - component: {fileID: 3536171208941353282}
   - component: {fileID: 9101984806708945259}
   - component: {fileID: 4846465907686339170}
-  - component: {fileID: 7306592411221824347}
   m_Layer: 6
   m_Name: Enemy_Base
   m_TagString: Enemy
@@ -144,6 +143,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7306592411221824347
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028765944443884622}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!195 &9046090498621859014
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -180,26 +206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 1
   positionUpdateInterval: 0.5
---- !u!114 &4582252279215852374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8028765944443884622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8587be2efa547445a6809fe19477538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: bed239e817269e443b5b6e9e52f26663, type: 2}
-  enemyClass: 0
-  enemyDifficulty: 0
-  t_hitPoints: 0
-  t_attack: 0
-  t_attackRadius: 0
-  t_movementSpeed: 0
-  t_experience: 0
 --- !u!114 &3536171208941353282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,30 +244,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4564be1af25e87468270eae67214e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &7306592411221824347
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8028765944443884622}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 57328060552705184}
-  - component: {fileID: 1719185197974016433}
   m_Layer: 0
   m_Name: ScreenAOE
   m_TagString: Untagged
@@ -33,26 +32,6 @@ Transform:
   - {fileID: 7845802762169772463}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1719185197974016433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6043325753769299960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0827411140a55445b5cf1fab2fb8b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilityParticleSystem: {fileID: 7151526369559866961, guid: 737cfd9bcd0de8b4085119cf889321ef, type: 3}
-  abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
-  abilityName: 0
-  abilityDescription: 
-  damage: 5
-  fireRate: 0
-  prefab: {fileID: 0}
-  playerAbilities: {fileID: 0}
 --- !u!1001 &2215128631522551713
 PrefabInstance:
   m_ObjectHideFlags: 0

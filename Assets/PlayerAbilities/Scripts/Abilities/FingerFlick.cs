@@ -17,7 +17,7 @@ public class FingerFlick : AbilityBase
     private float activationDelay = 3.0f;
     private bool isAttacking = false;
     private bool isAvoidingAwakeActivation;
-    private EnemyDeathHandler enemyDeathHandler;
+    private EnemyDeath enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
     private Coroutine checkForEnemiesCoroutine;
@@ -172,7 +172,7 @@ public class FingerFlick : AbilityBase
     
     private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
     {
-        enemyDeathHandler = collider.GetComponent<EnemyDeathHandler>();
+        enemyDeathHandler = collider.GetComponent<EnemyDeath>();
         enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
         enemyHealth = collider.GetComponent<EnemyHealth>(); // Setup enemyHealth reference.
     }
