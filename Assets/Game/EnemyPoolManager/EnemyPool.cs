@@ -17,6 +17,7 @@ public class EnemyPool : MonoBehaviour
     private Dictionary<string, Queue<GameObject>> waveEnemies = new();
     private GameObject waveContainer;
     private EnemyData.EnemyStats[] enemyStats;
+    private EnemyFactory enemyFactory;
     #endregion
 
     private void Awake()
@@ -55,6 +56,7 @@ public class EnemyPool : MonoBehaviour
     private void PopulateEnemyPool()
     {
         enemyStats = enemyData.enemyStatsArray;
+        enemyFactory = new EnemyFactory(enemyStats);
         
         foreach (KeyValuePair<string, EnemyWaveData[]> wave in waveDataSets)
         {
@@ -63,7 +65,7 @@ public class EnemyPool : MonoBehaviour
 
             foreach (EnemyWaveData data in wave.Value)
             {
-                enemies = EnemyFactory.CreateRangedEnemy(data, enemyStats, waveContainer);  
+                enemies = enemyFactory.CreateRangedEnemy(data, enemyStats, waveContainer);  
             }
 
             // Add to list to later use to enable enemies during gameplay.

@@ -1,41 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class EnemyFactory : MonoBehaviour
 {
-    public static Queue<GameObject> CreateRangedEnemy(EnemyWaveData enemyWaveData, EnemyData.EnemyStats[] enemyStats, GameObject waveContainer)
+    private EnemyPrefabCache enemyPrefabCache;
+
+    public EnemyFactory(EnemyData.EnemyStats[] enemyStats)
+    {
+        enemyPrefabCache = new EnemyPrefabCache(enemyStats);
+    }
+
+    public Queue<GameObject> CreateRangedEnemy(EnemyWaveData enemyWaveData, EnemyData.EnemyStats[] enemyStats, GameObject waveContainer)
     {
         GameObject enemyPrefab;
 
         switch (enemyWaveData.enemyDifficulty)
         {
             case EnemyDifficulty.Easy:
-                enemyPrefab = GetPrefabToInstantiate(enemyStats, EnemyClass.Range, EnemyDifficulty.Easy);
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Easy);
                 return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
             case EnemyDifficulty.Normal:
-                enemyPrefab = GetPrefabToInstantiate(enemyStats, EnemyClass.Range, EnemyDifficulty.Normal);
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Normal);
                 return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
             case EnemyDifficulty.Hard:
-                enemyPrefab = GetPrefabToInstantiate(enemyStats, EnemyClass.Range, EnemyDifficulty.Hard);
+                enemyPrefab = enemyPrefabCache.GetEnemyPrefab(EnemyClass.Range, EnemyDifficulty.Hard);
                 return InstantiateEnemy(enemyWaveData, enemyPrefab, waveContainer);
             default:
                 return null;
         }
     }
 
-    private static GameObject GetPrefabToInstantiate(EnemyData.EnemyStats[] enemyStats, EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
-    {
-        EnemyData.EnemyStats stats = enemyStats.FirstOrDefault
-        (
-            stat => enemyClass == stat.enemyClass 
-            && enemyDifficulty == stat.difficulty
-        );
-
-        return stats?.prefab;
-    }    
-
-    private static Queue<GameObject> InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab, GameObject waveContainer)
+    private Queue<GameObject> InstantiateEnemy(EnemyWaveData data, GameObject enemyPrefab, GameObject waveContainer)
     {   
         Queue<GameObject> enemies = new Queue<GameObject>();
 

@@ -35,14 +35,14 @@ public class EnemyPoolSpawner : MonoBehaviour
             return;
         }        
         
-        StartCoroutine(SpawnWaves());
+        StartCoroutine(StartWaves());
     }
 
-    private IEnumerator SpawnWaves()
+    private IEnumerator StartWaves()
     {
         for (int currentWave = 0; currentWave < enemyPool.WaveDataSets.Count; currentWave++)
         {
-            yield return StartCoroutine(SpawnEnemies(currentWave));
+            yield return StartCoroutine(StartEnablingEnemies(currentWave));
 
             if (currentWave < enemyPool.WaveDataSets.Count - 1)
             {
@@ -51,7 +51,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemies(int currentWave)
+    private IEnumerator StartEnablingEnemies(int currentWave)
     {
         string waveKey = $"Wave{currentWave + 1}";
         if (!enemyPool.WaveEnemies.ContainsKey(waveKey)) yield break;
@@ -61,6 +61,7 @@ public class EnemyPoolSpawner : MonoBehaviour
         while (enemiesToActivate.Count > 0)
         {
             GameObject enemy = enemyPool.WaveEnemies[waveKey].Dequeue();
+            
             if (!enemy.activeInHierarchy)
             {
                 enemy.transform.position = BaseUtilityMethods.GenerateRandomSpawnLocation(playerTransform.position);
