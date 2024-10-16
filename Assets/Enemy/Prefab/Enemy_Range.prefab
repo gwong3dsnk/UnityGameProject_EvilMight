@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: attackFX
       value: 
       objectReference: {fileID: 7222504330939581587}
+    - target: {fileID: 3536171208941353282, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: impactFX
+      value: 
+      objectReference: {fileID: 4888502735744228981, guid: 7a50bc05c3bda52479c2e11ce7320e72, type: 3}
+    - target: {fileID: 3536171208941353282, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: primaryFX
+      value: 
+      objectReference: {fileID: 9220439057694531453, guid: e948fcc4c18fbbb4e9f0c3147e5d09a6, type: 3}
     - target: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

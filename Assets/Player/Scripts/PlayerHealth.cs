@@ -14,7 +14,17 @@ public class PlayerHealth : HealthManagement
         base.Start();
     }
 
-    private void OnParticleCollision(GameObject other) 
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+    }    
+
+    public void TakePhysicalDamage(int damage)
+    {
+        TakeDamage(damage);
+    }
+
+    protected override void OnParticleCollision(GameObject other) 
     {
         if (!isPlayerDead)
         {
@@ -26,19 +36,12 @@ public class PlayerHealth : HealthManagement
                 TakeDamage(enemy.Attack);
             }
         }
-    }
+    } 
 
     protected override void BeginDeathSequence()
     {
         isPlayerDead = true;
         StartCoroutine(PlayerDeathCoroutine());
-    }
-
-    private IEnumerator PlayerDeathCoroutine()
-    {
-        GetComponent<PlayerAnimController>().ProcessDeathAnim();
-        yield return new WaitForSeconds(deathDelay);
-        GetComponent<PlayerDeathHandler>().HandleDeath();
     }
 
     protected override void HandleStillAlive()
@@ -81,8 +84,10 @@ public class PlayerHealth : HealthManagement
         // }
     }
 
-    public void ResetHealth()
+    private IEnumerator PlayerDeathCoroutine()
     {
-        currentHealth = maxHealth;
-    }
+        GetComponent<PlayerAnimController>().ProcessDeathAnim();
+        yield return new WaitForSeconds(deathDelay);
+        GetComponent<PlayerDeathHandler>().HandleDeath();
+    }    
 }

@@ -144,8 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: bed239e817269e443b5b6e9e52f26663, type: 2}
-  primaryFX: {fileID: 0}
-  impactFX: {fileID: 0}
   enemyClass: 0
   enemyDifficulty: 0
   hitPoints: 0

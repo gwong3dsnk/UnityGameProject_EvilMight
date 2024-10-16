@@ -6,8 +6,6 @@ public abstract class Enemy : MonoBehaviour
 {
     #region Fields and Properties
     [SerializeField] protected EnemyData enemyData;
-    [SerializeField] protected ParticleSystem primaryFX;
-    [SerializeField] protected ParticleSystem impactFX;
 
     // ReadOnly SerializedFields
     [SerializeField] [ReadOnly] protected EnemyClass enemyClass;
@@ -26,19 +24,29 @@ public abstract class Enemy : MonoBehaviour
     public float AttackRadius => attackRadius;
     public float MovementSpeed => movementSpeed;
     public int Experience => experience;
+    public PlayerHealth PlayerHealth => playerHealth;
 
     // Protected Fields
     protected GameObject prefab;  
     protected EnemyDeath enemyDeath;
+    protected PlayerHealth playerHealth;
     #endregion
 
     protected void Awake()
     {
         enemyDeath = GetComponent<EnemyDeath>();
+        playerHealth = FindObjectOfType<PlayerHealth>();
 
         if (enemyDeath == null || enemyData == null)
         {
-            Logger.LogError($"{this.name} Enemy script is missing reference to EnemyDeath or EnemyData.");
+            Logger.LogError($"{this.name} - Enemy script is missing reference to EnemyDeath or EnemyData.");
+            return;
+        }
+
+        if (playerHealth == null)
+        {
+            Logger.LogError($"{this.name} - Missing reference to PlayerHealth.", this);
+            return;
         }
     }
 

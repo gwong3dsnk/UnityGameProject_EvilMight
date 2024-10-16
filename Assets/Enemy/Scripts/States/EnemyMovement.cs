@@ -9,11 +9,10 @@ public class EnemyMovement : MonoBehaviour
 {
     #region Fields and Properties
     // SerializedFields
-    [SerializeField] float turnSpeed = 3f;
+    [SerializeField] float turnSpeed = 5f;
     [SerializeField] float positionUpdateInterval = 0.5f;
 
     // Private Fields
-    private Transform player;
     private NavMeshAgent navMeshAgent;
     private Enemy enemy;
     private EnemyHealth enemyHealth;
@@ -54,14 +53,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<PlayerMovement>().transform;
-
-        if (player == null)
-        {
-            Logger.LogError($"[{this.name}] - PlayerMovement script is not found in the scene.", this);
-            return;
-        }
-
         lastPosition = transform.position;
         updatePositionCoroutine = StartCoroutine(UpdatePositionPeriodically());
     }
@@ -73,9 +64,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if (player != null && !isEnemyDead)
+        if (!isEnemyDead)
         {
-            distanceToTarget = Vector3.Distance(player.position, transform.position);
+            distanceToTarget = Vector3.Distance(enemy.PlayerHealth.transform.position, transform.position);
             MoveToPlayer();
         }
     }
@@ -137,7 +128,7 @@ public class EnemyMovement : MonoBehaviour
     private void FacePlayer()
     {
         // Rotate the enemy to face the player
-        Vector3 direction = (player.position - transform.position).normalized;
+        Vector3 direction = (enemy.PlayerHealth.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
     }
@@ -146,7 +137,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (navMeshAgent.isOnNavMesh && navMeshAgent.isActiveAndEnabled)
         {
-            navMeshAgent.SetDestination(player.position);
+            navMeshAgent.SetDestination(enemy.PlayerHealth.transform.position);
             // Check if enemy is ranged or melee.  Ranged will walk, melee will run.
             enemyAnimController.DetermineEnemyClassAndAction(EnemyAnimCategory.Movement);
         }

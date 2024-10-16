@@ -1,12 +1,17 @@
 using System;
+using NaughtyAttributes;
 using UnityEngine;
 
 public abstract class HealthManagement : MonoBehaviour
 {
-    [SerializeField] protected int maxHealth = 1;
+    [SerializeField] [ReadOnly] protected float currentHealth;
     public float CurrentHealth => currentHealth;
     public event EventHandler OnDeath;
-    protected float currentHealth;
+    protected int maxHealth = 1;
+
+    protected abstract void OnParticleCollision(GameObject other);
+    protected abstract void BeginDeathSequence();
+    protected abstract void HandleStillAlive();
 
     protected virtual void Start()
     {
@@ -31,8 +36,4 @@ public abstract class HealthManagement : MonoBehaviour
     {
         OnDeath?.Invoke(this, EventArgs.Empty);
     }
-
-    protected abstract void BeginDeathSequence();
-
-    protected abstract void HandleStillAlive();
 }

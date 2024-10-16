@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// [RequireComponent(typeof(Enemy))]
 public class EnemyHealth : HealthManagement
 {
     private Enemy enemy;
@@ -18,12 +17,6 @@ public class EnemyHealth : HealthManagement
         currentHealth = maxHealth;
     }
 
-    private void OnParticleCollision(GameObject other)
-    {
-        AbilityBase ability = other.GetComponentInParent<AbilityBase>();
-        HandleTakeCollisionDamage(ability);
-    }
-
     public void HandleTakeCollisionDamage(AbilityBase ability)
     {
         if (ability != null)
@@ -35,6 +28,12 @@ public class EnemyHealth : HealthManagement
             Logger.LogError("[EnemyHealth] - Missing PlayerAbilities.", this);
         }
     }
+
+    protected override void OnParticleCollision(GameObject other) 
+    {
+        AbilityBase ability = other.GetComponentInParent<AbilityBase>();
+        HandleTakeCollisionDamage(ability);
+    }    
 
     protected override void BeginDeathSequence()
     {

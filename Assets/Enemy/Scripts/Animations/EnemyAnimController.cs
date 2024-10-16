@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
 {
-    public event EventHandler OnEnemyAnimEvent;
+    public event EventHandler OnEnemyAttackParticleAnimEvent;
+    public event EventHandler OnEnemyAttackPhysicalAnimEvent;
     private Animator animator;
     private EnemyAnimState currentState;
     private EnemyHealth enemyHealth;
+    private Enemy enemy;
     private const string getHitTrigger = "GetHitTrigger";
     private const string rangeAttacking = "isRangeAttacking";
     private const string deathTrigger = "DeathTrigger";
@@ -16,6 +18,7 @@ public class EnemyAnimController : MonoBehaviour
 
     private void Awake() 
     {
+        enemy = GetComponentInParent<Enemy>();
         animator = GetComponent<Animator>();
         enemyHealth = GetComponentInParent<EnemyHealth>();
 
@@ -23,6 +26,12 @@ public class EnemyAnimController : MonoBehaviour
         {
             Logger.LogError("[EnemyAnimController] - Animator or EnemyHealth reference is missing", this);
             return;            
+        }
+
+        if (enemy == null)
+        {
+            Logger.LogError("[EnemyAnimController] - Enemy reference is missing", this);
+            return;
         }
     }
 
@@ -38,67 +47,60 @@ public class EnemyAnimController : MonoBehaviour
 
     public void DetermineEnemyClassAndAction(EnemyAnimCategory animType)
     {
-        Enemy enemy = GetComponentInParent<Enemy>();
-        if (enemy == null)
+        switch (enemy.EnemyClass)
         {
-            Logger.LogError($"[{this.name}] - Enemy script component is missing", this);
-            return;            
-        }
-        else
-        {
-            switch (enemy.EnemyClass)
-            {
-                case EnemyClass.Range:
-                    if (animType == EnemyAnimCategory.Movement)
-                    {
-                        SetRangeMoveBool();
-                        currentState = EnemyAnimState.RangeMovement;
-                    }
-                    else if (animType == EnemyAnimCategory.Attack)
-                    {
-                        SetRangeAttackBool();
-                        currentState = EnemyAnimState.RangeAttack;
-                    }
-                    else
-                    {
-                        SetTriggerParam(getHitTrigger);
-                    }
-                    break;
-                case EnemyClass.Melee:
-                    if (animType == EnemyAnimCategory.Movement)
-                    {
-                        SetMeleeMoveBool();
-                        currentState = EnemyAnimState.MeleeMovement;
-                    }
-                    else if (animType == EnemyAnimCategory.Attack)
-                    {
-                        SetMeleeAttackBool();
-                        currentState = EnemyAnimState.MeleeAttack;
-                    }
-                    else
-                    {
-                        SetTriggerParam(getHitTrigger);
-                    }            
-                    break;
-                default:
-                    return;
-            }
+            case EnemyClass.Range:
+                if (animType == EnemyAnimCategory.Movement)
+                {
+                    SetRangeMoveBool();
+                    currentState = EnemyAnimState.RangeMovement;
+                }
+                else if (animType == EnemyAnimCategory.Attack)
+                {
+                    SetRangeAttackBool();
+                    currentState = EnemyAnimState.RangeAttack;
+                }
+                else
+                {
+                    SetTriggerParam(getHitTrigger);
+                }
+                break;
+            case EnemyClass.Melee:
+                if (animType == EnemyAnimCategory.Movement)
+                {
+                    SetMeleeMoveBool();
+                    currentState = EnemyAnimState.MeleeMovement;
+                }
+                else if (animType == EnemyAnimCategory.Attack)
+                {
+                    SetMeleeAttackBool();
+                    currentState = EnemyAnimState.MeleeAttack;
+                }
+                else
+                {
+                    SetTriggerParam(getHitTrigger);
+                }            
+                break;
+            default:
+                return;
         }
     }
 
-    public void ReceiveAttackAnimEvent()
+    public void ReceiveAttackParticleAnimEvent()
     {
-        // Method called by enemy animation events & by EnemyMovement.
-        OnEnemyAnimEvent?.Invoke(this, EventArgs.Empty);
+        // Method called by range enemy attack anim event
+        OnEnemyAttackParticleAnimEvent?.Invoke(this, EventArgs.Empty);
     }
 
-    public void HitDetection()
+    public void ReceiveAttackPhysicalAnimEvent()
     {
-        
+        // Method called by melee enemy attack anim event
+        OnEnemyAttackPhysicalAnimEvent?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnGetHitCompletion()
     {
+        // Method called by GetHit anim event
         switch (currentState)
         {
             case EnemyAnimState.RangeMovement:
