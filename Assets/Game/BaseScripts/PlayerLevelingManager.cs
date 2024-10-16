@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class PlayerLevelingManager : MonoBehaviour
 {
     #region Fields and Properties
     // SerializedFields

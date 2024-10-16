@@ -3,7 +3,7 @@ using UnityEngine;
 public class AbilityCardChooserUI : MonoBehaviour
 {
     [SerializeField] Canvas abilityChoiceCanvas;
-    [SerializeField] LevelManager levelManager;
+    [SerializeField] PlayerLevelingManager playerLevelingManager;
 
     private void Start()
     {
@@ -11,22 +11,22 @@ public class AbilityCardChooserUI : MonoBehaviour
         Logger.Log("------------------------------------------------", this);
         Logger.Log("[AbilityCardChooseUI] - All OnAwake logic and AbilityCardChoose OnStart logic FINISHED", this);
         Logger.Log("------------------------------------------------", this);
-        if (levelManager == null)
+        if (playerLevelingManager == null)
         {
-            Logger.LogError("[AbilityCardChooseUI] - Missing level manager reference", this);
+            Logger.LogError("[AbilityCardChooseUI] - Missing PlayerLevelingManager reference", this);
         }
     }
 
     private void OnEnable() 
     {
-        levelManager.OnLevelUp += EnableAbilityChoiceCanvas;
+        playerLevelingManager.OnLevelUp += EnableAbilityChoiceCanvas;
         AbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion += DisableAbilityChoiceCanvas;
         UpgradeManager.UpgradeManagerInstance.OnUpgradeActivationCompletion += DisableAbilityChoiceCanvas;
     }
 
     private void OnDisable() 
     {
-        levelManager.OnLevelUp -= EnableAbilityChoiceCanvas;
+        playerLevelingManager.OnLevelUp -= EnableAbilityChoiceCanvas;
         AbilitiesManager.AbilityManagerInstance.OnAbilityActivationCompletion -= DisableAbilityChoiceCanvas;
         UpgradeManager.UpgradeManagerInstance.OnUpgradeActivationCompletion -= DisableAbilityChoiceCanvas;
     }

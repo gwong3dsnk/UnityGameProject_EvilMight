@@ -10,7 +10,7 @@ public class EnemyDeath : MonoBehaviour
     private Enemy enemy;
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
-    private LevelManager levelManager;
+    private PlayerLevelingManager playerLevelingManager;
     private EnemyPool enemyPool;
 
     private void Awake()
@@ -34,7 +34,7 @@ public class EnemyDeath : MonoBehaviour
     {
         enemy = GetComponent<Enemy>();
         enemyCollider = GetComponent<Collider>();
-        levelManager = FindObjectOfType<LevelManager>();
+        playerLevelingManager = FindObjectOfType<PlayerLevelingManager>();
         
         if (GridManager.GridManagerInstance == null)
         {
@@ -48,9 +48,9 @@ public class EnemyDeath : MonoBehaviour
             return;
         }
 
-        if (levelManager == null)
+        if (playerLevelingManager == null)
         {
-            Logger.LogError("[EnemyDeathHandler] - Missing reference to LevelManager.", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing reference to PlayerLevelingManager.", this);
             return;
         }
     }
@@ -67,7 +67,7 @@ public class EnemyDeath : MonoBehaviour
 
         if (enemyHealthSender != null)
         {
-            levelManager.AddXP(enemy.Experience);
+            playerLevelingManager.AddXP(enemy.Experience);
             StartCoroutine(DelayProcessingEnemyDeactivation());
         }        
     }
