@@ -11,14 +11,16 @@ public class EnemyDeath : MonoBehaviour
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
     private LevelManager levelManager;
+    private EnemyPool enemyPool;
 
     private void Awake()
     {
         enemyHealth = GetComponent<EnemyHealth>();
+        enemyPool = FindObjectOfType<EnemyPool>();
 
-        if (enemyHealth == null)
+        if (enemyHealth == null || enemyPool == null)
         {
-            Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth script component.", this);
+            Logger.LogError("[EnemyDeathHandler] - Missing EnemyHealth component or reference to EnemyPool.", this);
             return;
         }
     }
@@ -74,7 +76,14 @@ public class EnemyDeath : MonoBehaviour
     {
         yield return new WaitForSeconds(deactivationDelay);
         GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
+        EnqueueKilledEnemy();
         OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
         gameObject.SetActive(false);
     }
+
+    private void EnqueueKilledEnemy()
+    {
+        string parentName = transform.parent.gameObject.name;
+        enemyPool.WaveEnemies[parentName].Enqueue(gameObject);
+    }    
 }

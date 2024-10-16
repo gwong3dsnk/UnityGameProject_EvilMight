@@ -1185,10 +1185,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 989551062267389654, guid: b2211741f75ad234fa3bf2875ac13bf3, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 23800000, guid: d66e4b050881af642b22f120e5fc6187, type: 2}
     - target: {fileID: 4336891066869193079, guid: b2211741f75ad234fa3bf2875ac13bf3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -512
@@ -1268,7 +1264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[0].enemyCount
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[1].enemyClass
@@ -1284,7 +1280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[0].enemyCount
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[1].enemyClass
@@ -1292,7 +1288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[1].enemyCount
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[0].enemyClass
@@ -1300,7 +1296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[0].enemyCount
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[1].enemyClass
@@ -1308,7 +1304,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[2].enemyWaveData.Array.data[1].enemyCount
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[1].enemyWaveData.Array.data[0].enemyDifficulty

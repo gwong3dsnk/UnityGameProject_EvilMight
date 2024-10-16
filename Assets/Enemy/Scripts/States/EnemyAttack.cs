@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] ParticleSystem attackFX;
+    [SerializeField] ParticleSystem primaryFX;
+    [SerializeField] ParticleSystem impactFX;
     private EnemyAnimController enemyAnimController;
 
     private void Awake() 
@@ -24,14 +25,14 @@ public class EnemyAttack : MonoBehaviour
     public void PlayAttackFX()
     {
         StopAttackFX();
-        attackFX.Play();
+        primaryFX.Play();
     }
 
     public void StopAttackFX()
     {
-        if (attackFX.isPlaying)
+        if (primaryFX.isPlaying)
         {
-            attackFX.Stop();
+            primaryFX.Stop();
         }        
     }
 }

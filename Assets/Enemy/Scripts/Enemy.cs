@@ -6,6 +6,8 @@ public abstract class Enemy : MonoBehaviour
 {
     #region Fields and Properties
     [SerializeField] protected EnemyData enemyData;
+    [SerializeField] protected ParticleSystem primaryFX;
+    [SerializeField] protected ParticleSystem impactFX;
 
     // ReadOnly SerializedFields
     [SerializeField] [ReadOnly] protected EnemyClass enemyClass;
@@ -24,38 +26,20 @@ public abstract class Enemy : MonoBehaviour
     public float AttackRadius => attackRadius;
     public float MovementSpeed => movementSpeed;
     public int Experience => experience;
-    public GameObject Prefab => prefab;
 
     // Protected Fields
     protected GameObject prefab;  
     protected EnemyDeath enemyDeath;
-    protected EnemyPool enemyPool;
     #endregion
 
     protected void Awake()
     {
         enemyDeath = GetComponent<EnemyDeath>();
-        enemyPool = FindObjectOfType<EnemyPool>();
 
-        if (enemyDeath == null || enemyPool == null)
+        if (enemyDeath == null || enemyData == null)
         {
-            Logger.LogError($"{this.name} Enemy script is missing references to either EnemyDeath or EnemyPool.");
+            Logger.LogError($"{this.name} Enemy script is missing reference to EnemyDeath or EnemyData.");
         }
-
-        if (enemyData == null)
-        {
-            Logger.LogError($"{this.name} Enemy script is missing reference to EnemyData.");
-        }
-    }
-
-    protected void OnEnable()
-    {
-        enemyDeath.OnEnemyDeactivation += EnqueueKilledEnemy;
-    }
-
-    protected void OnDisable()
-    {
-        enemyDeath.OnEnemyDeactivation -= EnqueueKilledEnemy;
     }
 
     public virtual void SetClassAndDifficulty(EnemyClass enemyClass, EnemyDifficulty enemyDifficulty)
@@ -63,12 +47,6 @@ public abstract class Enemy : MonoBehaviour
         this.enemyClass = enemyClass;
         this.enemyDifficulty = enemyDifficulty;
         InitializeAttributes();
-    }
-
-    protected virtual void EnqueueKilledEnemy(object sender, System.EventArgs e)
-    {
-        string parentName = transform.parent.gameObject.name;
-        enemyPool.WaveEnemies[parentName].Enqueue(gameObject);
     }
 
     protected virtual void InitializeAttributes()

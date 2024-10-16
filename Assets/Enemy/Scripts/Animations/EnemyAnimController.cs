@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
 {
+    public event EventHandler OnEnemyAnimEvent;
     private Animator animator;
     private EnemyAnimState currentState;
     private EnemyHealth enemyHealth;
@@ -26,12 +28,12 @@ public class EnemyAnimController : MonoBehaviour
 
     private void OnEnable()
     {
-        enemyHealth.OnDeath += ProcessEnemyDeath;        
+        enemyHealth.OnDeath += PlayEnemyDeathAnim;        
     }
 
     private void OnDisable()
     {
-        enemyHealth.OnDeath -= ProcessEnemyDeath;
+        enemyHealth.OnDeath -= PlayEnemyDeathAnim;
     }
 
     public void DetermineEnemyClassAndAction(EnemyAnimCategory animType)
@@ -84,6 +86,36 @@ public class EnemyAnimController : MonoBehaviour
         }
     }
 
+    public void ReceiveAttackAnimEvent()
+    {
+        // Method called by enemy animation events & by EnemyMovement.
+        OnEnemyAnimEvent?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void HitDetection()
+    {
+        
+    }
+
+    public void OnGetHitCompletion()
+    {
+        switch (currentState)
+        {
+            case EnemyAnimState.RangeMovement:
+                SetRangeMoveBool();
+                break;
+            case EnemyAnimState.RangeAttack:
+                SetRangeAttackBool();
+                break;
+            case EnemyAnimState.MeleeMovement:
+                SetMeleeMoveBool();
+                break;
+            case EnemyAnimState.MeleeAttack:
+                SetMeleeAttackBool();
+                break;
+        }
+    }    
+
     private void SetRangeMoveBool()
     {
         animator.SetBool(rangeAttacking, false);
@@ -108,7 +140,7 @@ public class EnemyAnimController : MonoBehaviour
         animator.SetBool(meleeAttacking, true);
     }
 
-    private void ProcessEnemyDeath(object sender, System.EventArgs e)
+    private void PlayEnemyDeathAnim(object sender, System.EventArgs e)
     {
         SetTriggerParam(deathTrigger);
     }
@@ -116,38 +148,5 @@ public class EnemyAnimController : MonoBehaviour
     private void SetTriggerParam(string triggerName)
     {
         animator.SetTrigger(triggerName);
-    }
-
-    public void ReceiveAttackAnimEvent()
-    {
-        EnemyAttack enemyAttack = GetComponentInParent<EnemyAttack>();
-        if (enemyAttack != null)
-        {
-            enemyAttack.PlayAttackFX();
-        }
-        else
-        {
-            Logger.LogError($"[{this.name}] - Missing reference to EnemyAttack.", this);
-            return;
-        }
-    }
-
-    public void OnGetHitCompletion()
-    {
-        switch (currentState)
-        {
-            case EnemyAnimState.RangeMovement:
-                SetRangeMoveBool();
-                break;
-            case EnemyAnimState.RangeAttack:
-                SetRangeAttackBool();
-                break;
-            case EnemyAnimState.MeleeMovement:
-                SetMeleeMoveBool();
-                break;
-            case EnemyAnimState.MeleeAttack:
-                SetMeleeAttackBool();
-                break;
-        }
     }
 }

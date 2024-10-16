@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: projectileFX
       value: 
       objectReference: {fileID: 1602559197875551712}
+    - target: {fileID: 3536171208941353282, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: attackFX
+      value: 
+      objectReference: {fileID: 4888502735744228981, guid: 7a50bc05c3bda52479c2e11ce7320e72, type: 3}
     - target: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -76,12 +80,26 @@ PrefabInstance:
       propertyPath: movementSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5271304201226330712, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271304201226330712, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271304201226330712, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8028765944443884622, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       propertyPath: m_Name
-      value: Enemy_Easy_Melee
+      value: Enemy_Melee
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 3536171208941353282, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 3409334154483410009, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4581574817136444414, guid: c793e3a1afe51a242ada32b17efcae42, type: 3}
       insertIndex: -1

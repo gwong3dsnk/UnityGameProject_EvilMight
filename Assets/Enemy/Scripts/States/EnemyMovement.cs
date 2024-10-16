@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-// [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(EnemyAttack))]
 [RequireComponent(typeof(EnemyHealth))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -10,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
 {
     #region Fields and Properties
     // SerializedFields
-    [SerializeField] float turnSpeed = 1f;
+    [SerializeField] float turnSpeed = 3f;
     [SerializeField] float positionUpdateInterval = 0.5f;
 
     // Private Fields
@@ -23,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
     private float distanceToTarget = Mathf.Infinity;
     private Vector3 lastPosition;
     private Coroutine updatePositionCoroutine;
+    private bool isEnemyDead = false;
     #endregion
 
     private void Awake()
@@ -39,15 +39,15 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (navMeshAgent == null || enemyHealth == null)
+        if (navMeshAgent == null)
         {
-            Logger.LogError($"[{this.name}] - NavMeshAgent or EnemyHealth component is missing", this);
+            Logger.LogError($"[{this.name}] - NavMeshAgent component is missing", this);
             return;
         }        
         
-        if (enemyAttack == null)
+        if (enemyAttack == null || enemyHealth == null)
         {
-            Logger.LogError($"[{this.name}] - Missing EnemyAttack script component.", this);
+            Logger.LogError($"[{this.name}] - Missing EnemyAttack or EnemyHealth script component.", this);
             return;
         }        
     }
@@ -73,7 +73,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if (player != null)
+        if (player != null && !isEnemyDead)
         {
             distanceToTarget = Vector3.Distance(player.position, transform.position);
             MoveToPlayer();
@@ -92,12 +92,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void StopMovement(object sender, System.EventArgs e)
     {
-        EnemyHealth enemyHealthSender = sender as EnemyHealth;
-
-        if (enemyHealthSender != null)
+        if (sender as EnemyHealth)
         {
-            navMeshAgent.isStopped = true;
-            navMeshAgent.velocity = Vector3.zero;
+            isEnemyDead = true;
         }
     }
 
@@ -132,6 +129,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (distanceToTarget <= navMeshAgent.stoppingDistance) // player within range, enemy will attack
         {
+            navMeshAgent.velocity = Vector3.zero;
             enemyAttack.AttackTarget();
         }        
     }
