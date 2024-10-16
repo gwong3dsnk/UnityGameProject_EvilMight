@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerHealth : HealthManagement
 {
     [SerializeField] private int playerHealth = 3;
-    private float deathDelay = 1.0f;
     private Enemy enemy;
     private bool isPlayerDead;
 
@@ -38,10 +37,10 @@ public class PlayerHealth : HealthManagement
         }
     } 
 
-    protected override void BeginDeathSequence()
+    protected override void HandleDeath()
     {
         isPlayerDead = true;
-        StartCoroutine(PlayerDeathCoroutine());
+        InvokeOnDeathEvent();
     }
 
     protected override void HandleStillAlive()
@@ -83,11 +82,4 @@ public class PlayerHealth : HealthManagement
         //     GetComponent<PlayerAnimController>().ProcessGetHitAnim();
         // }
     }
-
-    private IEnumerator PlayerDeathCoroutine()
-    {
-        GetComponent<PlayerAnimController>().ProcessDeathAnim();
-        yield return new WaitForSeconds(deathDelay);
-        GetComponent<PlayerDeathHandler>().HandleDeath();
-    }    
 }

@@ -35,7 +35,7 @@ public class EnemyHealth : HealthManagement
         HandleTakeCollisionDamage(ability);
     }    
 
-    protected override void BeginDeathSequence()
+    protected override void HandleDeath()
     {
         if (!isEnemyDeathProcessed)
         {

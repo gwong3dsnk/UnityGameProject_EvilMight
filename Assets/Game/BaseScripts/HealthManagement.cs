@@ -10,7 +10,7 @@ public abstract class HealthManagement : MonoBehaviour
     protected int maxHealth = 1;
 
     protected abstract void OnParticleCollision(GameObject other);
-    protected abstract void BeginDeathSequence();
+    protected abstract void HandleDeath();
     protected abstract void HandleStillAlive();
 
     protected virtual void Start()
@@ -24,7 +24,7 @@ public abstract class HealthManagement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            BeginDeathSequence(); 
+            HandleDeath(); 
         }
         else
         {

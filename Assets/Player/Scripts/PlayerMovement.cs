@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         MovePlayer();
         RotatePlayer();
-        // UpdatePlayerHeight();
     }
 
     private void OnDisable() 
@@ -53,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
         }
      
         rb.velocity = movement * movementSpeed;
-        // rb.velocity = new Vector3(movement.x * movementSpeed, rb.velocity.y, movement.z * movementSpeed);
     }
 
     private void RotatePlayer()
@@ -70,17 +68,6 @@ public class PlayerMovement : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
     }
-
-    // private void UpdatePlayerHeight()
-    // {
-    //     RaycastHit hit;
-    //     // Cast a ray downwards to get the terrain height
-    //     if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit))
-    //     {
-    //         Vector3 newPosition = new Vector3(transform.position.x, hit.point.y, transform.position.z);
-    //         rb.position = newPosition; // Set the new position while keeping the rotation
-    //     }
-    // }    
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
