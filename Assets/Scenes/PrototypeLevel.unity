@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 59573b088aaea0442bf29e0a0e9d1339, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -400,6 +400,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7391163298542281199, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1176383948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7437143004645335867, guid: 0555b2851379f5b45a63c0792a2b4f0b, type: 3}
+  m_PrefabInstance: {fileID: 2241169939956980527}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a1ec8948631c6488bb00cc7643d648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1186384626 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5552972640768200751, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
@@ -886,6 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeathCanvas: {fileID: 428600675}
+  abilityCardChooserUI: {fileID: 1176383948}
 --- !u!1001 &109696816220360735
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,7 +956,7 @@ PrefabInstance:
       objectReference: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
     - target: {fileID: 2853289758988068880, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: playerHealth
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3491606287055040149, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
       propertyPath: m_Constraints
@@ -1300,7 +1312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[0].enemyCount
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[1].enemyClass

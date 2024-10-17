@@ -39,7 +39,7 @@ MonoBehaviour:
     prefab: {fileID: 7539209899930774730, guid: cbdd878178d8c0f4a93ae922e43cdfb0, type: 3}
   - enemyClass: 0
     difficulty: 0
-    hp: 2
+    hp: 1
     atk: 1
     atkRadius: 3
     movementSpeed: 7
