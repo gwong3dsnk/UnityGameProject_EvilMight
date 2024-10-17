@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyWaveController))]
@@ -18,6 +19,7 @@ public class EnemyPool : MonoBehaviour
     private GameObject waveContainer;
     private EnemyData.EnemyStats[] enemyStats;
     private EnemyFactory enemyFactory;
+    private int totalEnemyCounter;
     #endregion
 
     private void Awake()
@@ -32,6 +34,22 @@ public class EnemyPool : MonoBehaviour
 
         CreateWaveDataRelationship();
         PopulateEnemyPool();
+    }
+
+    public bool DecrementFinalWaveCounter()
+    {
+        totalEnemyCounter--;
+
+        if (totalEnemyCounter <= 0) 
+        {
+            Logger.Log("LAST ENEMY DEAD - GAMESTATE CHANGE", this);
+            GameManager.Instance.ChangeGameState(GameStates.PlayerVictory); // All enemies dead.  Game over.  Change game state.
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void CreateWaveDataRelationship()
@@ -67,6 +85,7 @@ public class EnemyPool : MonoBehaviour
 
             foreach (EnemyWaveData data in wave.Value)
             {
+                totalEnemyCounter += data.enemyCount;
                 enemies = enemyFactory.CreateEnemy(data, waveContainer);  
             }
 

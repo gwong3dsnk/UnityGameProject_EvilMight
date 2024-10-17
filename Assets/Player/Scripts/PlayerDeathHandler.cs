@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerDeathHandler : MonoBehaviour
 {
-    [SerializeField] Canvas playerDeathCanvas;
     private PlayerHealth playerHealth;
     private PlayerAnimController playerAnimController;
     private float deathDelay = 1.0f;   
@@ -25,15 +24,6 @@ public class PlayerDeathHandler : MonoBehaviour
         if (playerAnimController == null)
         {
             Logger.LogError($"[{this.name}] -  Missing PlayerAnimController reference", this);
-        }
-
-        if (playerDeathCanvas != null)
-        {
-            playerDeathCanvas.transform.gameObject.SetActive(false);
-        }
-        else
-        {
-            Logger.LogError("[PlayerDeathHandler] -  Missing PlayerDeathCanvas reference", this);
         }
     }
 
@@ -57,18 +47,11 @@ public class PlayerDeathHandler : MonoBehaviour
 
     private IEnumerator PlayerDeathCoroutine()
     {
+        Logger.Log("PLAYER DEAD - PLAYING DEATH COROUTINE.", this);
+        AbilitiesManager.AbilityManagerInstance.DeactivatePlayerAbilities();
         playerAnimController.ProcessDeathAnim();
         yield return new WaitForSeconds(deathDelay);
-        DeathSequence();
-    }
-
-    private void DeathSequence()
-    {
-        playerDeathCanvas.transform.gameObject.SetActive(true);
-
-        Logger.Log("[PlayerDeathHandler] - Freezing time on player death.", this);
-        Time.timeScale = 0;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        Logger.Log("PLAYER DEAD - GAMESTATE CHANGE.", this);
+        GameManager.Instance.ChangeGameState(GameStates.PlayerLoss); // Player has died.  Game over. Change the game state
     }
 }

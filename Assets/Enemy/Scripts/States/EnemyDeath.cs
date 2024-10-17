@@ -63,12 +63,14 @@ public class EnemyDeath : MonoBehaviour
 
     private void DeathHandler_OnDeath(object sender, System.EventArgs e)
     {
-        EnemyHealth enemyHealthSender = sender as EnemyHealth;
-
-        if (enemyHealthSender != null)
+        if (sender as EnemyHealth != null)
         {
-            playerLevelingManager.AddXP(enemy.Experience);
-            StartCoroutine(DelayProcessingEnemyDeactivation());
+            bool isGameOver = enemyPool.DecrementFinalWaveCounter();
+            if (!isGameOver)
+            {
+                playerLevelingManager.AddXP(enemy.Experience);
+                StartCoroutine(DelayProcessingEnemyDeactivation());
+            }
         }        
     }
 

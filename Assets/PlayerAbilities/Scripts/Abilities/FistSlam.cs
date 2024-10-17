@@ -26,8 +26,8 @@ public class FistSlam : AbilityBase
 
     public override void DeactivateAbility()
     {
-        StopFistSlamAttackCoroutine();
         base.DeactivateAbility();
+        StopFistSlamAttackCoroutine();
     }    
 
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
@@ -77,19 +77,13 @@ public class FistSlam : AbilityBase
         {
             isAttacking = false;
             StopCoroutine(attackCoroutine);
-            if (attackCoroutine != null)
-            {
-                attackCoroutine = null;
-            }
+            if (attackCoroutine != null) attackCoroutine = null;
         }
     }
 
     private void PlayParticleSystem()
     {
-        if (fxSystem.isPlaying)
-        {
-            fxSystem.Stop();
-        }
+        if (fxSystem.isPlaying) fxSystem.Stop();
         
         fxSystem.Play();
     }

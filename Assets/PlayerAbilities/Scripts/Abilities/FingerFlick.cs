@@ -61,6 +61,7 @@ public class FingerFlick : AbilityBase
     public override void DeactivateAbility()
     {
         base.DeactivateAbility();
+        isAttacking = true; // prevent update logic from executing.
     }    
 
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
@@ -201,7 +202,6 @@ public class FingerFlick : AbilityBase
         {
             Logger.Log("[FingerFlick] - Stopping attack cycle for FingerFlick anim and coroutine", this);
             isAttacking = false;
-            DeactivateAbility();
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
             enemyDeathHandler.OnEnemyDeactivation -= StopAttacking;

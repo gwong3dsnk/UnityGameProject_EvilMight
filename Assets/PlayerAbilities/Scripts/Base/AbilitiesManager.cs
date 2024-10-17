@@ -81,11 +81,23 @@ public class AbilitiesManager : MonoBehaviour
         }
     }
 
-    public void RemoveAbility(AbilityBase ability)
+    // public void RemoveAbility(AbilityBase ability)
+    // {
+    //     if (activeAbilities.Contains(ability))
+    //     {
+    //         activeAbilities.Remove(ability);
+    //         ability.DeactivateAbility();
+    //     }
+    // }
+
+    /// <summary>
+    /// Called by PlayerDeathHandler.PlayerDeathCoroutine when the player dies to ensure 
+    /// abilities don't kill the enemy after the player has already died.
+    /// </summary>
+    public void DeactivatePlayerAbilities()
     {
-        if (activeAbilities.Contains(ability))
+        foreach (AbilityBase ability in activeAbilities)
         {
-            activeAbilities.Remove(ability);
             ability.DeactivateAbility();
         }
     }
@@ -132,8 +144,6 @@ public class AbilitiesManager : MonoBehaviour
 
     public void InvokeHandleAbilityPlayAnimEvent(AbilityBase ability)
     {
-        // abilityToAnimate = ability;
-        // Logger.Log($"[{this.name}] - Invoking HandleAbilityPlayAnim for {abilityToAnimate.AbilityName}.", this);
         HandleAbilityPlayAnim?.Invoke(ability);
     }
     #endregion

@@ -18,11 +18,9 @@ public abstract class AbilityBase : MonoBehaviour
 
     // Public Fields/Properties
     public AbilityNames AbilityName => abilityName;
-    public float Damage { get => damage; set => damage = value; }
-    public float FireRate => fireRate;
+    public float Damage => damage;
 
     // Protected Fields
-    protected bool isEffectRepeating = false;
     protected GameObject[] playerSockets;
     protected Vector3 enemyPosition = new Vector3();      
     #endregion
@@ -46,7 +44,8 @@ public abstract class AbilityBase : MonoBehaviour
 
     public virtual void DeactivateAbility()
     {
-        Logger.Log($"[{this.name}] - Stopping particle system.", this);
+        Logger.Log($"[{this.name}] - Stopping all ability coroutines.", this);
+        StopAllCoroutines();
     }
 
     public virtual void ActivateUpgrade(UpgradeTypesDatabase upgradeToActivate)
