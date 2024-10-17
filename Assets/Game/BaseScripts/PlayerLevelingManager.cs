@@ -11,14 +11,14 @@ public class PlayerLevelingManager : MonoBehaviour
     [Tooltip("Delay in seconds to wait before enabling ability choice canvas UI.")] 
     private float onLevelUpDelay = 1.0f;
 
+    // Event
+    public event EventHandler OnLevelUp; 
+
     // Serialized for testing purposes only
     [SerializeField] private int levelXPThreshold;
     [SerializeField] private int currentLevel = 1;
     [SerializeField] private int currentXP = 0;
     [SerializeField] private int excessXP;
-
-    // Event
-    public event EventHandler OnLevelUp;
 
     // Debug
     #if UNITY_EDITOR

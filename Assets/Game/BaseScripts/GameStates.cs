@@ -4,5 +4,6 @@ public enum GameStates
     Playing,
     PlayerVictory,
     PlayerLoss,
-    Pausing
+    Pausing,
+    LevelingUp
 }

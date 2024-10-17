@@ -14,6 +14,7 @@ public class AbilityCardChooserUI : MonoBehaviour
         if (playerLevelingManager == null)
         {
             Logger.LogError("[AbilityCardChooseUI] - Missing PlayerLevelingManager reference", this);
+            return;
         }
     }
 
@@ -33,7 +34,7 @@ public class AbilityCardChooserUI : MonoBehaviour
 
     public void EnableAbilityChoiceCanvas(object sender, System.EventArgs e)
     {
-        Time.timeScale = 0;
+        GameManager.Instance.ChangeGameState(GameStates.LevelingUp);        
         abilityChoiceCanvas.gameObject.SetActive(true);
 
         AbilityCardGenerator cardGenerator = abilityChoiceCanvas.GetComponent<AbilityCardGenerator>();
@@ -49,8 +50,7 @@ public class AbilityCardChooserUI : MonoBehaviour
 
     public void DisableAbilityChoiceCanvas(object sender, System.EventArgs e)
     {
-        Logger.Log("[AbilityCardChooseUI] - Resuming time and disabling ability choice canvas.", this);
-        Time.timeScale = 1;
+        GameManager.Instance.ChangeGameState(GameStates.Playing);
         abilityChoiceCanvas.gameObject.SetActive(false);
     }
 }

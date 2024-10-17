@@ -3,7 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     
-    [SerializeField] Canvas playerDeathCanvas;
+    [SerializeField] private Canvas playerDeathCanvas;
+    [SerializeField] private AbilityCardChooserUI abilityCardChooserUI;
     public static GameManager Instance;
     private GameStates currentGameState;
 
@@ -52,6 +53,9 @@ public class GameManager : MonoBehaviour
             case GameStates.Pausing:
                 TriggerPausing();
                 break;
+            case GameStates.LevelingUp:
+                TriggerLevelingUp();
+                break;
             default:
                 return;
         }
@@ -80,6 +84,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void TriggerPausing()
+    {
+        FreezeGame();
+    }
+
+    private void TriggerLevelingUp()
     {
         FreezeGame();
     }
