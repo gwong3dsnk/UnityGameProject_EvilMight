@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -14,14 +12,12 @@ public class FingerFlick : AbilityBase
 {
     #region Fields and Properties
     [SerializeField] private float meleeRange = 2.5f;
-    private float activationDelay = 3.0f;
-    private bool isAttacking = false;
+    // private bool isAttacking = false; 
     private bool isAvoidingAwakeActivation;
     private EnemyDeath enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
     private Coroutine checkForEnemiesCoroutine;
-    private ParticleSystem[] particleSystems;
     #endregion
 
     protected override void Awake()
@@ -41,13 +37,15 @@ public class FingerFlick : AbilityBase
     #region Public Methods
     public override void ActivateAbility()
     {
+        activationDelay = 3.0f;
+
         // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
         if (isAvoidingAwakeActivation)
         {
             if (!isAttacking)
             {
                 isAttacking = true;
-                GetAbilityParticleSystem();
+                base.GetAbilityParticleSystems();
                 Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
                 attackCoroutine = StartCoroutine(AttackCoroutine());
             }
@@ -83,10 +81,10 @@ public class FingerFlick : AbilityBase
     #endregion
 
     #region Protected Methods
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
-    }
+    // protected override void InitializeAbilityData()
+    // {
+    //     base.InitializeAbilityData();
+    // }    
     #endregion
 
     #region Private Methods
@@ -163,13 +161,7 @@ public class FingerFlick : AbilityBase
         }
 
         return false;
-    }
-
-    private void GetAbilityParticleSystem()
-    {
-        particleSystems = GetComponentsInChildren<ParticleSystem>();
-        if (particleSystems.Length == 0) Logger.LogWarning("[FingerFlick] - No particle system gameobject components found.", this);
-    }        
+    }   
     
     private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
     {

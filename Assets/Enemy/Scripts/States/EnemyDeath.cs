@@ -78,7 +78,7 @@ public class EnemyDeath : MonoBehaviour
     {
         yield return new WaitForSeconds(deactivationDelay);
         GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
-        EnqueueKilledEnemy();
+        // EnqueueKilledEnemy(); // Enable if you want to have the waves continue to loop indefinitely.  Will need to fix issue of enemies not moving after reactivating.
         OnEnemyDeactivation?.Invoke(this, EventArgs.Empty);
         gameObject.SetActive(false);
     }

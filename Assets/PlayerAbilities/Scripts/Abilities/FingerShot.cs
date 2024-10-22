@@ -9,13 +9,20 @@ public class FingerShot : AbilityBase
 {
     private AbilityHelperData helperData;
     private GameObject renderMesh; 
-    private ParticleSystem[] particleSystems; 
     private bool isSwitchingFX = true;
 
     protected override void Awake()
     {
         base.Awake();
     }
+
+    private void Update()
+    {
+        if (particleSystems.Length > 1)
+        {
+            SetParticleSystemTransforms();
+        }
+    }    
 
     #region Public Methods
     public override void ActivateAbility()
@@ -104,16 +111,9 @@ public class FingerShot : AbilityBase
 
     private void HandleAbilityParticleSystem()
     {
-        GetAbilityParticleSystem();
-        SetParticleSystemTransforms();
+        base.GetAbilityParticleSystems();
+        // SetParticleSystemTransforms();
     }
-
-    private void GetAbilityParticleSystem()
-    {
-        particleSystems = GetComponentsInChildren<ParticleSystem>();
-
-        if (particleSystems.Length <= 1) Logger.LogError($"[{this.name}] - Missing FingerShot particle system gameobject components.", this);
-    }            
 
     private void SetParticleSystemTransforms()
     {

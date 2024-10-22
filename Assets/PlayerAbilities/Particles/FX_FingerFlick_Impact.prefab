@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4888502735744228981}
   - component: {fileID: 2809397393205284466}
   m_Layer: 0
-  m_Name: FX_FingerFlickImpact
+  m_Name: FX_FingerFlick_Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

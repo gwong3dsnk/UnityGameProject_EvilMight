@@ -7,10 +7,7 @@ using UpgradeTypesDatabase =
 
 public class FistSlam : AbilityBase
 {
-    private float activationDelay = 10.0f;
-    private ParticleSystem fxSystem;
     private Coroutine attackCoroutine;
-    private bool isAttacking;
 
     protected override void Awake()
     {
@@ -21,13 +18,17 @@ public class FistSlam : AbilityBase
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        StartUpFistSlamAttackCoroutine();
+        Logger.Log($"Starting FistSlamAttackCoroutine for {this.name}");
+        isAttacking = true;
+        activationDelay = 10.0f;
+        attackCoroutine = StartCoroutine(FistSlamAttackCoroutine());    
     }
 
     public override void DeactivateAbility()
     {
         base.DeactivateAbility();
-        StopFistSlamAttackCoroutine();
+        isAttacking = false;
+        if (attackCoroutine != null) attackCoroutine = null;
     }    
 
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
@@ -37,8 +38,16 @@ public class FistSlam : AbilityBase
 
     public override void HandleAnimEventFX()
     {
-        fxSystem = GetComponentInChildren<ParticleSystem>();
-        PlayParticleSystem();
+        particleSystems = GetComponentsInChildren<ParticleSystem>();
+        
+        if (particleSystems.Length == 0) 
+        {
+            Logger.LogWarning("[FingerFlick] - No particle system gameobject components found.", this);
+        }
+        else
+        {
+            PlayParticleSystem();
+        }
     }
 
     public override void UpgradeActivationDelay(float upgradeValue)
@@ -55,13 +64,6 @@ public class FistSlam : AbilityBase
     #endregion
 
     #region Private Methods
-    private void StartUpFistSlamAttackCoroutine()
-    {
-        Logger.Log($"Starting FistSlamAttackCoroutine for {this.name}");
-        isAttacking = true;
-        attackCoroutine = StartCoroutine(FistSlamAttackCoroutine());        
-    }
-
     private IEnumerator FistSlamAttackCoroutine()
     {
         while (isAttacking)
@@ -71,21 +73,11 @@ public class FistSlam : AbilityBase
         }
     }
 
-    private void StopFistSlamAttackCoroutine()
-    {
-        if (isAttacking)
-        {
-            isAttacking = false;
-            StopCoroutine(attackCoroutine);
-            if (attackCoroutine != null) attackCoroutine = null;
-        }
-    }
-
     private void PlayParticleSystem()
     {
-        if (fxSystem.isPlaying) fxSystem.Stop();
+        if (particleSystems[0].isPlaying) particleSystems[0].Stop();
         
-        fxSystem.Play();
+        particleSystems[0].Play();
     }
     #endregion    
 }

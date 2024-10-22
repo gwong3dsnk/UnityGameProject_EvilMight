@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1263844076762949144}
   - component: {fileID: 4886130924095903059}
   - component: {fileID: 6749898300292376459}
+  - component: {fileID: 2256287696876809504}
   m_Layer: 0
   m_Name: GameSession
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 9194612043889151074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 282.04398, y: 225.98758, z: 27.267254}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78,3 +79,18 @@ MonoBehaviour:
   currentLevel: 1
   currentXP: 0
   excessXP: 0
+  expOverride: 0
+--- !u!114 &2256287696876809504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9194612043889151074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453c38ffc3380544990cd7cc870af49a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDeathCanvas: {fileID: 0}
+  abilityCardChooserUI: {fileID: 0}

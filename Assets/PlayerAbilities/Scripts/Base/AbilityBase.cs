@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -11,10 +12,12 @@ public abstract class AbilityBase : MonoBehaviour
     #region Fields and Properties
     // SerializedFields
     [SerializeField] protected AbilityLibraryData abilityData;
-    [SerializeField] protected AbilityNames abilityName;  
-    [SerializeField] protected float damage;   
-    [SerializeField] protected float fireRate;
-    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float activationDelay = 0.0f;
+    [SerializeField] protected ParticleSystem[] particleSystems;
+    [SerializeField] [ReadOnly] protected AbilityNames abilityName;  
+    [SerializeField] [ReadOnly] protected float damage;   
+    [SerializeField] [ReadOnly] protected float fireRate;
+    [SerializeField] [ReadOnly] protected float attackSpeed;
 
     // Public Fields/Properties
     public AbilityNames AbilityName => abilityName;
@@ -22,7 +25,9 @@ public abstract class AbilityBase : MonoBehaviour
 
     // Protected Fields
     protected GameObject[] playerSockets;
-    protected Vector3 enemyPosition = new Vector3();      
+    protected Vector3 enemyPosition = new Vector3();     
+    protected bool isAttacking = false; 
+    protected Transform player;
     #endregion
 
     protected virtual void Awake()
@@ -34,6 +39,8 @@ public abstract class AbilityBase : MonoBehaviour
     public abstract void HandleAnimEventFX();
 
     public abstract void UpgradeActivationDelay(float upgradeValue);
+
+    // protected abstract void GetAbilityParticleSystems();
     #endregion
 
     #region Public Virtual Methods
@@ -108,6 +115,16 @@ public abstract class AbilityBase : MonoBehaviour
                 fireRate = stats.fireRate;
             }
         }        
-    }    
+    }
+
+    protected virtual void GetAbilityParticleSystems()
+    {
+        particleSystems = GetComponentsInChildren<ParticleSystem>();
+
+        if (particleSystems.Length == 0)
+        {
+            Logger.LogWarning($"[{this.name}] - No particle systems found.", this);
+        }
+    }
     #endregion
 }
