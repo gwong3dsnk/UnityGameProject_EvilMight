@@ -33,14 +33,25 @@ public abstract class AbilityBase : MonoBehaviour
     protected virtual void Awake()
     {
         InitializeAbilityData();
+        player = FindObjectOfType<PlayerHealth>().transform;
+        
+        if (player == null)
+        {
+            Logger.LogError("Missing reference to player transform.", this);
+            return;
+        }
+    }
+
+    protected virtual void Update()
+    {
+        transform.position = player.position;
+        transform.rotation = player.rotation;
     }
 
     #region Public Abstract Methods
     public abstract void HandleAnimEventFX();
 
     public abstract void UpgradeActivationDelay(float upgradeValue);
-
-    // protected abstract void GetAbilityParticleSystems();
     #endregion
 
     #region Public Virtual Methods
@@ -115,16 +126,6 @@ public abstract class AbilityBase : MonoBehaviour
                 fireRate = stats.fireRate;
             }
         }        
-    }
-
-    protected virtual void GetAbilityParticleSystems()
-    {
-        particleSystems = GetComponentsInChildren<ParticleSystem>();
-
-        if (particleSystems.Length == 0)
-        {
-            Logger.LogWarning($"[{this.name}] - No particle systems found.", this);
-        }
     }
     #endregion
 }

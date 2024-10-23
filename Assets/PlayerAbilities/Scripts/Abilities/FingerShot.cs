@@ -16,7 +16,7 @@ public class FingerShot : AbilityBase
         base.Awake();
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (particleSystems.Length > 1)
         {
@@ -38,7 +38,8 @@ public class FingerShot : AbilityBase
         EnableVariantHandMeshes();
         base.ActivateAbility();
         playerSockets = helperData.meshSockets[0].meshSockets;
-        HandleAbilityParticleSystem();
+        GetAbilityParticleSystems();
+
         AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
     }
 
@@ -65,7 +66,6 @@ public class FingerShot : AbilityBase
 
     public void PlayLeftParticleSystem()
     {
-        Logger.Log($"[{this.name}] - 3. Playing LEFT PARTICLE for [{this.name}] animation.", this);
         if (particleSystems[0].isPlaying) particleSystems[0].Stop();
 
         particleSystems[0].Play(); 
@@ -74,7 +74,6 @@ public class FingerShot : AbilityBase
 
     public void PlayRightParticleSystem()
     {
-        Logger.Log($"[{this.name}] - 3. Playing RIGHT PARTICLE for [{this.name}] animation.", this);
         if (particleSystems[1].isPlaying) particleSystems[1].Stop();
 
         particleSystems[1].Play();
@@ -83,17 +82,9 @@ public class FingerShot : AbilityBase
 
     public override void HandleAnimEventFX() 
     {
-        Logger.Log($"[{this.name}] - 2. STARTING play right and left PARTICLE for [{this.name}] animation.", this);
         if (isSwitchingFX) PlayRightParticleSystem();
         else PlayLeftParticleSystem();
     }           
-    #endregion
-
-    #region Protected Methods
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
-    }
     #endregion
 
     #region Private Methods
@@ -109,12 +100,6 @@ public class FingerShot : AbilityBase
         renderMesh.transform.rotation = renderMesh.transform.rotation;
     }
 
-    private void HandleAbilityParticleSystem()
-    {
-        base.GetAbilityParticleSystems();
-        // SetParticleSystemTransforms();
-    }
-
     private void SetParticleSystemTransforms()
     {
         // Set transforms for particle system in left index socket
@@ -124,5 +109,15 @@ public class FingerShot : AbilityBase
         particleSystems[1].transform.position = playerSockets[1].transform.position;
         particleSystems[1].transform.rotation = renderMesh.transform.rotation;
     }
+
+    protected virtual void GetAbilityParticleSystems()
+    {
+        particleSystems = GetComponentsInChildren<ParticleSystem>();
+
+        if (particleSystems.Length == 0)
+        {
+            Logger.LogWarning($"[{this.name}] - No particle systems found.", this);
+        }
+    }    
     #endregion
 }

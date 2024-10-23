@@ -12,12 +12,12 @@ public class FingerFlick : AbilityBase
 {
     #region Fields and Properties
     [SerializeField] private float meleeRange = 2.5f;
-    // private bool isAttacking = false; 
     private bool isAvoidingAwakeActivation;
     private EnemyDeath enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
     private Coroutine checkForEnemiesCoroutine;
+    private const string colliderCompareTag = "Enemy";
     #endregion
 
     protected override void Awake()
@@ -26,8 +26,10 @@ public class FingerFlick : AbilityBase
         base.Awake();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (!isAttacking && checkForEnemiesCoroutine == null)
         {
             checkForEnemiesCoroutine = StartCoroutine(CheckIfEnemyInMeleeRangeCoroutine());
@@ -38,6 +40,7 @@ public class FingerFlick : AbilityBase
     public override void ActivateAbility()
     {
         activationDelay = 3.0f;
+        particleSystems[0].gameObject.SetActive(true);
 
         // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
         if (isAvoidingAwakeActivation)
@@ -45,8 +48,11 @@ public class FingerFlick : AbilityBase
             if (!isAttacking)
             {
                 isAttacking = true;
-                base.GetAbilityParticleSystems();
-                Logger.Log("[FingerFlick] - Starting AttackCoroutine", this);
+                if (particleSystems.Length == 0)
+                {
+                    Logger.LogError("Missing vfx reference for FingerFlick ability.", this);
+                }
+
                 attackCoroutine = StartCoroutine(AttackCoroutine());
             }
         }
@@ -69,7 +75,6 @@ public class FingerFlick : AbilityBase
 
     public override void HandleAnimEventFX()
     {
-        Logger.Log($"[{this.name}] - 2. Set PARTICLE POSITION to ENEMY POSITION for [{this.name}] animation.", this);
         particleSystems[0].transform.position = enemyPosition;
         PlayParticleSystem(); 
     }    
@@ -78,13 +83,6 @@ public class FingerFlick : AbilityBase
     {
         activationDelay = upgradeValue;
     }
-    #endregion
-
-    #region Protected Methods
-    // protected override void InitializeAbilityData()
-    // {
-    //     base.InitializeAbilityData();
-    // }    
     #endregion
 
     #region Private Methods
@@ -131,7 +129,7 @@ public class FingerFlick : AbilityBase
         foreach (Collider collider in hitColliders)
         {
             // Isolate the Enemy objects and store them and their distance from this into the dictionary.
-            if (collider.CompareTag("Enemy"))
+            if (collider.CompareTag(colliderCompareTag))
             {
                 enemyPosition = collider.transform.position;
                 float enemyDistanceFromPlayer = Vector3.Distance(transform.position, enemyPosition);
@@ -150,7 +148,6 @@ public class FingerFlick : AbilityBase
 
             if (Vector3.Dot(transform.forward, directionToEnemy) > 0.7f)
             {
-                Logger.Log($"[FingerFlick] - {kvp.Key} is {kvp.Value}m in front of player.", this);
                 SubscribeToEnemyDeathHandlerEvent(kvp.Key);
                 return true;
             }
@@ -174,7 +171,6 @@ public class FingerFlick : AbilityBase
     {
         while(isAttacking)
         {
-            Logger.Log($"[FingerFlick] - Playing through AttackCoroutine...playing anim and waiting {activationDelay} seconds.", this);
             AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
             enemyHealth.HandleTakeCollisionDamage(this);
             yield return new WaitForSeconds(activationDelay);
@@ -192,7 +188,6 @@ public class FingerFlick : AbilityBase
         // Call this method from enemy when the enemy prefab dies and is disabled.
         if (isAttacking)
         {
-            Logger.Log("[FingerFlick] - Stopping attack cycle for FingerFlick anim and coroutine", this);
             isAttacking = false;
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
@@ -204,11 +199,9 @@ public class FingerFlick : AbilityBase
     {
         if (particleSystems[0].isPlaying)
         {
-            Logger.Log($"[{this.name}] - 3. STOPPING particle system for [{this.name}].", this);
             particleSystems[0].Stop();
         }
         
-        Logger.Log($"[{this.name}] - 3. STARTING particle system for [{this.name}].", this);
         particleSystems[0].Play();     
     }    
     #endregion

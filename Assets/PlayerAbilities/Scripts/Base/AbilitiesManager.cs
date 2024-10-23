@@ -10,6 +10,7 @@ public class AbilitiesManager : MonoBehaviour
     [SerializeField] AbilityDatabaseManager abilityDatabaseManager;
     [SerializeField] ActivateButtonOnClick activateButtonOnClick;
     [SerializeField] GameObject playerDefaultAbility;
+    [SerializeField] GameObject[] allAbilities;
 
     // Public Fields/Properties/Events
     public static AbilitiesManager AbilityManagerInstance { get; private set; }
@@ -19,8 +20,7 @@ public class AbilitiesManager : MonoBehaviour
 
     // Private Fields
     private PlayerAnimController baseHandsAnimController;
-    private PlayerAnimController smallHandsAnimController;
-    // private AbilityBase abilityToAnimate;    
+    private PlayerAnimController smallHandsAnimController; 
     private List<AbilityBase> activeAbilities = new List<AbilityBase>();
     #endregion
 
@@ -81,15 +81,6 @@ public class AbilitiesManager : MonoBehaviour
         }
     }
 
-    // public void RemoveAbility(AbilityBase ability)
-    // {
-    //     if (activeAbilities.Contains(ability))
-    //     {
-    //         activeAbilities.Remove(ability);
-    //         ability.DeactivateAbility();
-    //     }
-    // }
-
     /// <summary>
     /// Called by PlayerDeathHandler.PlayerDeathCoroutine when the player dies to ensure 
     /// abilities don't kill the enemy after the player has already died.
@@ -105,30 +96,32 @@ public class AbilitiesManager : MonoBehaviour
     public void BeginUnlockingNewAbility(object sender, System.EventArgs e)
     {
         ActivateButtonOnClick activateAbilityButtonClicked = sender as ActivateButtonOnClick;
-        GameObject abilityToInstantiate;
+        GameObject abilityToActivate;
         bool isPlayerDefaultAbility;
 
         if (activateAbilityButtonClicked != null)
         {
-            Logger.Log($"[{this.name}] - Cast Succeeded. Instantiating from CardPanel choice.", this);
-            abilityToInstantiate = activateButtonOnClick.SelectedAbilityPrefab;
+            Logger.Log($"[{this.name}] - Cast Succeeded. Activating ability from CardPanel choice.", this);
+            abilityToActivate = allAbilities.FirstOrDefault(ability => ability.name == activateButtonOnClick.SelectedAbilityPrefab.name);
             isPlayerDefaultAbility = false;
         }
         else
         {
-            Logger.Log($"[{this.name}] - Cast Failed, one-time onAwake instantiation of playerDefaultAbility", this);
-            abilityToInstantiate = playerDefaultAbility;
+            Logger.Log($"[{this.name}] - Cast Failed, one-time activation of playerDefaultAbility", this);
+            abilityToActivate = allAbilities.FirstOrDefault(ability => ability.name == playerDefaultAbility.name);
             isPlayerDefaultAbility = true;
         }
 
-        // Start with instantiating the ability prefab.
-        GameObject abilityGameObject = Instantiate(abilityToInstantiate, transform.position, Quaternion.identity, transform);
+        if (!abilityToActivate.activeInHierarchy)
+        {
+            abilityToActivate.SetActive(true);
+        }
 
         // Process AddAbility.
-        AddAbility(abilityGameObject.GetComponent<AbilityBase>());
+        AddAbility(abilityToActivate.GetComponent<AbilityBase>());
 
         // Remove the unlocked ability from the ability database so it won't be shown in future level-ups.
-        abilityDatabaseManager.RemoveAbilityFromDatabase(abilityGameObject.GetComponent<AbilityBase>());
+        abilityDatabaseManager.RemoveAbilityFromDatabase(abilityToActivate.GetComponent<AbilityBase>());
 
         if (!isPlayerDefaultAbility)
         {
@@ -138,7 +131,6 @@ public class AbilitiesManager : MonoBehaviour
 
     public void InvokeOnActivationCompletion()
     {
-        Logger.Log($"[{this.name}] - Invoking OnActivationCompletion.", this);
         OnAbilityActivationCompletion?.Invoke(this, EventArgs.Empty); 
     }
 

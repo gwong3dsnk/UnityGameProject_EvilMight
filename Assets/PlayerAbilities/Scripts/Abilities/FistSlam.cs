@@ -14,13 +14,18 @@ public class FistSlam : AbilityBase
         base.Awake();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+    }
+
     #region Public Methods
     public override void ActivateAbility()
     {
         base.ActivateAbility();
-        Logger.Log($"Starting FistSlamAttackCoroutine for {this.name}");
         isAttacking = true;
         activationDelay = 10.0f;
+        particleSystems[0].gameObject.SetActive(true);
         attackCoroutine = StartCoroutine(FistSlamAttackCoroutine());    
     }
 
@@ -38,7 +43,7 @@ public class FistSlam : AbilityBase
 
     public override void HandleAnimEventFX()
     {
-        particleSystems = GetComponentsInChildren<ParticleSystem>();
+        // particleSystems = GetComponentsInChildren<ParticleSystem>();
         
         if (particleSystems.Length == 0) 
         {
@@ -53,13 +58,6 @@ public class FistSlam : AbilityBase
     public override void UpgradeActivationDelay(float upgradeValue)
     {
         activationDelay = upgradeValue;
-    }    
-    #endregion
-
-    #region Protected Methods
-    protected override void InitializeAbilityData()
-    {
-        base.InitializeAbilityData();
     }    
     #endregion
 
