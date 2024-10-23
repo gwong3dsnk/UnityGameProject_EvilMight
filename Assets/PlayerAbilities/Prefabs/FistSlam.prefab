@@ -29,8 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5687233486351311262}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8806668786151840947
@@ -46,47 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilityData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
+  particleSystems: []
   abilityName: 0
-  abilityDescription: 
   damage: 100
-  fireRate: 0
-  prefab: {fileID: 0}
-  playerAbilities: {fileID: 0}
---- !u!1001 &4373364069197393808
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 57328060552705184}
-    m_Modifications:
-    - target: {fileID: 4861280373453204051, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-      propertyPath: m_Name
-      value: FX_Player_FistSlam
-      objectReference: {fileID: 0}
-    - target: {fileID: 7151526369559866961, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
---- !u!4 &5687233486351311262 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8240553545587920398, guid: a2704e01cb0217a46ae781cb2ade56df, type: 3}
-  m_PrefabInstance: {fileID: 4373364069197393808}
-  m_PrefabAsset: {fileID: 0}
+  attackSpeed: 0
+  animSpeed: 0
+  abilityRange: 0

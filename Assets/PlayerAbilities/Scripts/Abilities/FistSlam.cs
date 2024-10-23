@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UpgradeTypesDatabase = 
     System.Collections.Generic.Dictionary<AbilityNames, 
@@ -24,7 +25,6 @@ public class FistSlam : AbilityBase
     {
         base.ActivateAbility();
         isAttacking = true;
-        activationDelay = 10.0f;
         particleSystems[0].gameObject.SetActive(true);
         attackCoroutine = StartCoroutine(FistSlamAttackCoroutine());    
     }
@@ -43,21 +43,20 @@ public class FistSlam : AbilityBase
 
     public override void HandleAnimEventFX()
     {
-        // particleSystems = GetComponentsInChildren<ParticleSystem>();
-        
         if (particleSystems.Length == 0) 
         {
             Logger.LogWarning("[FingerFlick] - No particle system gameobject components found.", this);
         }
         else
         {
+            particleSystems[0].transform.position = player.position;
             PlayParticleSystem();
         }
     }
 
     public override void UpgradeActivationDelay(float upgradeValue)
     {
-        activationDelay = upgradeValue;
+        attackSpeed = upgradeValue;
     }    
     #endregion
 
@@ -67,7 +66,18 @@ public class FistSlam : AbilityBase
         while (isAttacking)
         {
             AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
-            yield return new WaitForSeconds(activationDelay);
+
+            yield return new WaitForSeconds(1.0f); // Let anim & vfx play before damaging enemies.
+
+            Dictionary<Collider, float> enemiesInRange = base.GetNearbyEnemies(transform.position, abilityRange);
+
+            foreach (KeyValuePair<Collider, float> enemy in enemiesInRange)
+            {
+                EnemyHealth enemyHealth = enemy.Key.GetComponent<EnemyHealth>();
+                enemyHealth.TakeGeneralDamage(this);
+            }
+
+            yield return new WaitForSeconds(attackSpeed);
         }
     }
 

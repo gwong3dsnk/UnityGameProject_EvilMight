@@ -17,7 +17,7 @@ public class EnemyHealth : HealthManagement
         currentHealth = maxHealth;
     }
 
-    public void HandleTakeCollisionDamage(AbilityBase ability)
+    public void TakeGeneralDamage(AbilityBase ability)
     {
         if (ability != null)
         {
@@ -32,7 +32,7 @@ public class EnemyHealth : HealthManagement
     protected override void OnParticleCollision(GameObject other) 
     {
         AbilityBase ability = other.GetComponentInParent<AbilityBase>();
-        HandleTakeCollisionDamage(ability);
+        TakeGeneralDamage(ability);
     }    
 
     protected override void HandleDeath()

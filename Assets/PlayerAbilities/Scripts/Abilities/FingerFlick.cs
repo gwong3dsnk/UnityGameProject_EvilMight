@@ -11,13 +11,11 @@ using UpgradeTypesDatabase =
 public class FingerFlick : AbilityBase
 {
     #region Fields and Properties
-    [SerializeField] private float meleeRange = 2.5f;
     private bool isAvoidingAwakeActivation;
     private EnemyDeath enemyDeathHandler;
     private EnemyHealth enemyHealth;
     private Coroutine attackCoroutine;
     private Coroutine checkForEnemiesCoroutine;
-    private const string colliderCompareTag = "Enemy";
     #endregion
 
     protected override void Awake()
@@ -40,7 +38,6 @@ public class FingerFlick : AbilityBase
     #region Public Methods
     public override void ActivateAbility()
     {
-        activationDelay = 3.0f;
         particleSystems[0].gameObject.SetActive(true);
 
         // isAvoidingAwakeActivation is necessary to avoid starting of AttackCoroutine during Awake stage.
@@ -82,7 +79,7 @@ public class FingerFlick : AbilityBase
 
     public override void UpgradeActivationDelay(float upgradeValue)
     {
-        activationDelay = upgradeValue;
+        attackSpeed = upgradeValue;
     }
     #endregion
 
@@ -105,41 +102,20 @@ public class FingerFlick : AbilityBase
 
     private bool CheckIfEnemyInFront()
     {
-        Dictionary<Collider, float> enemiesInMeleeRange = new Dictionary<Collider, float>();
         List<KeyValuePair<Collider, float>> sortedDictionary = new List<KeyValuePair<Collider, float>>();
+        Dictionary<Collider, float> enemiesInRange = base.GetNearbyEnemies(transform.position, abilityRange);
 
-        enemiesInMeleeRange = PopulateNearbyEnemyDictionary(enemiesInMeleeRange);
-
-        if (enemiesInMeleeRange.Count == 0)
+        if (enemiesInRange.Count == 0)
         {
             return false;
         }
         else
         {
             // Sort the dictionary so the closest enemy is the first element.
-            sortedDictionary = enemiesInMeleeRange.OrderBy(enemy => enemy.Value).ToList();
-
+            sortedDictionary = enemiesInRange.OrderBy(enemy => enemy.Value).ToList();
             return ActIfEnemyInFront(sortedDictionary);
         }
     }
-
-    private Dictionary<Collider, float> PopulateNearbyEnemyDictionary(Dictionary<Collider, float> enemiesInMeleeRange)
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, meleeRange);
-
-        foreach (Collider collider in hitColliders)
-        {
-            // Isolate the Enemy objects and store them and their distance from this into the dictionary.
-            if (collider.CompareTag(colliderCompareTag))
-            {
-                enemyPosition = collider.transform.position;
-                float enemyDistanceFromPlayer = Vector3.Distance(transform.position, enemyPosition);
-                enemiesInMeleeRange.Add(collider, enemyDistanceFromPlayer);
-            }
-        }
-
-        return enemiesInMeleeRange;
-    }    
 
     private bool ActIfEnemyInFront(List<KeyValuePair<Collider, float>> sortedDictionary)
     {
@@ -173,8 +149,8 @@ public class FingerFlick : AbilityBase
         while(isAttacking)
         {
             AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
-            enemyHealth.HandleTakeCollisionDamage(this);
-            yield return new WaitForSeconds(activationDelay);
+            enemyHealth.TakeGeneralDamage(this);
+            yield return new WaitForSeconds(attackSpeed);
             
             if (!CheckIfEnemyInFront())
             {

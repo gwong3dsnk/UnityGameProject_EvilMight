@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -40,16 +41,22 @@ public class EnemyPool : MonoBehaviour
     {
         totalEnemyCounter--;
 
-        if (totalEnemyCounter <= 0) 
+        if (totalEnemyCounter <= 0)
         {
             Logger.Log("LAST ENEMY DEAD - GAMESTATE CHANGE", this);
-            GameManager.Instance.ChangeGameState(GameStates.PlayerVictory); // All enemies dead.  Game over.  Change game state.
+            StartCoroutine(ChangeGameState());
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    private IEnumerator ChangeGameState()
+    {
+        yield return new WaitForSeconds(2.0f);
+        GameManager.Instance.ChangeGameState(GameStates.PlayerVictory); // All enemies dead.  Game over.  Change game state.
     }
 
     private void CreateWaveDataRelationship()

@@ -12,12 +12,12 @@ public abstract class AbilityBase : MonoBehaviour
     #region Fields and Properties
     // SerializedFields
     [SerializeField] protected AbilityLibraryData abilityData;
-    [SerializeField] protected float activationDelay = 0.0f;
     [SerializeField] protected ParticleSystem[] particleSystems;
     [SerializeField] [ReadOnly] protected AbilityNames abilityName;  
     [SerializeField] [ReadOnly] protected float damage;   
-    [SerializeField] [ReadOnly] protected float fireRate;
     [SerializeField] [ReadOnly] protected float attackSpeed;
+    [SerializeField] [ReadOnly] protected float animSpeed;
+    [SerializeField] [ReadOnly] protected float abilityRange;
 
     // Public Fields/Properties
     public AbilityNames AbilityName => abilityName;
@@ -25,9 +25,10 @@ public abstract class AbilityBase : MonoBehaviour
 
     // Protected Fields
     protected GameObject[] playerSockets;
-    protected Vector3 enemyPosition = new Vector3();     
+    protected Vector3 enemyPosition = new Vector3();
     protected bool isAttacking = false; 
     protected Transform player;
+    protected const string colliderCompareTag = "Enemy";
     #endregion
 
     protected virtual void Awake()
@@ -64,7 +65,6 @@ public abstract class AbilityBase : MonoBehaviour
 
     public virtual void DeactivateAbility()
     {
-        Logger.Log($"[{this.name}] - Stopping all ability coroutines.", this);
         StopAllCoroutines();
     }
 
@@ -86,7 +86,7 @@ public abstract class AbilityBase : MonoBehaviour
                     // Logic to increase animation speed.  Default value is 1.
                     Animator fingerFlickAnimator = GetComponentInParent<UpgradeManager>().SmallHandsAnimator;
                     fingerFlickAnimator.SetFloat("FingerShot", upgradeValue);
-                    Logger.Log($"[{this.name}] -Updating Anim Speed to {upgradeValue}", this);
+                    Logger.Log($"[{this.name}] - Updating Anim Speed to {upgradeValue}", this);
                 }
                 break;
             case UpgradeTypes.AttackSpeed: // Reduces activationDelay.
@@ -112,6 +112,25 @@ public abstract class AbilityBase : MonoBehaviour
         //     UpgradeActivationDelay(upgradeValue);
         // }
     }
+
+    protected virtual Dictionary<Collider, float> GetNearbyEnemies(Vector3 currentPosition, float meleeRange)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(currentPosition, meleeRange);
+        Dictionary<Collider, float> enemiesWithinRange = new Dictionary<Collider, float>();
+
+        foreach (Collider collider in hitColliders)
+        {
+            // Isolate the Enemy objects and store them and their distance from this into the dictionary.
+            if (collider.CompareTag(colliderCompareTag))
+            {
+                enemyPosition = collider.transform.position;
+                float enemyDistanceFromPlayer = Vector3.Distance(currentPosition, enemyPosition);
+                enemiesWithinRange.Add(collider, enemyDistanceFromPlayer);
+            }
+        }
+
+        return enemiesWithinRange;
+    }        
     #endregion
 
     #region Protected Virtual Methods
@@ -124,7 +143,9 @@ public abstract class AbilityBase : MonoBehaviour
             {
                 abilityName = stats.abilityName;
                 damage = stats.damage;
-                fireRate = stats.fireRate;
+                attackSpeed = stats.attackSpeed;
+                animSpeed = stats.animSpeed;
+                abilityRange = stats.abilityRange;
             }
         }        
     }

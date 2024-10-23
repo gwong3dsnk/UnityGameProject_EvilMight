@@ -16,18 +16,18 @@ MonoBehaviour:
   - abilityName: 1
     abilityDescription: Flick away those annoying pests!
     damage: 1
-    fireRate: 1
-    prefab: {fileID: 6043325753769299960, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
-    playerAbilities: {fileID: 864473063569061556, guid: 2fa908efd227c3040a9da3d9de6d3fcf, type: 3}
+    attackSpeed: 3
+    animSpeed: 0
+    abilityRange: 2.5
   - abilityName: 2
-    abilityDescription: Flick away those annoying pests!
-    damage: 1
-    fireRate: 1
-    prefab: {fileID: 3948856698939220209, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
-    playerAbilities: {fileID: 732283309839090374, guid: 7b3ea17b48821174d93c2c8b7ded1f65, type: 3}
+    abilityDescription: Pew Pew!
+    damage: 2
+    attackSpeed: 0
+    animSpeed: 1
+    abilityRange: 0
   - abilityName: 0
-    abilityDescription: Flick away those annoying pests!
-    damage: 1
-    fireRate: 1
-    prefab: {fileID: 6043325753769299960, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
-    playerAbilities: {fileID: 8806668786151840947, guid: 0441c929a41349b4ea624a664ab97a70, type: 3}
+    abilityDescription: Gamer Rage!
+    damage: 3
+    attackSpeed: 10
+    animSpeed: 0
+    abilityRange: 6
