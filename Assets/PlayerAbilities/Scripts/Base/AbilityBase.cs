@@ -40,6 +40,8 @@ public abstract class AbilityBase : MonoBehaviour
             Logger.LogError("Missing reference to player transform.", this);
             return;
         }
+
+        gameObject.SetActive(false);
     }
 
     protected virtual void Update()
@@ -69,7 +71,6 @@ public abstract class AbilityBase : MonoBehaviour
     public virtual void ActivateUpgrade(UpgradeTypesDatabase upgradeToActivate)
     {
         Logger.Log($"[{this.name}] - Activating Upgrade.", this);
-        // ParticleSystem abilityFX = GetComponentInChildren<ParticleSystem>();
         UpgradeTypes upgradeType = upgradeToActivate.First().Value.First().Key;
         Queue<UpgradeLevelData> levelQueueData = upgradeToActivate.First().Value.First().Value;
         float upgradeValue = levelQueueData.Peek().newValue;

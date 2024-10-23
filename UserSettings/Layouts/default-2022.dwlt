@@ -198,7 +198,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 184
+  controlID: 182
   draggingID: 0
 --- !u!114 &9
 MonoBehaviour:
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 92
+  controlID: 146
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -1111,9 +1111,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -13.051509, y: 24.559328, z: -18.700916}
+    m_Target: {x: -1.797854, y: -8.129909, z: 10.509616}
     speed: 2
-    m_Value: {x: -13.051509, y: 24.559328, z: -18.700916}
+    m_Value: {x: -1.797854, y: -8.129909, z: 10.509616}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1159,9 +1159,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 1
   m_Rotation:
-    m_Target: {x: 0.3744417, y: 0.18735698, z: -0.07807171, w: 0.9050259}
+    m_Target: {x: 0.38091967, y: 0.027878668, z: -0.011997034, w: 0.92437047}
     speed: 2
-    m_Value: {x: 0.3771827, y: 0.18572143, z: -0.07804953, w: 0.903963}
+    m_Value: {x: 0.38082796, y: 0.027871957, z: -0.011994146, w: 0.9241479}
   m_Size:
     m_Target: 14.104038
     speed: 2
@@ -1227,9 +1227,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: acf2ffff
-      m_LastClickedID: -3412
-      m_ExpandedIDs: a4bfffff3cc5ffffb4edffffd0f2ffffdaf2ffffe8faffff
+      m_SelectedIDs: 6e4e0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: a4b4fdff8490feff46b0feff20b6feff5ccbfefff654ffffb2bbffff9ac8ffff60d3ffff64d3ffffbeecfffff0ecfffff4ecfffff8ecfffffcecffff00edffffa0edffffdcedffff74f3ffffe8fafffff4ffffff28620000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1298,7 +1298,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/PlayerAbilities/Scripts
+    - Assets/PlayerAbilities/Scripts/Data
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1306,16 +1306,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/PlayerAbilities/Scripts
+  - Assets/PlayerAbilities/Scripts/Data
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\3dsnk\UnityGameProject_EvilMight
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 159}
-    m_SelectedIDs: 48810000
-    m_LastClickedID: 33096
-    m_ExpandedIDs: 0000000046810000488100004a8100004c8100004e81000050810000528100005481000056810000588100005a8100005c8100005e8100006081000062810000648100006681000000ca9a3b
+    scrollPos: {x: 0, y: 239}
+    m_SelectedIDs: dc810000
+    m_LastClickedID: 33244
+    m_ExpandedIDs: 0000000046810000488100004a8100004c8100004e81000050810000528100005481000056810000588100005a8100005c8100005e81000060810000628100006481000066810000ce810000de81000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1478,7 +1478,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 46412
+  m_LastSelectedObjectID: -150364
 --- !u!114 &25
 MonoBehaviour:
   m_ObjectHideFlags: 52

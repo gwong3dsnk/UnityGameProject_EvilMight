@@ -42,11 +42,13 @@ public class AbilitiesManager : MonoBehaviour
         if (abilityDatabaseManager == null || activateButtonOnClick == null)
         {
             Logger.LogError($"[{this.name}] - Missing references to activateButtonOnClick or AbilityDatabaseManager.", this);
+            return;
         }
 
         if (baseHandsAnimController == null || smallHandsAnimController == null)
         {
             Logger.LogError($"[{this.name}] - Missing either AbilityHelper script component or AbilityHelperData on PlayerAbilityContainer gameobject", this);
+            return;
         }
     }
 
@@ -73,7 +75,6 @@ public class AbilitiesManager : MonoBehaviour
     #region Public Methods
     public void AddAbility(AbilityBase ability)
     {
-        Logger.Log($"[{this.name}] - Adding ability [{ability.AbilityName}] to activeAbilities.", this);
         if (!activeAbilities.Contains(ability))
         {
             activeAbilities.Add(ability);
@@ -101,13 +102,11 @@ public class AbilitiesManager : MonoBehaviour
 
         if (activateAbilityButtonClicked != null)
         {
-            Logger.Log($"[{this.name}] - Cast Succeeded. Activating ability from CardPanel choice.", this);
-            abilityToActivate = allAbilities.FirstOrDefault(ability => ability.name == activateButtonOnClick.SelectedAbilityPrefab.name);
+            abilityToActivate = allAbilities.FirstOrDefault(ability => ability.GetComponent<AbilityBase>().AbilityName == activateButtonOnClick.SelectedAbility.abilityName);
             isPlayerDefaultAbility = false;
         }
         else
         {
-            Logger.Log($"[{this.name}] - Cast Failed, one-time activation of playerDefaultAbility", this);
             abilityToActivate = allAbilities.FirstOrDefault(ability => ability.name == playerDefaultAbility.name);
             isPlayerDefaultAbility = true;
         }

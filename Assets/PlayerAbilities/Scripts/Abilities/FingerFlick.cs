@@ -24,6 +24,7 @@ public class FingerFlick : AbilityBase
     {
         isAvoidingAwakeActivation = false;
         base.Awake();
+        gameObject.SetActive(true);
     }
 
     protected override void Update()

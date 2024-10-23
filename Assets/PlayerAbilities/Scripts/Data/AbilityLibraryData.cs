@@ -10,8 +10,6 @@ public class AbilityLibraryData : ScriptableObject
         public string abilityDescription;
         public float damage;
         public float fireRate;
-        public GameObject prefab;
-        public AbilityBase playerAbilities;
     }
 
     public AbilityStats[] abilityStatsArray;

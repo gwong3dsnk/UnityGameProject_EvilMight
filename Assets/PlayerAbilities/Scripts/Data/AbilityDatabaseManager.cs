@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,31 +20,12 @@ public class AbilityDatabaseManager : MonoBehaviour
     private void InitializeAbilityDatabase()
     {
         Logger.Log("Initializing ABILITY DATABASE MANAGER OnAwake", this);
-        List<AbilityBase> activePlayerAbilities = AbilitiesManager.AbilityManagerInstance.ActiveAbilities;
 
         for (int i = 0; i < abilityLibraryData.abilityStatsArray.Length; i++)
         {
-            bool isFound = false;
-
-            foreach (AbilityBase ability in activePlayerAbilities)
-            {
-                if (ability.name.Contains(abilityLibraryData.abilityStatsArray[i].playerAbilities.name))
-                {
-                    isFound = true;
-                    break;
-                }
-            }
-
-            if (!isFound)
-            {
-                if (!abilityDatabase.Contains(abilityLibraryData.abilityStatsArray[i]))
-                {
-                    abilityDatabase.Add(abilityLibraryData.abilityStatsArray[i]);
-                }
-            }
+            abilityDatabase.Add(abilityLibraryData.abilityStatsArray[i]);
         }
 
-        Logger.Log("Finished ability database initialization", this);
         Logger.Log("Logging Initialized Ability Database Contents:", this);
         foreach (var item in abilityDatabase)
         {

@@ -11,7 +11,8 @@ public class ActivateButtonOnClick : MonoBehaviour
 {
     #region Fields and Properties
     // Public Properties / Events
-    public GameObject SelectedAbilityPrefab => selectedAbilityPrefab;
+    // public AbilityNames SelectedAbilityName => selectedAbilityName;
+    public AbilityLibraryData.AbilityStats SelectedAbility => selectedAbility;
     public event EventHandler OnAbilityChosen;
     public event Action<UpgradeTypesDatabase> OnUpgradeChosen;
 
@@ -19,14 +20,7 @@ public class ActivateButtonOnClick : MonoBehaviour
     private Button activationButton;
     private UpgradeTypesDatabase selectedUpgrade = new UpgradeTypesDatabase();
     private AbilityLibraryData.AbilityStats selectedAbility = new AbilityLibraryData.AbilityStats();
-    private GameObject selectedAbilityPrefab;
-
-    // Debug
-    #if UNITY_EDITOR
-    [Header("DEBUG")]
-    [SerializeField] GameObject prefabOverride;
-    [SerializeField] bool enableDebugMode;
-    #endif    
+    // private AbilityNames selectedAbilityName;
     #endregion
 
     private void Start()
@@ -66,15 +60,6 @@ public class ActivateButtonOnClick : MonoBehaviour
         if (selectedAbility != null)
         {
             Logger.Log($"Ability Chosen - {selectedAbility.abilityName}");
-            selectedAbilityPrefab = selectedAbility.prefab;
-
-            #if UNITY_EDITOR            
-            if (prefabOverride != null)
-            {
-                selectedAbilityPrefab = prefabOverride;
-            }
-            #endif
-
             OnAbilityChosen?.Invoke(this, EventArgs.Empty);
         }
         else if (selectedUpgrade.Count > 0)
