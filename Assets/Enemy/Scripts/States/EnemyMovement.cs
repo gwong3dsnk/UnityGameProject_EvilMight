@@ -85,6 +85,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (sender as EnemyHealth)
         {
+            navMeshAgent.speed = 0.0f;
             isEnemyDead = true;
         }
     }
