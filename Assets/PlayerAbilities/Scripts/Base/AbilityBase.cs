@@ -15,8 +15,8 @@ public abstract class AbilityBase : MonoBehaviour
     [SerializeField] protected ParticleSystem[] particleSystems;
     [SerializeField] [ReadOnly] protected AbilityNames abilityName;  
     [SerializeField] [ReadOnly] protected float damage;   
+    [SerializeField] [ReadOnly] protected float abilityCooldown;
     [SerializeField] [ReadOnly] protected float attackSpeed;
-    [SerializeField] [ReadOnly] protected float animSpeed;
     [SerializeField] [ReadOnly] protected float abilityRange;
 
     // Public Fields/Properties
@@ -78,13 +78,13 @@ public abstract class AbilityBase : MonoBehaviour
             case UpgradeTypes.DamageUp:
                 damage = upgradeValue;
                 break;
-            case UpgradeTypes.AnimSpeed:
-                UpgradeAnimationSpeed(upgradeValue);
-                animSpeed = upgradeValue;
-                break;
             case UpgradeTypes.AttackSpeed:
                 UpgradeAttackSpeed(upgradeValue);
                 attackSpeed = upgradeValue;
+                break;
+            case UpgradeTypes.AbilityCooldown:
+                UpgradeAbilityCooldown(upgradeValue);
+                abilityCooldown = upgradeValue;
                 break;
             // case UpgradeTypes.AbilityRange:
             //     break;
@@ -102,19 +102,19 @@ public abstract class AbilityBase : MonoBehaviour
             {
                 abilityName = stats.abilityName;
                 damage = stats.damage;
+                abilityCooldown = stats.abilityCooldown;
                 attackSpeed = stats.attackSpeed;
-                animSpeed = stats.animSpeed;
                 abilityRange = stats.abilityRange;
             }
         }        
     }
 
-    protected virtual void UpgradeAnimationSpeed(float upgradeValue)
+    protected virtual void UpgradeAttackSpeed(float upgradeValue)
     {
 
     }
 
-    protected virtual void UpgradeAttackSpeed(float upgradeValue)
+    protected virtual void UpgradeAbilityCooldown(float upgradeValue)
     {
 
     } 

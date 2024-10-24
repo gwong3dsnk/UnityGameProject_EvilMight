@@ -78,7 +78,7 @@ public class FingerShot : AbilityBase
         }
     }    
 
-    protected override void UpgradeAnimationSpeed(float upgradeValue)
+    protected override void UpgradeAttackSpeed(float upgradeValue)
     {
         Animator fingerFlickAnimator = GetComponentInParent<UpgradeManager>().SmallHandsAnimator;
         fingerFlickAnimator.SetFloat(animSpeedParam, upgradeValue);

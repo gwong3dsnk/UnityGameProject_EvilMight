@@ -7,6 +7,7 @@ public class EnemyDeath : MonoBehaviour
 {
     public event EventHandler OnEnemyDeactivation; 
     private float deactivationDelay = 1.5f;
+    private float colliderDisableDelay = 0.5f;
     private Enemy enemy;
     private EnemyHealth enemyHealth;
     private Collider enemyCollider;
@@ -76,6 +77,8 @@ public class EnemyDeath : MonoBehaviour
 
     private IEnumerator DelayProcessingEnemyDeactivation()
     {
+        yield return new WaitForSeconds(colliderDisableDelay);
+        enemyCollider.enabled = false;
         yield return new WaitForSeconds(deactivationDelay);
         GridManager.GridManagerInstance.RemoveEnemy(enemyCollider);
         // EnqueueKilledEnemy(); // Enable if you want to have the waves continue to loop indefinitely.  Will need to fix issue of enemies not moving after reactivating.

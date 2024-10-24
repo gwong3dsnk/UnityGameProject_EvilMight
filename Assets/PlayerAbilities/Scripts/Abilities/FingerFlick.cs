@@ -81,7 +81,7 @@ public class FingerFlick : AbilityBase
     #region Protected Methods
     protected override void UpgradeAttackSpeed(float upgradeValue)
     {
-        attackSpeed = upgradeValue;
+        abilityCooldown = upgradeValue;
     }
     #endregion
 
@@ -141,6 +141,7 @@ public class FingerFlick : AbilityBase
     
     private void SubscribeToEnemyDeathHandlerEvent(Collider collider)
     {
+        // TODO: Subscribe to enemyHealth event not deathHAndler event
         enemyDeathHandler = collider.GetComponent<EnemyDeath>();
         enemyDeathHandler.OnEnemyDeactivation += StopAttacking;
         enemyHealth = collider.GetComponent<EnemyHealth>(); // Setup enemyHealth reference.
@@ -152,7 +153,7 @@ public class FingerFlick : AbilityBase
         {
             AbilitiesManager.AbilityManagerInstance.InvokeHandleAbilityPlayAnimEvent(this); 
             enemyHealth.TakeGeneralDamage(this);
-            yield return new WaitForSeconds(attackSpeed);
+            yield return new WaitForSeconds(abilityCooldown);
             
             if (!CheckIfEnemyInFront())
             {

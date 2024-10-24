@@ -9,8 +9,8 @@ public class AbilityLibraryData : ScriptableObject
         public AbilityNames abilityName;
         public string abilityDescription;
         public float damage;
+        public float abilityCooldown;
         public float attackSpeed;
-        public float animSpeed;
         public float abilityRange;
     }
 

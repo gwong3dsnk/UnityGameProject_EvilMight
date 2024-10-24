@@ -56,9 +56,9 @@ public class FistSlam : AbilityBase
     #endregion
 
     #region Protected Methods
-    protected override void UpgradeAttackSpeed(float upgradeValue)
+    protected override void UpgradeAbilityCooldown(float upgradeValue)
     {
-        attackSpeed = upgradeValue;
+        abilityCooldown = upgradeValue;
     }    
     #endregion
 
@@ -79,7 +79,7 @@ public class FistSlam : AbilityBase
                 enemyHealth.TakeGeneralDamage(this);
             }
 
-            yield return new WaitForSeconds(attackSpeed);
+            yield return new WaitForSeconds(abilityCooldown);
         }
     }
 
