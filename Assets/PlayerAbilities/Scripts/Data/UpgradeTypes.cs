@@ -1,7 +1,7 @@
 public enum UpgradeTypes
 {
-    FireRateUp,
     DamageUp,
     AttackSpeed,
-    AnimSpeed
+    AnimSpeed,
+    AbilityRange
 }

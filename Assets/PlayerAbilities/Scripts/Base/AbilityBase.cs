@@ -53,8 +53,6 @@ public abstract class AbilityBase : MonoBehaviour
 
     #region Public Abstract Methods
     public abstract void HandleAnimEventFX();
-
-    public abstract void UpgradeActivationDelay(float upgradeValue);
     #endregion
 
     #region Public Virtual Methods
@@ -81,56 +79,17 @@ public abstract class AbilityBase : MonoBehaviour
                 damage = upgradeValue;
                 break;
             case UpgradeTypes.AnimSpeed:
-                if (this.abilityName == AbilityNames.FingerShot)
-                {
-                    // Logic to increase animation speed.  Default value is 1.
-                    Animator fingerFlickAnimator = GetComponentInParent<UpgradeManager>().SmallHandsAnimator;
-                    fingerFlickAnimator.SetFloat("FingerShot", upgradeValue);
-                    Logger.Log($"[{this.name}] - Updating Anim Speed to {upgradeValue}", this);
-                }
+                UpgradeAnimationSpeed(upgradeValue);
+                animSpeed = upgradeValue;
                 break;
-            case UpgradeTypes.AttackSpeed: // Reduces activationDelay.
-                UpgradeActivationDelay(upgradeValue);
+            case UpgradeTypes.AttackSpeed:
+                UpgradeAttackSpeed(upgradeValue);
+                attackSpeed = upgradeValue;
                 break;
-            // case UpgradeTypes.FireRateUp:
-            //     ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
-            //     emissionModule.rateOverTime = fireRate = upgradeValue;
-            //     break;                
+            // case UpgradeTypes.AbilityRange:
+            //     break;
         }
-
-        // if (upgradeType == UpgradeTypes.DamageUp)
-        // {
-        //     damage = upgradeValue;
-        // }
-        // else if (upgradeType == UpgradeTypes.FireRateUp)
-        // {
-        //     ParticleSystem.EmissionModule emissionModule = abilityFX.emission;
-        //     emissionModule.rateOverTime = fireRate = upgradeValue;
-        // }   
-        // else if (upgradeType == UpgradeTypes.AttackSpeed)
-        // {
-        //     UpgradeActivationDelay(upgradeValue);
-        // }
     }
-
-    protected virtual Dictionary<Collider, float> GetNearbyEnemies(Vector3 currentPosition, float meleeRange)
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(currentPosition, meleeRange);
-        Dictionary<Collider, float> enemiesWithinRange = new Dictionary<Collider, float>();
-
-        foreach (Collider collider in hitColliders)
-        {
-            // Isolate the Enemy objects and store them and their distance from this into the dictionary.
-            if (collider.CompareTag(colliderCompareTag))
-            {
-                enemyPosition = collider.transform.position;
-                float enemyDistanceFromPlayer = Vector3.Distance(currentPosition, enemyPosition);
-                enemiesWithinRange.Add(collider, enemyDistanceFromPlayer);
-            }
-        }
-
-        return enemiesWithinRange;
-    }        
     #endregion
 
     #region Protected Virtual Methods
@@ -149,5 +108,34 @@ public abstract class AbilityBase : MonoBehaviour
             }
         }        
     }
+
+    protected virtual void UpgradeAnimationSpeed(float upgradeValue)
+    {
+
+    }
+
+    protected virtual void UpgradeAttackSpeed(float upgradeValue)
+    {
+
+    } 
+
+    protected virtual Dictionary<Collider, float> GetNearbyEnemies(Vector3 currentPosition, float meleeRange)
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(currentPosition, meleeRange);
+        Dictionary<Collider, float> enemiesWithinRange = new Dictionary<Collider, float>();
+
+        foreach (Collider collider in hitColliders)
+        {
+            // Isolate the Enemy objects and store them and their distance from this into the dictionary.
+            if (collider.CompareTag(colliderCompareTag))
+            {
+                enemyPosition = collider.transform.position;
+                float enemyDistanceFromPlayer = Vector3.Distance(currentPosition, enemyPosition);
+                enemiesWithinRange.Add(collider, enemyDistanceFromPlayer);
+            }
+        }
+
+        return enemiesWithinRange;
+    }            
     #endregion
 }

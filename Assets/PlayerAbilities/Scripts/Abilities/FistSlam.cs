@@ -53,8 +53,10 @@ public class FistSlam : AbilityBase
             PlayParticleSystem();
         }
     }
+    #endregion
 
-    public override void UpgradeActivationDelay(float upgradeValue)
+    #region Protected Methods
+    protected override void UpgradeAttackSpeed(float upgradeValue)
     {
         attackSpeed = upgradeValue;
     }    

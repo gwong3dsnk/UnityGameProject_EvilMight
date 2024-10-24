@@ -795,6 +795,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1176383948}
     - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: expOverride
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1696630776}
@@ -1384,7 +1388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[0].enemyCount
-      value: 10
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 153703462208915683, guid: c569c37e972b8d0488a40ea7a6385172, type: 3}
       propertyPath: enemyWaveContainer.Array.data[0].enemyWaveData.Array.data[1].enemyClass

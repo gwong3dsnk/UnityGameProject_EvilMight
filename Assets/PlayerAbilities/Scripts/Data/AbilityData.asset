@@ -20,13 +20,13 @@ MonoBehaviour:
     animSpeed: 0
     abilityRange: 2.5
   - abilityName: 2
-    abilityDescription: Pew Pew!
+    abilityDescription: Unlock the Pew Pew!
     damage: 2
     attackSpeed: 0
     animSpeed: 1
     abilityRange: 0
   - abilityName: 0
-    abilityDescription: Gamer Rage!
+    abilityDescription: Release your Gamer Rage!
     damage: 3
     attackSpeed: 10
     animSpeed: 0

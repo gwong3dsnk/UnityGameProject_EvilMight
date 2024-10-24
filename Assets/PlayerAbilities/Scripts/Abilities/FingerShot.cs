@@ -10,6 +10,7 @@ public class FingerShot : AbilityBase
     private AbilityHelperData helperData;
     private GameObject renderMesh; 
     private bool isSwitchingFX = true;
+    private const string animSpeedParam = "FingerShotAnimSpeed";
 
     protected override void Awake()
     {
@@ -57,34 +58,31 @@ public class FingerShot : AbilityBase
     public override void ActivateUpgrade(UpgradeTypesDatabase newUpgrade)
     {
         base.ActivateUpgrade(newUpgrade);
-    }    
-
-    public override void UpgradeActivationDelay(float upgradeValue)
-    {
-        // No need to update activationDelay.
-    }    
-
-    public void PlayLeftParticleSystem()
-    {
-        if (particleSystems[0].isPlaying) particleSystems[0].Stop();
-
-        particleSystems[0].Play(); 
-        isSwitchingFX = true;
     }
-
-    public void PlayRightParticleSystem()
-    {
-        if (particleSystems[1].isPlaying) particleSystems[1].Stop();
-
-        particleSystems[1].Play();
-        isSwitchingFX = false;
-    }      
 
     public override void HandleAnimEventFX() 
     {
         if (isSwitchingFX) PlayRightParticleSystem();
         else PlayLeftParticleSystem();
     }           
+    #endregion
+
+    #region Protected Methods
+    protected virtual void GetAbilityParticleSystems()
+    {
+        particleSystems = GetComponentsInChildren<ParticleSystem>();
+
+        if (particleSystems.Length == 0)
+        {
+            Logger.LogWarning($"[{this.name}] - No particle systems found.", this);
+        }
+    }    
+
+    protected override void UpgradeAnimationSpeed(float upgradeValue)
+    {
+        Animator fingerFlickAnimator = GetComponentInParent<UpgradeManager>().SmallHandsAnimator;
+        fingerFlickAnimator.SetFloat(animSpeedParam, upgradeValue);
+    }    
     #endregion
 
     #region Private Methods
@@ -110,14 +108,20 @@ public class FingerShot : AbilityBase
         particleSystems[1].transform.rotation = renderMesh.transform.rotation;
     }
 
-    protected virtual void GetAbilityParticleSystems()
+    private void PlayLeftParticleSystem()
     {
-        particleSystems = GetComponentsInChildren<ParticleSystem>();
+        if (particleSystems[0].isPlaying) particleSystems[0].Stop();
 
-        if (particleSystems.Length == 0)
-        {
-            Logger.LogWarning($"[{this.name}] - No particle systems found.", this);
-        }
-    }    
+        particleSystems[0].Play(); 
+        isSwitchingFX = true;
+    }
+
+    private void PlayRightParticleSystem()
+    {
+        if (particleSystems[1].isPlaying) particleSystems[1].Stop();
+
+        particleSystems[1].Play();
+        isSwitchingFX = false;
+    }          
     #endregion
 }
