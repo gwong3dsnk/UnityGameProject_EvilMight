@@ -795,10 +795,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1176383948}
     - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
-      propertyPath: expOverride
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6749898300292376459, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1696630776}
