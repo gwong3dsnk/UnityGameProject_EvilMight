@@ -53,9 +53,13 @@ PrefabInstance:
       value: SK_CharacterHands
       objectReference: {fileID: 0}
     - target: {fileID: 5994834969144054173, guid: a258d8f2160f71441bc9fd1d5bf2826e, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2233555734087444040, guid: b1ca3c9aece5a9a44be602ef7576163a, type: 3}
+    - target: {fileID: 5994834969144054173, guid: a258d8f2160f71441bc9fd1d5bf2826e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 82debed44e6146741bc396a28b678562, type: 2}
+      objectReference: {fileID: 2100000, guid: e46c0206ff70e5f4497bf9551dc75cbe, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -206,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da00e7cebd98de4b8a0d88c6b2add05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  currentHealth: 0
   playerHealth: 5
 --- !u!114 &6395560150186708690
 MonoBehaviour:
@@ -220,7 +224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df3abef2a071ccc48907a5c5a7909f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDeathCanvas: {fileID: 0}
 --- !u!114 &3269323739179389190
 MonoBehaviour:
   m_ObjectHideFlags: 0
