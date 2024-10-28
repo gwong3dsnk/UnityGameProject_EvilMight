@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2468144979948607884}
-  - component: {fileID: 321913361911937050}
   - component: {fileID: 7437143004645335867}
+  - component: {fileID: 4194239708877463290}
   m_Layer: 0
   m_Name: GameSession_UI
   m_TagString: Untagged
@@ -33,18 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &321913361911937050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5958493659400060477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a14bb5af288a694419e0bb74ce59aba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7437143004645335867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,3 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityChoiceCanvas: {fileID: 0}
   playerLevelingManager: {fileID: 0}
+--- !u!114 &4194239708877463290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958493659400060477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd71318084343944587432c35ac532d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

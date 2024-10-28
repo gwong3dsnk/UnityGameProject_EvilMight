@@ -39,7 +39,6 @@ public class EnemyAttack : MonoBehaviour
     private void ProcessParticleAttack(object sender, System.EventArgs e)
     {
         PlayPrimaryFX();
-        // PlayImpactFX();
     }
 
     private void PlayPrimaryFX()

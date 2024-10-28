@@ -35,10 +35,10 @@ public class AbilityCardChooserUI : MonoBehaviour
     public void EnableAbilityChoiceCanvas(object sender, System.EventArgs e)
     {
         GameManager.Instance.ChangeGameState(GameStates.LevelingUp);        
-        abilityChoiceCanvas.gameObject.SetActive(true);
+        abilityChoiceCanvas.enabled = true;
 
         AbilityCardGenerator cardGenerator = abilityChoiceCanvas.GetComponent<AbilityCardGenerator>();
-        if (cardGenerator != null)
+        if (cardGenerator != null) 
         {
             cardGenerator.BeginGeneration();
         }
@@ -51,6 +51,6 @@ public class AbilityCardChooserUI : MonoBehaviour
     public void DisableAbilityChoiceCanvas(object sender, System.EventArgs e)
     {
         GameManager.Instance.ChangeGameState(GameStates.Playing);
-        abilityChoiceCanvas.gameObject.SetActive(false);
+        abilityChoiceCanvas.enabled = false;
     }
 }

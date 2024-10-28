@@ -33,7 +33,6 @@ public class AbilitiesManager : MonoBehaviour
         if (AbilityManagerInstance == null)
         {
             AbilityManagerInstance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (AbilityManagerInstance != this)
         {

@@ -1,13 +1,13 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
-public class PlayerDeathUI : MonoBehaviour
+public class GlobalUI : MonoBehaviour
 {
     public void ReloadLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
-        Time.timeScale = 1;
+        GameManager.Instance.ChangeGameState(GameStates.Playing);
     }
 
     public void ReturnToMainMenu()

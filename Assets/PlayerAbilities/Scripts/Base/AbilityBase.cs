@@ -11,6 +11,7 @@ public abstract class AbilityBase : MonoBehaviour
 {
     #region Fields and Properties
     // SerializedFields
+    [SerializeField] protected Transform player;
     [SerializeField] protected AbilityLibraryData abilityData;
     [SerializeField] protected ParticleSystem[] particleSystems;
     [SerializeField] [ReadOnly] protected AbilityNames abilityName;  
@@ -27,18 +28,16 @@ public abstract class AbilityBase : MonoBehaviour
     protected GameObject[] playerSockets;
     protected Vector3 enemyPosition = new Vector3();
     protected bool isAttacking = false; 
-    protected Transform player;
     protected const string colliderCompareTag = "Enemy";
     #endregion
 
     protected virtual void Awake()
     {
         InitializeAbilityData();
-        player = FindObjectOfType<PlayerHealth>().transform;
         
-        if (player == null)
+        if (player == null || abilityData == null)
         {
-            Logger.LogError("Missing reference to player transform.", this);
+            Logger.LogError("Missing reference to player transform or abilityData.", this);
             return;
         }
 

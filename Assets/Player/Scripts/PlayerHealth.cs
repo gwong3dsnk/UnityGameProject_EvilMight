@@ -5,7 +5,7 @@ public class PlayerHealth : HealthManagement
 {
     [SerializeField] private int playerHealth = 3;
     private Enemy enemy;
-    private bool isPlayerDead;
+    private bool isPlayerDead = false;
 
     protected override void Start()
     {
@@ -39,8 +39,12 @@ public class PlayerHealth : HealthManagement
 
     protected override void HandleDeath()
     {
-        isPlayerDead = true;
-        InvokeOnDeathEvent();
+        // isPlayerDead = true;
+        if (!isPlayerDead)
+        {
+            isPlayerDead = true;
+            InvokeOnDeathEvent();
+        }
     }
 
     protected override void HandleStillAlive()

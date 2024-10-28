@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     
     [SerializeField] private Canvas playerDeathCanvas;
-    [SerializeField] private AbilityCardChooserUI abilityCardChooserUI;
     public static GameManager Instance;
     private GameStates currentGameState;
 
@@ -13,7 +12,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -22,7 +20,7 @@ public class GameManager : MonoBehaviour
         
         if (playerDeathCanvas != null)
         {
-            playerDeathCanvas.transform.gameObject.SetActive(false);
+            playerDeathCanvas.enabled = false;
         }
         else
         {
@@ -79,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     private void TriggerPlayerLoss()
     {
-        playerDeathCanvas.transform.gameObject.SetActive(true);
+        playerDeathCanvas.enabled = true;
         FreezeGame();
     }
 

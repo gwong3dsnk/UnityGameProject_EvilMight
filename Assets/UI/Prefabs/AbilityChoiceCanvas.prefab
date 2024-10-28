@@ -65,8 +65,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 10
@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c7b99bb0c10d44da19d72b3ac34700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityLibraryData: {fileID: 11400000, guid: f09b8b32b5a442e40beb45cea4bc4b35, type: 2}
 --- !u!114 &5956798996386888713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a0bd0374b92a4419a8807813ea0dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityDatabaseManager: {fileID: 0}
 --- !u!114 &6032380039279528699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9c4d855aeb2b2c4b9926679fddaf003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradeLibraryData: {fileID: 11400000, guid: a0df77e7986628e42936b0f94797fb67, type: 2}
+  upgradeDatabaseManager: {fileID: 0}
 --- !u!114 &1783058966032599383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2088,8 +2088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e86c5886491344cab98484157a9dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabOverride: {fileID: 0}
-  enableDebugMode: 0
 --- !u!1 &8860726314507378946
 GameObject:
   m_ObjectHideFlags: 0
