@@ -1,13 +1,16 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     
     [SerializeField] private Canvas playerDeathCanvas;
+    [SerializeField] private Canvas pauseCanvas;
     public static GameManager Instance;
     private GameStates currentGameState;
+    private PlayerControls playerControls;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -18,17 +21,26 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         
-        if (playerDeathCanvas != null)
+        if (playerDeathCanvas == null || pauseCanvas == null)
         {
-            playerDeathCanvas.enabled = false;
+            Logger.LogError("Missing PlayerDeathCanvas or PauseCanvas reference", this);
         }
-        else
-        {
-            Logger.LogError("Missing PlayerDeathCanvas reference", this);
-        }
+
+        playerControls = new PlayerControls();
 
         ChangeGameState(GameStates.Playing);
     }
+
+    private void OnEnable() 
+    {
+        playerControls.Enable();
+        playerControls.Player.Pause.performed += OnPause;
+    }    
+
+    private void OnDisable() 
+    {
+        playerControls.Disable();
+    }    
 
     public void ChangeGameState(GameStates gameStates)
     {
@@ -59,6 +71,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetGameStateWhenResuming()
+    {
+        // Called when clicking Resume game button in GUI
+        ChangeGameState(GameStates.Playing);
+        pauseCanvas.enabled = false;
+    }
+
     private void TriggerMainMenu()
     {
         // Return to main menu.
@@ -83,6 +102,7 @@ public class GameManager : MonoBehaviour
 
     private void TriggerPausing()
     {
+        pauseCanvas.enabled = true;
         FreezeGame();
     }
 
@@ -103,5 +123,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnPause(InputAction.CallbackContext value)
+    {
+        ChangeGameState(GameStates.Pausing);
     }
 }

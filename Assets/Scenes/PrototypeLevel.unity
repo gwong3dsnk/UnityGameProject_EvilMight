@@ -202,6 +202,11 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 900470326075416038, guid: 819707c5c9851bc4d84f4e6d7c68fd60, type: 3}
   m_PrefabInstance: {fileID: 109696816220360735}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &159564050 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 4773217903044621002, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+  m_PrefabInstance: {fileID: 1193199663}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &183935386 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6378233534303530109, guid: 1043f1220b417df4cbba36aa58381aeb, type: 3}
@@ -484,6 +489,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 384532700257983218, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1718078266}
+    - target: {fileID: 384532700257983218, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetGameStateWhenResuming
+      objectReference: {fileID: 0}
+    - target: {fileID: 384532700257983218, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 454290031255916319, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2241169939956980528}
+    - target: {fileID: 454290031255916319, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToMainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 814912493196357087, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -518,6 +543,10 @@ PrefabInstance:
       objectReference: {fileID: 1193199665}
     - target: {fileID: 3539878679417609288, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4773217903044621002, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4903919179549332993, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
@@ -647,6 +676,14 @@ PrefabInstance:
     - target: {fileID: 6715380684928002208, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6905521252762329447, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2241169939956980528}
+    - target: {fileID: 6905521252762329447, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReloadLevel
       objectReference: {fileID: 0}
     - target: {fileID: 6988418886245703042, guid: 9ef5e7eb2e89d1a478987083304915fb, type: 3}
       propertyPath: m_IsActive
@@ -878,6 +915,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2256287696876809504, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+      propertyPath: pauseCanvas
+      value: 
+      objectReference: {fileID: 159564050}
+    - target: {fileID: 2256287696876809504, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
       propertyPath: playerDeathCanvas
       value: 
       objectReference: {fileID: 1193199664}
@@ -969,6 +1010,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7471e5f5f7f53046bc3a008d7681067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1718078266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2256287696876809504, guid: 57af459cbe5d3d748871001bc12d2068, type: 3}
+  m_PrefabInstance: {fileID: 1718078261}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453c38ffc3380544990cd7cc870af49a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2051483757 stripped
